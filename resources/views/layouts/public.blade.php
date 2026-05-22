@@ -19,16 +19,15 @@
             </a>
 
             <nav class="nav-links">
-                <a href="{{ route('about') }}">About</a>
-                <a href="{{ route('modules.index') }}">Solutions</a>
-                <a href="{{ route('pricing') }}">Pricing</a>
-                <a href="{{ route('blog.index') }}">Blog</a>
-                <a href="{{ route('contact') }}">Contact</a>
+                <a href="{{ route('modules.index') }}">Products</a>
+                <a href="{{ route('about') }}">Customers</a>
+                <a href="{{ route('contact') }}">Partners</a>
+                <a href="{{ route('blog.index') }}">Resources</a>
             </nav>
 
             <div class="nav-cta">
                 <a class="btn btn-ghost-dark btn-sm" href="{{ route('login') }}">Sign in</a>
-                <a class="btn btn-primary btn-sm" href="{{ route('modules.index') }}">Get Started</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('contact') }}">Sign Up</a>
             </div>
         </div>
     </header>
