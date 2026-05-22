@@ -7,78 +7,83 @@
     <meta name="description" content="{{ $metaDescription ?? 'Tiwi delivers practical business software modules for teams managing sales, schools, hospitals, rentals, travel, hotspot billing, and manufacturing.' }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/tiwi.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-
-    <header class="site-header">
-        <div class="container nav">
-            <a class="brand" href="{{ route('home') }}">
-                Tiwi<span class="brand-dot"></span>
+<body class="font-sans">
+    <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+        <div class="tw-container flex min-h-20 items-center justify-between gap-8">
+            <a href="{{ route('home') }}" class="flex items-center gap-3" aria-label="Tiwi home">
+                <span class="relative block h-12 w-24">
+                    <span class="absolute left-0 top-2 h-9 w-9 rotate-[-9deg] rounded-md border-[5px] border-[#ee0011] bg-white"></span>
+                    <span class="absolute left-7 top-2 h-9 w-9 rotate-[14deg] rounded-md border-[5px] border-[#16a34a] bg-white"></span>
+                    <span class="absolute left-14 top-2 h-9 w-9 rotate-[-5deg] rounded-md border-[5px] border-[#2563eb] bg-white"></span>
+                    <span class="absolute left-[84px] top-2 h-9 w-9 rotate-[1deg] rounded-md border-[5px] border-[#f59e0b] bg-white"></span>
+                    <span class="absolute left-8 top-11 text-[10px] font-black uppercase tracking-[.45em] text-slate-950">Tiwi</span>
+                </span>
             </a>
 
-            <nav class="nav-links">
-                <a href="{{ route('modules.index') }}">Products</a>
-                <a href="{{ route('about') }}">Customers</a>
-                <a href="{{ route('contact') }}">Partners</a>
-                <a href="{{ route('blog.index') }}">Resources</a>
+            <nav class="hidden items-center gap-10 text-[17px] font-medium text-slate-950 lg:flex">
+                <a class="transition hover:text-tiwi-red" href="{{ route('modules.index') }}">Products</a>
+                <a class="transition hover:text-tiwi-red" href="{{ route('about') }}">Customers</a>
+                <a class="transition hover:text-tiwi-red" href="{{ route('contact') }}">Partners</a>
+                <a class="transition hover:text-tiwi-red" href="{{ route('blog.index') }}">Resources</a>
             </nav>
 
-            <div class="nav-cta">
-                <a class="btn btn-ghost-dark btn-sm" href="{{ route('login') }}">Sign in</a>
-                <a class="btn btn-primary btn-sm" href="{{ route('contact') }}">Sign Up</a>
+            <div class="hidden items-center gap-6 text-[17px] font-medium lg:flex">
+                <a class="text-slate-950 transition hover:text-tiwi-red" href="{{ route('login') }}">Sign In</a>
+                <a class="rounded border border-tiwi-red px-6 py-3 text-tiwi-red transition hover:bg-tiwi-red hover:text-white" href="{{ route('contact') }}">Sign Up</a>
             </div>
         </div>
     </header>
 
     <main>@yield('content')</main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-body">
-                <div>
-                    <span class="footer-brand-name">Tiwi<span style="color:var(--brand)">.</span></span>
-                    <p class="footer-brand-desc">
-                        Integrated business management software for East African enterprises.
-                        One platform, seven powerful systems.
-                    </p>
-                    <a class="btn btn-outline btn-sm" href="{{ route('contact') }}">Talk to us</a>
-                </div>
+    <footer class="border-t border-slate-200 bg-[#f7f7f7]">
+        <div class="tw-container grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+            <div>
+                <span class="text-3xl font-black tracking-tight text-slate-950">Tiwi<span class="text-tiwi-red">.</span></span>
+                <p class="mt-4 max-w-sm text-sm leading-7 text-slate-600">
+                    The main marketing website and access hub for modular business software systems.
+                </p>
+                <a class="mt-6 inline-flex rounded border border-slate-950 px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-slate-950 hover:text-white" href="{{ route('contact') }}">Talk to us</a>
+            </div>
 
-                <div class="footer-col">
-                    <h4>Solutions</h4>
+            <div>
+                <h4 class="mb-4 text-xs font-black uppercase tracking-[.16em] text-slate-950">Solutions</h4>
+                <div class="space-y-2">
                     @foreach(\App\Models\Module::active()->orderBy('name')->take(7)->get() as $footerModule)
-                        <a href="{{ route('modules.show', $footerModule) }}">{{ $footerModule->name }}</a>
+                        <a class="block text-sm text-slate-600 hover:text-tiwi-red" href="{{ route('modules.show', $footerModule) }}">{{ $footerModule->name }}</a>
                     @endforeach
-                </div>
-
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <a href="{{ route('about') }}">About Tiwi</a>
-                    <a href="{{ route('pricing') }}">Pricing</a>
-                    <a href="{{ route('blog.index') }}">Blog</a>
-                    <a href="{{ route('contact') }}">Contact Us</a>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <a href="{{ route('modules.index') }}">All Solutions</a>
-                    <a href="{{ route('contact') }}">Request a Demo</a>
-                    <a href="{{ route('contact') }}">Support</a>
-                    <a href="{{ route('login') }}">Client Login</a>
                 </div>
             </div>
 
-            <div class="footer-bottom">
-                <span>&copy; {{ date('Y') }} Tiwi Software. All rights reserved.</span>
-                <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+            <div>
+                <h4 class="mb-4 text-xs font-black uppercase tracking-[.16em] text-slate-950">Company</h4>
+                <div class="space-y-2 text-sm text-slate-600">
+                    <a class="block hover:text-tiwi-red" href="{{ route('about') }}">About Tiwi</a>
+                    <a class="block hover:text-tiwi-red" href="{{ route('pricing') }}">Pricing</a>
+                    <a class="block hover:text-tiwi-red" href="{{ route('blog.index') }}">Blog</a>
+                    <a class="block hover:text-tiwi-red" href="{{ route('contact') }}">Contact</a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="mb-4 text-xs font-black uppercase tracking-[.16em] text-slate-950">Resources</h4>
+                <div class="space-y-2 text-sm text-slate-600">
+                    <a class="block hover:text-tiwi-red" href="{{ route('modules.index') }}">All Products</a>
+                    <a class="block hover:text-tiwi-red" href="{{ route('contact') }}">Request a Demo</a>
+                    <a class="block hover:text-tiwi-red" href="{{ route('login') }}">Client Login</a>
                 </div>
             </div>
         </div>
+        <div class="border-t border-slate-200 py-5">
+            <div class="tw-container flex flex-col justify-between gap-3 text-sm text-slate-500 md:flex-row">
+                <span>&copy; {{ date('Y') }} Tiwi Software. All rights reserved.</span>
+                <span class="flex gap-6"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></span>
+            </div>
+        </div>
     </footer>
-
 </body>
 </html>

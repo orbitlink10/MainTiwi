@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-white text-slate-950 antialiased;
+    }
+}
+
+@layer components {
+    .tw-container {
+        @apply mx-auto w-[calc(100%_-_32px)] max-w-[1180px];
+    }
+
+    .zoho-line-bg {
+        background-image:
+            repeating-linear-gradient(60deg, rgba(37, 99, 235, .08) 0 1px, transparent 1px 18px),
+            linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    }
+}
