@@ -9,7 +9,41 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/tiwi.css') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if (file_exists(public_path('build/manifest.json')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        },
+                        colors: {
+                            tiwi: {
+                                red: '#ee0011',
+                                blue: '#0067b8',
+                                ink: '#111827',
+                                soft: '#f7fafc',
+                            },
+                        },
+                        boxShadow: {
+                            zoho: '0 18px 45px rgba(15, 23, 42, .08)',
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            .tw-container { width: calc(100% - 32px); max-width: 1180px; margin-left: auto; margin-right: auto; }
+            .zoho-line-bg {
+                background-image:
+                    repeating-linear-gradient(60deg, rgba(37, 99, 235, .08) 0 1px, transparent 1px 18px),
+                    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+            }
+        </style>
+    @endif
 </head>
 <body class="font-sans">
     <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
