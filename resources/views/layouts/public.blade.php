@@ -3,46 +3,83 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $metaTitle ?? 'Tiwi | Business Software Modules' }}</title>
-    <meta name="description" content="{{ $metaDescription ?? 'Tiwi is a marketing website and dashboard for connected business software modules.' }}">
+    <title>{{ $metaTitle ?? 'Tiwi | Business Management Software' }}</title>
+    <meta name="description" content="{{ $metaDescription ?? 'Tiwi delivers powerful, integrated business management systems for East African enterprises — from Point of Sale to Hospital Management.' }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/tiwi.css') }}">
 </head>
 <body>
+
     <header class="site-header">
         <div class="container nav">
-            <a class="brand" href="{{ route('home') }}">Tiwi</a>
+            <a class="brand" href="{{ route('home') }}">
+                Tiwi<span class="brand-dot"></span>
+            </a>
+
             <nav class="nav-links">
                 <a href="{{ route('about') }}">About</a>
                 <a href="{{ route('modules.index') }}">Solutions</a>
                 <a href="{{ route('pricing') }}">Pricing</a>
                 <a href="{{ route('blog.index') }}">Blog</a>
                 <a href="{{ route('contact') }}">Contact</a>
-                <a class="button secondary" href="{{ route('login') }}">Admin</a>
             </nav>
+
+            <div class="nav-cta">
+                <a class="btn btn-ghost-dark btn-sm" href="{{ route('login') }}">Sign in</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('modules.index') }}">Get Started</a>
+            </div>
         </div>
     </header>
 
     <main>@yield('content')</main>
 
-    <footer class="footer">
-        <div class="container footer-grid">
-            <div>
-                <h3>Tiwi</h3>
-                <p>One public website and dashboard for connected business software modules.</p>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-body">
+                <div>
+                    <span class="footer-brand-name">Tiwi<span style="color:var(--brand)">.</span></span>
+                    <p class="footer-brand-desc">
+                        Integrated business management software for East African enterprises.
+                        One platform, seven powerful systems.
+                    </p>
+                    <a class="btn btn-outline btn-sm" href="{{ route('contact') }}">Talk to us</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Solutions</h4>
+                    @foreach(\App\Models\Module::active()->orderBy('name')->take(7)->get() as $footerModule)
+                        <a href="{{ route('modules.show', $footerModule) }}">{{ $footerModule->name }}</a>
+                    @endforeach
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="{{ route('about') }}">About Tiwi</a>
+                    <a href="{{ route('pricing') }}">Pricing</a>
+                    <a href="{{ route('blog.index') }}">Blog</a>
+                    <a href="{{ route('contact') }}">Contact Us</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <a href="{{ route('modules.index') }}">All Solutions</a>
+                    <a href="{{ route('contact') }}">Request a Demo</a>
+                    <a href="{{ route('contact') }}">Support</a>
+                    <a href="{{ route('login') }}">Client Login</a>
+                </div>
             </div>
-            <div>
-                <h3>Modules</h3>
-                @foreach(\App\Models\Module::active()->orderBy('name')->take(7)->get() as $footerModule)
-                    <a href="{{ route('modules.show', $footerModule) }}">{{ $footerModule->name }}</a>
-                @endforeach
-            </div>
-            <div>
-                <h3>Company</h3>
-                <a href="{{ route('about') }}">About Tiwi</a>
-                <a href="{{ route('pricing') }}">Pricing</a>
-                <a href="{{ route('contact') }}">Contact</a>
+
+            <div class="footer-bottom">
+                <span>&copy; {{ date('Y') }} Tiwi Software. All rights reserved.</span>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
+
 </body>
 </html>
