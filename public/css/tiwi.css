@@ -1230,25 +1230,64 @@ textarea{min-height:140px;resize:vertical}
    ZOHO-STYLE TOP PRODUCTS
    ===================================================== */
 .tiwi-products-hero{
-    padding:76px 0 84px;
+    padding:0 0 0;
     border-bottom:1px solid #e5e7eb;
 }
 .tiwi-products-panel{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:60px 74px;
-    max-width:1040px;
+    max-width:1034px;
     margin:0 auto;
-    padding:64px 18px;
+    padding:0 44px 96px;
     background:#fff;
     border:1px solid #e5e7eb;
+    border-top:0;
     border-radius:0 0 12px 12px;
-    box-shadow:0 18px 42px rgba(15,23,42,.04);
+    box-shadow:none;
+}
+.tiwi-products-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:83px;
+    border-bottom:1px solid #e5e7eb;
+    margin-bottom:72px;
+}
+.tiwi-products-head h2{
+    margin:0;
+    color:#0b1728;
+    font-size:20px;
+    font-weight:600;
+    line-height:1;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+}
+.tiwi-products-head a{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    color:#0067b8;
+    font-size:20px;
+    font-weight:500;
+    line-height:1;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+}
+.tiwi-products-head a span{
+    display:inline-block;
+    font-size:35px;
+    font-weight:300;
+    line-height:.5;
+    transform:translateY(-1px);
+}
+.tiwi-products-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    column-gap:66px;
+    row-gap:58px;
 }
 .tiwi-product-card{
     display:grid;
-    grid-template-columns:50px 1fr;
-    gap:22px;
+    grid-template-columns:48px 1fr;
+    gap:20px;
     align-items:start;
     min-width:0;
 }
@@ -1256,15 +1295,15 @@ textarea{min-height:140px;resize:vertical}
     color:#0067b8;
 }
 .tiwi-product-icon{
-    width:50px;
-    height:50px;
+    width:48px;
+    height:48px;
     color:#2878c8;
 }
 .tiwi-product-icon.green{color:#00a65a}
 .tiwi-product-icon.amber{color:#f59e0b}
 .tiwi-product-icon svg{
-    width:50px;
-    height:50px;
+    width:48px;
+    height:48px;
     fill:none;
     stroke:currentColor;
     stroke-width:3.2;
@@ -1286,7 +1325,7 @@ textarea{min-height:140px;resize:vertical}
     font-weight:400;
     line-height:1.1;
     letter-spacing:0;
-    margin-bottom:10px;
+    margin-bottom:12px;
     transition:color .15s;
 }
 .tiwi-product-copy small{
@@ -1299,20 +1338,36 @@ textarea{min-height:140px;resize:vertical}
 
 @media(max-width:1020px){
     .tiwi-products-panel{
+        padding:0 28px 64px;
+    }
+    .tiwi-products-grid{
         grid-template-columns:repeat(2,minmax(0,1fr));
         gap:46px 48px;
-        padding:48px 28px;
     }
 }
 @media(max-width:680px){
     .tiwi-products-hero{
-        padding:34px 0 48px;
+        padding:0;
     }
     .tiwi-products-panel{
+        padding:0 20px 42px;
+        border-radius:8px;
+    }
+    .tiwi-products-head{
+        align-items:flex-start;
+        flex-direction:column;
+        justify-content:center;
+        gap:16px;
+        min-height:112px;
+        margin-bottom:38px;
+    }
+    .tiwi-products-head h2,
+    .tiwi-products-head a{
+        font-size:18px;
+    }
+    .tiwi-products-grid{
         grid-template-columns:1fr;
         gap:34px;
-        padding:34px 20px;
-        border-radius:8px;
     }
     .tiwi-product-card{
         grid-template-columns:44px 1fr;

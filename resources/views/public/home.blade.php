@@ -46,35 +46,42 @@
 <section class="tiwi-products-hero zoho-line-bg">
     <div class="tw-container">
         <div class="tiwi-products-panel">
-            @foreach($featuredProducts as $product)
-                <a href="{{ route('modules.index') }}" class="tiwi-product-card">
-                    <span class="tiwi-product-icon {{ $product['accent'] }}" aria-hidden="true">
-                        @switch($product['key'])
-                            @case('pos')
-                                <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14h28v22H18z"/><path d="M14 50h36l-4-14H18z"/><path d="M25 43h14"/><path d="M26 22h12"/></svg>
-                                @break
-                            @case('property')
-                                <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 31 32 15l20 16"/><path d="M18 29v22h28V29"/><path d="M27 51V38h10v13"/><path d="M24 28h4"/><path d="M36 28h4"/></svg>
-                                @break
-                            @case('school')
-                                <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25 32 14l22 11-22 11z"/><path d="M18 31v12c4 5 24 5 28 0V31"/><path d="M54 25v18"/><path d="M50 45h8"/></svg>
-                                @break
-                            @case('itinerary')
-                                <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 12h28v40H18z"/><path d="M25 22h14"/><path d="M25 31h14"/><path d="M25 40h8"/><path d="m42 18 7-7"/><path d="m49 11 3 8"/></svg>
-                                @break
-                            @case('manufacturing')
-                                <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 47h40"/><path d="M16 47V29l10 7V29l10 7V22h12v25"/><path d="M40 22V12h8v10"/><path d="M21 42h4"/><path d="M33 42h4"/></svg>
-                                @break
-                            @default
-                                <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16h16v16H16z"/><path d="M32 16h16v16H32z"/><path d="M16 32h16v16H16z"/><path d="M32 32h16v16H32z"/></svg>
-                        @endswitch
-                    </span>
-                    <span class="tiwi-product-copy">
-                        <strong>{{ $product['name'] }}</strong>
-                        <small>{{ $product['description'] }}</small>
-                    </span>
-                </a>
-            @endforeach
+            <div class="tiwi-products-head">
+                <h2>Featured Apps</h2>
+                <a href="{{ route('modules.index') }}">Explore all products <span>&rsaquo;</span></a>
+            </div>
+
+            <div class="tiwi-products-grid">
+                @foreach($featuredProducts as $product)
+                    <a href="{{ route('modules.index') }}" class="tiwi-product-card">
+                        <span class="tiwi-product-icon {{ $product['accent'] }}" aria-hidden="true">
+                            @switch($product['key'])
+                                @case('pos')
+                                    <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14h28v22H18z"/><path d="M14 50h36l-4-14H18z"/><path d="M25 43h14"/><path d="M26 22h12"/></svg>
+                                    @break
+                                @case('property')
+                                    <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 31 32 15l20 16"/><path d="M18 29v22h28V29"/><path d="M27 51V38h10v13"/><path d="M24 28h4"/><path d="M36 28h4"/></svg>
+                                    @break
+                                @case('school')
+                                    <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25 32 14l22 11-22 11z"/><path d="M18 31v12c4 5 24 5 28 0V31"/><path d="M54 25v18"/><path d="M50 45h8"/></svg>
+                                    @break
+                                @case('itinerary')
+                                    <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 12h28v40H18z"/><path d="M25 22h14"/><path d="M25 31h14"/><path d="M25 40h8"/><path d="m42 18 7-7"/><path d="m49 11 3 8"/></svg>
+                                    @break
+                                @case('manufacturing')
+                                    <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 47h40"/><path d="M16 47V29l10 7V29l10 7V22h12v25"/><path d="M40 22V12h8v10"/><path d="M21 42h4"/><path d="M33 42h4"/></svg>
+                                    @break
+                                @default
+                                    <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16h16v16H16z"/><path d="M32 16h16v16H32z"/><path d="M16 32h16v16H16z"/><path d="M32 32h16v16H32z"/></svg>
+                            @endswitch
+                        </span>
+                        <span class="tiwi-product-copy">
+                            <strong>{{ $product['name'] }}</strong>
+                            <small>{{ $product['description'] }}</small>
+                        </span>
+                    </a>
+                @endforeach
+            </div>
         </div>
     </div>
 </section>
