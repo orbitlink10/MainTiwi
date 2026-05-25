@@ -12,7 +12,7 @@ class PublicController extends Controller
     public function home()
     {
         return view('public.home', [
-            'modules' => Module::active()->latest()->take(5)->get(),
+            'modules' => Module::active()->orderBy('name')->take(6)->get(),
             'posts' => BlogPost::published()->latest('published_at')->take(3)->get(),
             'sections' => HomepageSection::active()->get()->keyBy('key'),
             'metaTitle' => 'Tiwi | Business Software Modules',

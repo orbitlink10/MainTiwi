@@ -2,13 +2,14 @@
 
 @section('content')
 @php
-    $featuredProducts = [
+    $fallbackProducts = [
         [
             'name' => 'POS',
             'display_name' => 'POS',
             'description' => 'Complete point-of-sale software for retail, inventory, branches, and sales reporting.',
             'key' => 'pos',
             'accent' => 'blue',
+            'url' => route('modules.index'),
         ],
         [
             'name' => 'Property Management System',
@@ -16,6 +17,7 @@
             'description' => 'Manage tenants, units, rent collection, service requests, and property records.',
             'key' => 'property',
             'accent' => 'green',
+            'url' => route('modules.index'),
         ],
         [
             'name' => 'School Management System',
@@ -23,6 +25,7 @@
             'description' => 'Organize learners, fees, classes, exams, admissions, and school communication.',
             'key' => 'school',
             'accent' => 'blue',
+            'url' => route('modules.index'),
         ],
         [
             'name' => 'Itinerary Builder',
@@ -30,6 +33,7 @@
             'description' => 'Build travel plans, quotes, day-by-day routes, and polished client proposals.',
             'key' => 'itinerary',
             'accent' => 'amber',
+            'url' => route('modules.index'),
         ],
         [
             'name' => 'Manufacturing Management System',
@@ -37,6 +41,7 @@
             'description' => 'Plan production, materials, work orders, costing, and finished-goods movement.',
             'key' => 'manufacturing',
             'accent' => 'green',
+            'url' => route('modules.index'),
         ],
         [
             'name' => 'Tiwi One',
@@ -44,14 +49,56 @@
             'description' => 'A unified business software suite for product discovery, access, and growth.',
             'key' => 'suite',
             'accent' => 'blue',
+            'url' => route('modules.index'),
         ],
     ];
+
+    $accentForModule = fn ($name) => Str::contains(Str::lower($name), ['property', 'manufacturing'])
+        ? 'green'
+        : (Str::contains(Str::lower($name), ['itinerary', 'travel', 'trip']) ? 'amber' : 'blue');
+
+    $keyForModule = function ($name, $slug = null) {
+        $value = Str::lower($slug ?: $name);
+
+        return match (true) {
+            Str::contains($value, 'pos') => 'pos',
+            Str::contains($value, 'property') => 'property',
+            Str::contains($value, 'school') => 'school',
+            Str::contains($value, ['itinerary', 'travel', 'trip']) => 'itinerary',
+            Str::contains($value, 'manufacturing') => 'manufacturing',
+            default => 'suite',
+        };
+    };
+
+    $featuredProducts = $modules->isNotEmpty()
+        ? $modules->map(fn ($module) => [
+            'name' => $module->name,
+            'display_name' => $module->name,
+            'description' => $module->short_description,
+            'key' => $keyForModule($module->name, $module->slug),
+            'accent' => $accentForModule($module->name),
+            'url' => route('modules.show', $module->slug),
+        ])->values()->all()
+        : $fallbackProducts;
 
     $heroSection = $sections->get('hero');
     $heroPayload = $heroSection?->payload ?? [];
     $heroTitle = $heroSection?->heading ?: "Your life's work,\npowered by our life's work";
     $heroBody = $heroSection?->body ?: "A unique and powerful software suite to transform the way you work.\nDesigned for businesses of all sizes, built by a company that values your privacy.";
     $heroCta = $heroPayload['primary_cta'] ?? 'Get started for free';
+
+    $whySection = $sections->get('why');
+    $whyPayload = $whySection?->payload ?? [];
+    $whyLabel = $whyPayload['eyebrow'] ?? $whySection?->label ?? 'All-in-one suite';
+    $whyHeading = $whySection?->heading ?: 'Tiwi One';
+    $whyBody = $whySection?->body ?: 'Run your product catalogue, CMS pages, blog content, SEO metadata, homepage sections, and contact leads from one Laravel dashboard.';
+    $whyCta = $whyPayload['cta_label'] ?? 'View pricing';
+
+    $testimonialSection = $sections->get('testimonials');
+    $testimonialPayload = $testimonialSection?->payload ?? [];
+    $testimonialQuotes = $testimonialPayload['quotes'] ?? $testimonialPayload['points'] ?? [];
+    $testimonialQuote = collect($testimonialQuotes)->first() ?: $testimonialSection?->body ?: 'Tiwi gives every business module a clear home, while each specialist system remains free to grow independently.';
+    $testimonialCite = $testimonialPayload['cite'] ?? $testimonialSection?->label ?? 'Tiwi implementation team';
 
 @endphp
 
@@ -261,7 +308,7 @@
 
         <div class="home-products-grid">
             @foreach($featuredProducts as $product)
-                <a href="{{ route('modules.index') }}" class="home-product">
+                <a href="{{ $product['url'] }}" class="home-product">
                     <span class="home-product-icon {{ $product['accent'] }}" aria-hidden="true">
                         @switch($product['key'])
                             @case('pos')
@@ -296,20 +343,20 @@
 <section class="border-y border-slate-200 bg-[#fffaf2] py-20">
     <div class="tw-container grid items-center gap-12 lg:grid-cols-[1fr_.9fr]">
         <div>
-            <p class="text-sm font-black uppercase tracking-[.18em] text-tiwi-red">All-in-one suite</p>
-            <h2 class="mt-4 text-5xl font-black leading-tight tracking-[-.05em] text-slate-950 md:text-6xl">Tiwi One</h2>
+            <p class="text-sm font-black uppercase tracking-[.18em] text-tiwi-red">{{ $whyLabel }}</p>
+            <h2 class="mt-4 text-5xl font-black leading-tight tracking-[-.05em] text-slate-950 md:text-6xl">{{ $whyHeading }}</h2>
             <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-700">
-                Run your product catalogue, CMS pages, blog content, SEO metadata, homepage sections, and contact leads from one Laravel dashboard.
+                {{ $whyBody }}
             </p>
             <a href="{{ route('pricing') }}" class="mt-8 inline-flex min-h-12 items-center gap-2 rounded-sm bg-tiwi-red px-7 text-sm font-black uppercase tracking-wide text-white hover:bg-red-700">
-                View pricing <span class="text-xl">&rsaquo;</span>
+                {{ $whyCta }} <span class="text-xl">&rsaquo;</span>
             </a>
         </div>
         <blockquote class="border-l-[6px] border-tiwi-red bg-white p-9 shadow-zoho">
             <p class="text-2xl leading-10 tracking-[-.02em] text-slate-950">
-                "Tiwi gives every business module a clear home, while each specialist system remains free to grow independently."
+                "{{ $testimonialQuote }}"
             </p>
-            <cite class="mt-6 block text-sm font-black not-italic uppercase tracking-[.14em] text-slate-500">Tiwi implementation team</cite>
+            <cite class="mt-6 block text-sm font-black not-italic uppercase tracking-[.14em] text-slate-500">{{ $testimonialCite }}</cite>
         </blockquote>
     </div>
 </section>
@@ -326,7 +373,7 @@
 
         <div class="space-y-4 border-t border-slate-700 pt-6">
             @foreach($featuredProducts as $product)
-                <a href="{{ route('modules.index') }}" class="group grid min-h-[90px] grid-cols-[64px_1fr_24px] items-center gap-6 rounded-2xl border border-[#303945] bg-[#1f2630] px-5 py-4 transition hover:border-slate-500 hover:bg-[#252d38]">
+                <a href="{{ $product['url'] }}" class="group grid min-h-[90px] grid-cols-[64px_1fr_24px] items-center gap-6 rounded-2xl border border-[#303945] bg-[#1f2630] px-5 py-4 transition hover:border-slate-500 hover:bg-[#252d38]">
                     <span class="z-dark-icon {{ $product['accent'] }}" data-symbol="{{ Str::of($product['name'])->explode(' ')->map(fn ($word) => Str::substr($word, 0, 1))->take(3)->join('') }}"></span>
                     <span>
                         <strong class="block text-xl font-black leading-tight text-white">{{ $product['name'] }}</strong>
