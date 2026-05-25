@@ -13,7 +13,7 @@ class ContactController extends Controller
         return view('public.contact', [
             'modules' => Module::active()->orderBy('name')->get(),
             'metaTitle' => 'Contact Tiwi | Business Software Modules',
-            'metaDescription' => 'Contact Tiwi to discuss POS, rental, school, itinerary, hotspot, hospital, and manufacturing software modules.',
+            'metaDescription' => 'Contact Tiwi to discuss POS, property management, school management, itinerary builder, and manufacturing management software modules.',
         ]);
     }
 

@@ -12,7 +12,7 @@ class PageSeeder extends Seeder
         $pages = [
             [
                 'title' => 'About Tiwi',
-                'content' => 'Tiwi is the central marketing website and access hub for a suite of business software modules built for retail, education, healthcare, hospitality, internet billing, travel, rentals, and manufacturing teams.',
+                'content' => 'Tiwi is the central marketing website and access hub for a suite of business software modules built for POS, property management, school management, itinerary building, and manufacturing teams.',
             ],
             [
                 'title' => 'Pricing',

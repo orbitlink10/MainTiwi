@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $metaTitle ?? 'Tiwi | Business Management Software' }}</title>
-    <meta name="description" content="{{ $metaDescription ?? 'Tiwi delivers practical business software modules for teams managing sales, schools, hospitals, rentals, travel, hotspot billing, and manufacturing.' }}">
+    <meta name="description" content="{{ $metaDescription ?? 'Tiwi delivers practical business software modules for POS, property management, school management, itinerary building, and manufacturing management.' }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -87,8 +87,8 @@
             <div>
                 <h4 class="mb-4 text-xs font-black uppercase tracking-[.16em] text-slate-950">Solutions</h4>
                 <div class="space-y-2">
-                    @foreach(\App\Models\Module::active()->orderBy('name')->take(7)->get() as $footerModule)
-                        <a class="block text-sm text-slate-600 hover:text-tiwi-red" href="{{ route('modules.show', $footerModule) }}">{{ $footerModule->name }}</a>
+                    @foreach(['POS', 'Property Management System', 'School Management System', 'Itinerary Builder', 'Manufacturing Management System'] as $footerProduct)
+                        <a class="block text-sm text-slate-600 hover:text-tiwi-red" href="{{ route('modules.index') }}">{{ $footerProduct }}</a>
                     @endforeach
                 </div>
             </div>

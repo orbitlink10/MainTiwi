@@ -2,64 +2,39 @@
 
 @section('content')
 @php
-    $moduleMeta = [
-        'POS System' => [
-            'display' => 'POS',
-            'category' => 'Retail & Commerce',
+    $featuredProducts = [
+        [
+            'name' => 'POS',
+            'description' => 'Fast checkout, inventory, receipts, branches, and sales reporting for retail teams.',
             'icon' => 'POS',
-            'accent' => 'text-teal-600',
-            'bg' => 'bg-teal-50',
-            'ring' => 'ring-teal-200',
-        ],
-        'Rental Management System' => [
-            'display' => 'Rental',
-            'category' => 'Real Estate',
-            'icon' => 'RE',
             'accent' => 'text-blue-600',
-            'bg' => 'bg-blue-50',
-            'ring' => 'ring-blue-200',
         ],
-        'School Management System' => [
-            'display' => 'School',
-            'category' => 'Education',
-            'icon' => 'EDU',
-            'accent' => 'text-violet-600',
-            'bg' => 'bg-violet-50',
-            'ring' => 'ring-violet-200',
-        ],
-        'Itinerary Builder' => [
-            'display' => 'Itinerary',
-            'category' => 'Travel & Tours',
-            'icon' => 'TRP',
-            'accent' => 'text-amber-600',
-            'bg' => 'bg-amber-50',
-            'ring' => 'ring-amber-200',
-        ],
-        'Hotspot Billing System' => [
-            'display' => 'Hotspot',
-            'category' => 'ISP Billing',
-            'icon' => 'ISP',
+        [
+            'name' => 'Property Management System',
+            'description' => 'Manage units, tenants, rent collection, service requests, and property records.',
+            'icon' => 'PMS',
             'accent' => 'text-emerald-600',
-            'bg' => 'bg-emerald-50',
-            'ring' => 'ring-emerald-200',
         ],
-        'Hospital Management System' => [
-            'display' => 'Hospital',
-            'category' => 'Healthcare',
-            'icon' => 'HOS',
-            'accent' => 'text-rose-600',
-            'bg' => 'bg-rose-50',
-            'ring' => 'ring-rose-200',
+        [
+            'name' => 'School Management System',
+            'description' => 'Admissions, learners, fees, classes, exams, and communication in one school platform.',
+            'icon' => 'SMS',
+            'accent' => 'text-amber-600',
         ],
-        'Manufacturing System' => [
-            'display' => 'Manufacturing',
-            'category' => 'Production',
-            'icon' => 'MFG',
+        [
+            'name' => 'Itinerary Builder',
+            'description' => 'Build polished travel plans, quotes, day-by-day routes, and shareable proposals.',
+            'icon' => 'TRP',
             'accent' => 'text-indigo-600',
-            'bg' => 'bg-indigo-50',
-            'ring' => 'ring-indigo-200',
+        ],
+        [
+            'name' => 'Manufacturing Management System',
+            'description' => 'Plan production, materials, work orders, costing, and finished-goods movement.',
+            'icon' => 'MFG',
+            'accent' => 'text-red-600',
         ],
     ];
+
 @endphp
 
 <section class="zoho-line-bg border-b border-slate-200">
@@ -69,7 +44,7 @@
             Your business work, powered by Tiwi.
         </h1>
         <p class="mx-auto mt-7 max-w-3xl text-pretty text-xl leading-8 text-slate-700">
-            One polished marketing website and dashboard for the business modules your teams use across sales, schools, hospitals, rentals, travel, internet billing, and production.
+            One polished software suite for POS, property management, school operations, itinerary building, and manufacturing management.
         </p>
         <div class="mt-9 flex justify-center">
             <a href="{{ route('contact') }}" class="inline-flex min-h-[74px] items-center gap-3 rounded-sm bg-tiwi-red px-11 text-lg font-black uppercase tracking-wide text-white transition hover:bg-red-700">
@@ -90,7 +65,7 @@
                     Introducing<br>Tiwi One
                 </h2>
                 <p class="relative mt-7 max-w-md text-lg leading-8 text-white">
-                    A main website for module discovery, SEO pages, enquiries, and external system access.
+                    A main website for product discovery, SEO pages, enquiries, and external system access.
                 </p>
                 <a href="{{ route('modules.index') }}" class="relative mt-10 inline-flex min-h-16 items-center gap-3 rounded-full border-2 border-violet-300 px-9 text-sm font-black uppercase tracking-[.14em] text-white transition hover:bg-white hover:text-violet-950">
                     Explore Tiwi modules
@@ -100,7 +75,7 @@
 
             <div class="px-2 py-5 md:px-5 xl:py-10">
                 <div class="flex flex-col gap-5 border-b border-slate-200 pb-8 md:flex-row md:items-center md:justify-between">
-                    <h2 class="text-base font-black uppercase tracking-[.1em] text-slate-950">Featured apps</h2>
+                    <h2 class="text-base font-black uppercase tracking-[.1em] text-slate-950">Featured products</h2>
                     <a href="{{ route('modules.index') }}" class="inline-flex items-center gap-3 text-sm font-black uppercase tracking-[.1em] text-tiwi-blue">
                         Explore all products
                         <span class="text-2xl leading-none">&rsaquo;</span>
@@ -108,17 +83,16 @@
                 </div>
 
                 <div class="mt-12 grid gap-x-10 gap-y-12 md:grid-cols-2 2xl:grid-cols-3">
-                    @foreach($modules->take(6) as $module)
-                        @php $meta = $moduleMeta[$module->name] ?? ['display' => $module->name, 'category' => 'Business Software', 'icon' => 'APP', 'accent' => 'text-blue-600', 'bg' => 'bg-blue-50', 'ring' => 'ring-blue-200']; @endphp
-                        <a href="{{ route('modules.show', $module) }}" class="group grid min-w-0 grid-cols-[54px_1fr] gap-5">
-                            <span class="{{ $meta['accent'] }} grid h-12 w-12 place-items-center rounded-xl border-2 border-current bg-white text-[11px] font-black transition group-hover:scale-105">
-                                {{ $meta['icon'] }}
+                    @foreach($featuredProducts as $product)
+                        <article class="grid min-w-0 grid-cols-[54px_1fr] gap-5">
+                            <span class="{{ $product['accent'] }} grid h-12 w-12 place-items-center rounded-xl border-2 border-current bg-white text-[11px] font-black">
+                                {{ $product['icon'] }}
                             </span>
                             <span class="min-w-0">
-                                <strong class="block text-2xl font-medium leading-tight tracking-[-.04em] text-black">{{ $meta['display'] }}</strong>
-                                <small class="mt-3 block text-[16px] leading-6 text-slate-950">{{ $module->short_description }}</small>
+                                <strong class="block text-2xl font-medium leading-tight tracking-[-.02em] text-black">{{ $product['name'] }}</strong>
+                                <small class="mt-3 block text-[16px] leading-6 text-slate-950">{{ $product['description'] }}</small>
                             </span>
-                        </a>
+                        </article>
                     @endforeach
                 </div>
             </div>
@@ -132,7 +106,7 @@
             <p class="text-sm font-black uppercase tracking-[.18em] text-tiwi-red">All-in-one suite</p>
             <h2 class="mt-4 text-5xl font-black leading-tight tracking-[-.05em] text-slate-950 md:text-6xl">Tiwi One</h2>
             <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-700">
-                Run your public module catalogue, CMS pages, blog content, SEO metadata, homepage sections, and contact leads from one Laravel dashboard.
+                Run your product catalogue, CMS pages, blog content, SEO metadata, homepage sections, and contact leads from one Laravel dashboard.
             </p>
             <a href="{{ route('pricing') }}" class="mt-8 inline-flex min-h-12 items-center gap-2 rounded-sm bg-tiwi-red px-7 text-sm font-black uppercase tracking-wide text-white hover:bg-red-700">
                 View pricing <span class="text-xl">&rsaquo;</span>
@@ -153,18 +127,17 @@
             <p class="text-sm font-black uppercase tracking-[.18em] text-slate-400">Module Directory</p>
             <h2 class="mt-5 text-4xl font-black leading-tight tracking-[-.045em] md:text-5xl">Choose the system your team needs next.</h2>
             <p class="mt-5 text-lg leading-8 text-slate-400">
-                Each module can be activated, described, priced, and linked to its own external application from the admin dashboard.
+                Each product can be activated, described, priced, and linked to its own external application from the admin dashboard.
             </p>
         </div>
 
         <div class="space-y-4 border-t border-slate-700 pt-6">
-            @foreach($modules as $module)
-                @php $meta = $moduleMeta[$module->name] ?? ['category' => 'Business Software', 'icon' => 'APP', 'accent' => 'text-blue-400', 'bg' => 'bg-blue-50', 'ring' => 'ring-blue-200']; @endphp
-                <a href="{{ route('modules.show', $module) }}" class="group grid min-h-[90px] grid-cols-[64px_1fr_24px] items-center gap-6 rounded-2xl border border-[#303945] bg-[#1f2630] px-5 py-4 transition hover:border-slate-500 hover:bg-[#252d38]">
-                    <span class="{{ $meta['accent'] }} grid h-14 w-14 place-items-center rounded-xl bg-white/5 text-[11px] font-black ring-1 ring-white/10">{{ $meta['icon'] }}</span>
+            @foreach($featuredProducts as $product)
+                <a href="{{ route('modules.index') }}" class="group grid min-h-[90px] grid-cols-[64px_1fr_24px] items-center gap-6 rounded-2xl border border-[#303945] bg-[#1f2630] px-5 py-4 transition hover:border-slate-500 hover:bg-[#252d38]">
+                    <span class="{{ $product['accent'] }} grid h-14 w-14 place-items-center rounded-xl bg-white/5 text-[11px] font-black ring-1 ring-white/10">{{ $product['icon'] }}</span>
                     <span>
-                        <strong class="block text-xl font-black leading-tight text-white">{{ $module->name }}</strong>
-                        <small class="mt-1 block text-lg text-slate-400">{{ $meta['category'] }}</small>
+                        <strong class="block text-xl font-black leading-tight text-white">{{ $product['name'] }}</strong>
+                        <small class="mt-1 block text-lg text-slate-400">{{ $product['description'] }}</small>
                     </span>
                     <span class="text-3xl text-slate-500 transition group-hover:translate-x-1 group-hover:text-white">&rsaquo;</span>
                 </a>
@@ -178,21 +151,21 @@
         <div class="max-w-3xl">
             <h2 class="text-4xl font-black leading-tight tracking-[-.045em] text-slate-950 md:text-6xl">The core features that keep Tiwi useful</h2>
             <p class="mt-5 text-lg leading-8 text-slate-700">
-                Built around the website and dashboard work a modular software brand needs before each product is opened.
+                Built around the website and dashboard work a software brand needs before each product is opened.
             </p>
         </div>
         <div class="mt-10 grid border-l border-t border-slate-200 md:grid-cols-2 lg:grid-cols-4">
             <article class="border-b border-r border-slate-200 p-8">
                 <h3 class="text-xl font-black text-slate-950">Admin dashboard</h3>
-                <p class="mt-4 leading-7 text-slate-600">Manage modules, CMS pages, blog posts, contact messages, and homepage content.</p>
+                <p class="mt-4 leading-7 text-slate-600">Manage products, CMS pages, blog posts, contact messages, and homepage content.</p>
             </article>
             <article class="border-b border-r border-slate-200 p-8">
                 <h3 class="text-xl font-black text-slate-950">SEO-ready content</h3>
-                <p class="mt-4 leading-7 text-slate-600">Each module, page, and blog post supports clean slugs, meta titles, and descriptions.</p>
+                <p class="mt-4 leading-7 text-slate-600">Each product, page, and blog post supports clean slugs, meta titles, and descriptions.</p>
             </article>
             <article class="border-b border-r border-slate-200 p-8">
                 <h3 class="text-xl font-black text-slate-950">External module links</h3>
-                <p class="mt-4 leading-7 text-slate-600">Send visitors to separately built POS, school, hospital, rental, hotspot, travel, or manufacturing systems.</p>
+                <p class="mt-4 leading-7 text-slate-600">Send visitors to separately built POS, property, school, itinerary, or manufacturing systems.</p>
             </article>
             <article class="border-b border-r border-slate-200 p-8">
                 <h3 class="text-xl font-black text-slate-950">Responsive frontend</h3>
@@ -205,8 +178,8 @@
 <section class="bg-slate-950 py-14 text-white">
     <div class="tw-container grid text-center sm:grid-cols-2 lg:grid-cols-4">
         <div class="border-b border-white/15 p-6 sm:border-r lg:border-b-0">
-            <strong class="block text-5xl font-black">7</strong>
-            <span class="mt-3 block text-xs font-black uppercase tracking-[.16em] text-slate-300">Marketed modules</span>
+            <strong class="block text-5xl font-black">5</strong>
+            <span class="mt-3 block text-xs font-black uppercase tracking-[.16em] text-slate-300">Marketed products</span>
         </div>
         <div class="border-b border-white/15 p-6 lg:border-b-0 lg:border-r">
             <strong class="block text-5xl font-black">CMS</strong>
@@ -246,7 +219,7 @@
 <section class="border-t border-slate-200 bg-white py-20 text-center">
     <div class="tw-container">
         <h2 class="mx-auto max-w-3xl text-5xl font-black leading-tight tracking-[-.05em] text-slate-950 md:text-6xl">Ready to do your best work?</h2>
-        <p class="mx-auto mt-5 max-w-xl text-lg leading-8 text-slate-700">Let Tiwi become the main entry point for your business software modules.</p>
+        <p class="mx-auto mt-5 max-w-xl text-lg leading-8 text-slate-700">Let Tiwi become the main entry point for your business software products.</p>
         <a href="{{ route('contact') }}" class="mt-9 inline-flex min-h-[64px] items-center gap-3 rounded-sm bg-tiwi-red px-10 text-base font-black uppercase tracking-wide text-white transition hover:bg-red-700">
             Sign up now
             <span class="text-2xl">&rsaquo;</span>

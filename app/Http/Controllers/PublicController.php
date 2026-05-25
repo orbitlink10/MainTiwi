@@ -12,11 +12,11 @@ class PublicController extends Controller
     public function home()
     {
         return view('public.home', [
-            'modules' => Module::active()->latest()->take(7)->get(),
+            'modules' => Module::active()->latest()->take(5)->get(),
             'posts' => BlogPost::published()->latest('published_at')->take(3)->get(),
             'sections' => HomepageSection::active()->get()->keyBy('key'),
             'metaTitle' => 'Tiwi | Business Software Modules',
-            'metaDescription' => 'Tiwi markets and links business software modules for POS, rentals, schools, travel, hotspot billing, hospitals, and manufacturing.',
+            'metaDescription' => 'Tiwi markets and links business software modules for POS, property management, schools, itinerary building, and manufacturing.',
         ]);
     }
 
@@ -35,7 +35,7 @@ class PublicController extends Controller
         return view('public.modules.index', [
             'modules' => Module::active()->orderBy('name')->get(),
             'metaTitle' => 'Solutions and Modules | Tiwi',
-            'metaDescription' => 'Explore Tiwi software modules for retail, rental, school, itinerary, hotspot, hospital, and manufacturing operations.',
+            'metaDescription' => 'Explore Tiwi software modules for POS, property management, school, itinerary, and manufacturing operations.',
         ]);
     }
 
