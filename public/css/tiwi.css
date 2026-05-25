@@ -1271,6 +1271,10 @@ textarea{min-height:140px;resize:vertical}
     stroke-linecap:round;
     stroke-linejoin:round;
 }
+.tiwi-product-icon svg *{
+    fill:none;
+    stroke:currentColor;
+}
 .tiwi-product-copy{
     display:block;
     min-width:0;
