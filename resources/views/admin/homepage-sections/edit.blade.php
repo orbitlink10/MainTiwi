@@ -17,8 +17,8 @@
         <div class="field"><label>Section Label</label><input name="label" value="{{ old('label', $section->label) }}" required></div>
         <div class="field"><label>Sort Order</label><input name="sort_order" type="number" min="0" value="{{ old('sort_order', $section->sort_order) }}" required></div>
     </div>
-    <div class="field"><label>Hero Header Title / Section Heading</label><input name="heading" value="{{ old('heading', $section->heading) }}" required></div>
-    <div class="field"><label>Hero Header Description / Body</label><textarea name="body">{{ old('body', $section->body) }}</textarea></div>
+    <div class="field"><label>Section Heading</label><textarea name="heading" required>{{ old('heading', $section->heading) }}</textarea>@error('heading')<span class="error">{{ $message }}</span>@enderror</div>
+    <div class="field"><label>Section Body</label><textarea name="body">{{ old('body', $section->body) }}</textarea>@error('body')<span class="error">{{ $message }}</span>@enderror</div>
     @php
         $payload = $section->payload ?? [];
         $payloadLines = $payload['points'] ?? $payload['quotes'] ?? collect($payload)->map(fn ($value, $key) => is_array($value) ? null : "{$key}: {$value}")->filter()->values()->all();

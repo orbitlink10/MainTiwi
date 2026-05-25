@@ -11,6 +11,8 @@ class HomepageSectionController extends Controller
 {
     public function index()
     {
+        $this->ensureDefaultSectionsExist();
+
         return view('admin.homepage-sections.index', [
             'sections' => HomepageSection::orderBy('sort_order')->paginate(15),
         ]);
@@ -58,5 +60,49 @@ class HomepageSectionController extends Controller
                 return [Str::slug(trim($key), '_') => trim($value)];
             })->all()
             : ['points' => $items];
+    }
+
+    private function ensureDefaultSectionsExist(): void
+    {
+        foreach ($this->defaultSections() as $section) {
+            $homepageSection = HomepageSection::withTrashed()->firstOrNew(['key' => $section['key']]);
+
+            if (! $homepageSection->exists) {
+                $homepageSection->fill($section + ['image' => null, 'status' => true]);
+                $homepageSection->save();
+            } elseif ($homepageSection->trashed()) {
+                $homepageSection->restore();
+            }
+        }
+    }
+
+    private function defaultSections(): array
+    {
+        return [
+            [
+                'key' => 'hero',
+                'label' => 'Hero Section',
+                'heading' => "Your life's work,\npowered by our life's work",
+                'body' => "A unique and powerful software suite to transform the way you work.\nDesigned for businesses of all sizes, built by a company that values your privacy.",
+                'payload' => ['primary_cta' => 'Get started for free'],
+                'sort_order' => 1,
+            ],
+            [
+                'key' => 'why',
+                'label' => 'All-in-one Suite Section',
+                'heading' => 'One brand gateway for many operational tools',
+                'body' => 'Tiwi keeps the public website, SEO pages, product details, blog content, and contact leads in one Laravel dashboard.',
+                'payload' => ['eyebrow' => 'All-in-one suite', 'cta_label' => 'View pricing'],
+                'sort_order' => 2,
+            ],
+            [
+                'key' => 'testimonials',
+                'label' => 'Testimonial Quote',
+                'heading' => 'Built for practical teams',
+                'body' => 'Tiwi makes it easier for teams to understand the right software module and start the right conversation.',
+                'payload' => ['quotes' => ['The module pages make comparison simple.'], 'cite' => 'Tiwi implementation team'],
+                'sort_order' => 3,
+            ],
+        ];
     }
 }

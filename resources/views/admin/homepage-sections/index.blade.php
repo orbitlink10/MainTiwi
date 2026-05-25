@@ -13,7 +13,7 @@
     <table class="table">
         <thead><tr><th>Section</th><th>Heading</th><th>Status</th><th>Order</th><th>Action</th></tr></thead>
         <tbody>
-            @foreach($sections as $section)
+            @forelse($sections as $section)
                 <tr>
                     <td><strong>{{ $section->label }}</strong><small>{{ $section->key }}</small></td>
                     <td>{{ $section->heading }}</td>
@@ -21,7 +21,9 @@
                     <td>{{ $section->sort_order }}</td>
                     <td><a class="admin-action" href="{{ route('admin.homepage-sections.edit', $section) }}">Edit</a></td>
                 </tr>
-            @endforeach
+            @empty
+                <tr><td colspan="5">No homepage sections are available yet. Refresh this page to initialize the default editable sections.</td></tr>
+            @endforelse
         </tbody>
     </table>
     <div class="pagination">{{ $sections->links() }}</div>
