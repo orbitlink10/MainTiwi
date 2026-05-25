@@ -1225,3 +1225,104 @@ textarea{min-height:140px;resize:vertical}
     .z-number-grid div{border-right:0;border-bottom:1px solid rgba(255,255,255,.18)}
     .z-number-grid div:last-child{border-bottom:0}
 }
+
+/* =====================================================
+   ZOHO-STYLE TOP PRODUCTS
+   ===================================================== */
+.tiwi-products-hero{
+    padding:76px 0 84px;
+    border-bottom:1px solid #e5e7eb;
+}
+.tiwi-products-panel{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:60px 74px;
+    max-width:1040px;
+    margin:0 auto;
+    padding:64px 18px;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:0 0 12px 12px;
+    box-shadow:0 18px 42px rgba(15,23,42,.04);
+}
+.tiwi-product-card{
+    display:grid;
+    grid-template-columns:50px 1fr;
+    gap:22px;
+    align-items:start;
+    min-width:0;
+}
+.tiwi-product-card:hover strong{
+    color:#0067b8;
+}
+.tiwi-product-icon{
+    width:50px;
+    height:50px;
+    color:#2878c8;
+}
+.tiwi-product-icon.green{color:#00a65a}
+.tiwi-product-icon.amber{color:#f59e0b}
+.tiwi-product-icon svg{
+    width:50px;
+    height:50px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:3.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.tiwi-product-copy{
+    display:block;
+    min-width:0;
+}
+.tiwi-product-copy strong{
+    display:block;
+    color:#000;
+    font-size:31px;
+    font-weight:400;
+    line-height:1.1;
+    letter-spacing:0;
+    margin-bottom:10px;
+    transition:color .15s;
+}
+.tiwi-product-copy small{
+    display:block;
+    color:#111;
+    font-size:21px;
+    line-height:1.28;
+    font-weight:400;
+}
+
+@media(max-width:1020px){
+    .tiwi-products-panel{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:46px 48px;
+        padding:48px 28px;
+    }
+}
+@media(max-width:680px){
+    .tiwi-products-hero{
+        padding:34px 0 48px;
+    }
+    .tiwi-products-panel{
+        grid-template-columns:1fr;
+        gap:34px;
+        padding:34px 20px;
+        border-radius:8px;
+    }
+    .tiwi-product-card{
+        grid-template-columns:44px 1fr;
+        gap:18px;
+    }
+    .tiwi-product-icon,
+    .tiwi-product-icon svg{
+        width:44px;
+        height:44px;
+    }
+    .tiwi-product-copy strong{
+        font-size:26px;
+    }
+    .tiwi-product-copy small{
+        font-size:18px;
+    }
+}

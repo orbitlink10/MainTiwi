@@ -5,97 +5,76 @@
     $featuredProducts = [
         [
             'name' => 'POS',
-            'description' => 'Fast checkout, inventory, receipts, branches, and sales reporting for retail teams.',
-            'icon' => 'POS',
-            'accent' => 'text-blue-600',
+            'description' => 'Complete point-of-sale software for retail, inventory, branches, and sales reporting.',
+            'key' => 'pos',
+            'accent' => 'blue',
         ],
         [
             'name' => 'Property Management System',
-            'description' => 'Manage units, tenants, rent collection, service requests, and property records.',
-            'icon' => 'PMS',
-            'accent' => 'text-emerald-600',
+            'description' => 'Manage tenants, units, rent collection, service requests, and property records.',
+            'key' => 'property',
+            'accent' => 'green',
         ],
         [
             'name' => 'School Management System',
-            'description' => 'Admissions, learners, fees, classes, exams, and communication in one school platform.',
-            'icon' => 'SMS',
-            'accent' => 'text-amber-600',
+            'description' => 'Organize learners, fees, classes, exams, admissions, and school communication.',
+            'key' => 'school',
+            'accent' => 'blue',
         ],
         [
             'name' => 'Itinerary Builder',
-            'description' => 'Build polished travel plans, quotes, day-by-day routes, and shareable proposals.',
-            'icon' => 'TRP',
-            'accent' => 'text-indigo-600',
+            'description' => 'Build travel plans, quotes, day-by-day routes, and polished client proposals.',
+            'key' => 'itinerary',
+            'accent' => 'amber',
         ],
         [
             'name' => 'Manufacturing Management System',
             'description' => 'Plan production, materials, work orders, costing, and finished-goods movement.',
-            'icon' => 'MFG',
-            'accent' => 'text-red-600',
+            'key' => 'manufacturing',
+            'accent' => 'green',
+        ],
+        [
+            'name' => 'Tiwi One',
+            'description' => 'A unified business software suite for product discovery, access, and growth.',
+            'key' => 'suite',
+            'accent' => 'blue',
         ],
     ];
 
 @endphp
 
-<section class="zoho-line-bg border-b border-slate-200">
-    <div class="tw-container pb-24 pt-16 text-center lg:pb-28 lg:pt-20">
-        <p class="text-sm font-semibold tracking-[.2em] text-slate-600">Tiwi Business Software Suite</p>
-        <h1 class="mx-auto mt-8 max-w-5xl text-balance text-5xl font-black leading-[1.02] tracking-[-.055em] text-slate-950 md:text-7xl lg:text-[88px]">
-            Your business work, powered by Tiwi.
-        </h1>
-        <p class="mx-auto mt-7 max-w-3xl text-pretty text-xl leading-8 text-slate-700">
-            One polished software suite for POS, property management, school operations, itinerary building, and manufacturing management.
-        </p>
-        <div class="mt-9 flex justify-center">
-            <a href="{{ route('contact') }}" class="inline-flex min-h-[74px] items-center gap-3 rounded-sm bg-tiwi-red px-11 text-lg font-black uppercase tracking-wide text-white transition hover:bg-red-700">
-                Get started for free
-                <span class="text-3xl leading-none">&rsaquo;</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<section class="-mt-16 bg-white pb-16">
+<section class="tiwi-products-hero zoho-line-bg">
     <div class="tw-container">
-        <div class="grid gap-8 rounded-xl border border-slate-200 bg-white p-6 shadow-zoho xl:grid-cols-[560px_1fr] xl:p-6">
-            <aside class="relative flex min-h-[500px] flex-col items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-[#2d0b66] via-[#53158a] to-[#3b0764] px-8 py-12 text-center text-white">
-                <div class="absolute inset-0 opacity-25" style="background-image:linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px); background-size:52px 52px;"></div>
-                <div class="relative mb-9 grid h-24 w-24 place-items-center rounded-2xl border border-white/20 bg-[#1f063f] text-3xl font-black shadow-[0_0_45px_rgba(56,189,248,.45)] -rotate-6">Ti</div>
-                <h2 class="relative text-5xl font-medium leading-tight tracking-[-.045em] text-violet-100">
-                    Introducing<br>Tiwi One
-                </h2>
-                <p class="relative mt-7 max-w-md text-lg leading-8 text-white">
-                    A main website for product discovery, SEO pages, enquiries, and external system access.
-                </p>
-                <a href="{{ route('modules.index') }}" class="relative mt-10 inline-flex min-h-16 items-center gap-3 rounded-full border-2 border-violet-300 px-9 text-sm font-black uppercase tracking-[.14em] text-white transition hover:bg-white hover:text-violet-950">
-                    Explore Tiwi modules
-                    <span class="text-2xl">&rsaquo;</span>
+        <div class="tiwi-products-panel">
+            @foreach($featuredProducts as $product)
+                <a href="{{ route('modules.index') }}" class="tiwi-product-card">
+                    <span class="tiwi-product-icon {{ $product['accent'] }}" aria-hidden="true">
+                        @switch($product['key'])
+                            @case('pos')
+                                <svg viewBox="0 0 64 64"><path d="M18 14h28v22H18z"/><path d="M14 50h36l-4-14H18z"/><path d="M25 43h14"/><path d="M26 22h12"/></svg>
+                                @break
+                            @case('property')
+                                <svg viewBox="0 0 64 64"><path d="M12 31 32 15l20 16"/><path d="M18 29v22h28V29"/><path d="M27 51V38h10v13"/><path d="M24 28h4"/><path d="M36 28h4"/></svg>
+                                @break
+                            @case('school')
+                                <svg viewBox="0 0 64 64"><path d="M10 25 32 14l22 11-22 11z"/><path d="M18 31v12c4 5 24 5 28 0V31"/><path d="M54 25v18"/><path d="M50 45h8"/></svg>
+                                @break
+                            @case('itinerary')
+                                <svg viewBox="0 0 64 64"><path d="M18 12h28v40H18z"/><path d="M25 22h14"/><path d="M25 31h14"/><path d="M25 40h8"/><path d="m42 18 7-7"/><path d="m49 11 3 8"/></svg>
+                                @break
+                            @case('manufacturing')
+                                <svg viewBox="0 0 64 64"><path d="M12 47h40"/><path d="M16 47V29l10 7V29l10 7V22h12v25"/><path d="M40 22V12h8v10"/><path d="M21 42h4"/><path d="M33 42h4"/></svg>
+                                @break
+                            @default
+                                <svg viewBox="0 0 64 64"><path d="M16 16h16v16H16z"/><path d="M32 16h16v16H32z"/><path d="M16 32h16v16H16z"/><path d="M32 32h16v16H32z"/></svg>
+                        @endswitch
+                    </span>
+                    <span class="tiwi-product-copy">
+                        <strong>{{ $product['name'] }}</strong>
+                        <small>{{ $product['description'] }}</small>
+                    </span>
                 </a>
-            </aside>
-
-            <div class="px-2 py-5 md:px-5 xl:py-10">
-                <div class="flex flex-col gap-5 border-b border-slate-200 pb-8 md:flex-row md:items-center md:justify-between">
-                    <h2 class="text-base font-black uppercase tracking-[.1em] text-slate-950">Featured products</h2>
-                    <a href="{{ route('modules.index') }}" class="inline-flex items-center gap-3 text-sm font-black uppercase tracking-[.1em] text-tiwi-blue">
-                        Explore all products
-                        <span class="text-2xl leading-none">&rsaquo;</span>
-                    </a>
-                </div>
-
-                <div class="mt-12 grid gap-x-10 gap-y-12 md:grid-cols-2 2xl:grid-cols-3">
-                    @foreach($featuredProducts as $product)
-                        <article class="grid min-w-0 grid-cols-[54px_1fr] gap-5">
-                            <span class="{{ $product['accent'] }} grid h-12 w-12 place-items-center rounded-xl border-2 border-current bg-white text-[11px] font-black">
-                                {{ $product['icon'] }}
-                            </span>
-                            <span class="min-w-0">
-                                <strong class="block text-2xl font-medium leading-tight tracking-[-.02em] text-black">{{ $product['name'] }}</strong>
-                                <small class="mt-3 block text-[16px] leading-6 text-slate-950">{{ $product['description'] }}</small>
-                            </span>
-                        </article>
-                    @endforeach
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -134,7 +113,7 @@
         <div class="space-y-4 border-t border-slate-700 pt-6">
             @foreach($featuredProducts as $product)
                 <a href="{{ route('modules.index') }}" class="group grid min-h-[90px] grid-cols-[64px_1fr_24px] items-center gap-6 rounded-2xl border border-[#303945] bg-[#1f2630] px-5 py-4 transition hover:border-slate-500 hover:bg-[#252d38]">
-                    <span class="{{ $product['accent'] }} grid h-14 w-14 place-items-center rounded-xl bg-white/5 text-[11px] font-black ring-1 ring-white/10">{{ $product['icon'] }}</span>
+                    <span class="z-dark-icon {{ $product['accent'] }}" data-symbol="{{ Str::of($product['name'])->explode(' ')->map(fn ($word) => Str::substr($word, 0, 1))->take(3)->join('') }}"></span>
                     <span>
                         <strong class="block text-xl font-black leading-tight text-white">{{ $product['name'] }}</strong>
                         <small class="mt-1 block text-lg text-slate-400">{{ $product['description'] }}</small>
