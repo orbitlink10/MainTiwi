@@ -30,6 +30,7 @@ Route::post('/admin/logout', [LoginController::class, 'destroy'])->middleware('a
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
+    Route::get('homepage-content', [HomepageSectionController::class, 'index'])->name('homepage-content.index');
     Route::resource('modules', ModuleController::class)->except('show');
     Route::resource('pages', PageController::class)->except('show');
     Route::resource('blog-posts', BlogPostController::class)->except('show');

@@ -61,6 +61,9 @@ class PageController extends Controller
             'title' => ['required', 'string', 'max:180'],
             'content' => ['required', 'string'],
             'featured_image' => ['nullable', 'image', 'max:2048'],
+            'image_alt_text' => ['nullable', 'string', 'max:255'],
+            'heading' => ['nullable', 'string', 'max:255'],
+            'type' => ['required', 'string', 'max:80'],
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:500'],
         ]);

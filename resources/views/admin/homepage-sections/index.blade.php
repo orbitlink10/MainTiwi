@@ -1,20 +1,29 @@
 @extends('layouts.admin')
-@section('title', 'Settings')
+@section('title', 'Homepage Content')
 @section('content')
-<div class="section-head"><h2>Homepage content</h2></div>
-<table class="table">
-    <thead><tr><th>Section</th><th>Heading</th><th>Status</th><th>Order</th><th></th></tr></thead>
-    <tbody>
-        @foreach($sections as $section)
-            <tr>
-                <td>{{ $section->label }}</td>
-                <td>{{ $section->heading }}</td>
-                <td>{{ $section->status ? 'Active' : 'Inactive' }}</td>
-                <td>{{ $section->sort_order }}</td>
-                <td><a href="{{ route('admin.homepage-sections.edit', $section) }}">Edit</a></td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
-<div class="pagination">{{ $sections->links() }}</div>
+<section class="admin-card">
+    <div class="admin-card-head">
+        <div>
+            <h2>Homepage Content</h2>
+            <p>Edit text blocks, homepage messaging, imagery, and section order.</p>
+        </div>
+        <a class="button ghost" href="{{ route('admin.dashboard') }}">Back to Dashboard</a>
+    </div>
+
+    <table class="table">
+        <thead><tr><th>Section</th><th>Heading</th><th>Status</th><th>Order</th><th>Action</th></tr></thead>
+        <tbody>
+            @foreach($sections as $section)
+                <tr>
+                    <td><strong>{{ $section->label }}</strong><small>{{ $section->key }}</small></td>
+                    <td>{{ $section->heading }}</td>
+                    <td><span class="admin-status {{ $section->status ? 'active' : '' }}">{{ $section->status ? 'Active' : 'Inactive' }}</span></td>
+                    <td>{{ $section->sort_order }}</td>
+                    <td><a class="admin-action" href="{{ route('admin.homepage-sections.edit', $section) }}">Edit</a></td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="pagination">{{ $sections->links() }}</div>
+</section>
 @endsection

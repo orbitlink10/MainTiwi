@@ -13,9 +13,9 @@ class HomepageSectionSeeder extends Seeder
             [
                 'key' => 'hero',
                 'label' => 'Hero',
-                'heading' => 'Business software modules connected through one Tiwi hub',
-                'body' => 'Market, manage, and link to specialist systems for POS, property management, schools, travel itineraries, and manufacturing.',
-                'payload' => ['primary_cta' => 'Explore modules', 'secondary_cta' => 'Contact us'],
+                'heading' => "Your life's work,\npowered by our life's work",
+                'body' => "A unique and powerful software suite to transform the way you work.\nDesigned for businesses of all sizes, built by a company that values your privacy.",
+                'payload' => ['primary_cta' => 'Get started for free', 'secondary_cta' => 'Contact us'],
                 'sort_order' => 1,
             ],
             [

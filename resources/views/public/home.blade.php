@@ -47,6 +47,12 @@
         ],
     ];
 
+    $heroSection = $sections->get('hero');
+    $heroPayload = $heroSection?->payload ?? [];
+    $heroTitle = $heroSection?->heading ?: "Your life's work,\npowered by our life's work";
+    $heroBody = $heroSection?->body ?: "A unique and powerful software suite to transform the way you work.\nDesigned for businesses of all sizes, built by a company that values your privacy.";
+    $heroCta = $heroPayload['primary_cta'] ?? 'Get started for free';
+
 @endphp
 
 <style>
@@ -240,12 +246,9 @@
 
 <section class="z-hero">
     <div class="tw-container">
-        <h1>Your life's work,<br>powered by our life's work</h1>
-        <p class="z-lead">
-            A unique and powerful software suite to transform the way you work.<br>
-            Designed for businesses of all sizes, built by a company that values your privacy.
-        </p>
-        <a href="{{ route('contact') }}" class="z-red-cta">Get started for free <span>&rsaquo;</span></a>
+        <h1>{!! nl2br(e($heroTitle)) !!}</h1>
+        <p class="z-lead">{!! nl2br(e($heroBody)) !!}</p>
+        <a href="{{ route('contact') }}" class="z-red-cta">{{ $heroCta }} <span>&rsaquo;</span></a>
     </div>
 </section>
 
