@@ -49,6 +49,195 @@
 
 @endphp
 
+<style>
+    .home-products {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 0 0 76px;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .home-products-panel {
+        width: min(1032px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 0 0 8px;
+        background: #fff;
+    }
+
+    .home-products-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        min-height: 106px;
+        border-bottom: 1px solid #dfe3ea;
+        margin-bottom: 76px;
+    }
+
+    .home-products-head h2 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: .02em;
+        text-transform: uppercase;
+    }
+
+    .home-products-head a {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        color: #0067b8;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .home-products-head a span {
+        display: inline-block;
+        color: #0067b8;
+        font-size: 34px;
+        font-weight: 300;
+        line-height: .45;
+        transform: translateY(-1px);
+    }
+
+    .home-products-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: 76px;
+        row-gap: 62px;
+    }
+
+    .home-product {
+        display: grid;
+        grid-template-columns: 50px minmax(0, 1fr);
+        align-items: start;
+        gap: 18px;
+        color: #111;
+        text-decoration: none;
+        min-width: 0;
+    }
+
+    .home-product:hover .home-product-title {
+        color: #0067b8;
+    }
+
+    .home-product-icon {
+        width: 50px;
+        height: 50px;
+        color: #2b78c2;
+    }
+
+    .home-product-icon.green {
+        color: #00a65a;
+    }
+
+    .home-product-icon.amber {
+        color: #f5a400;
+    }
+
+    .home-product-icon svg {
+        display: block;
+        width: 50px;
+        height: 50px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 3.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .home-product-icon svg * {
+        fill: none;
+        stroke: currentColor;
+    }
+
+    .home-product-title {
+        display: block;
+        margin: 0 0 12px;
+        color: #000;
+        font-size: 32px;
+        font-weight: 400;
+        line-height: 1.1;
+        letter-spacing: 0;
+        transition: color .15s ease;
+    }
+
+    .home-product-description {
+        display: block;
+        color: #111;
+        font-size: 21px;
+        font-weight: 400;
+        line-height: 1.28;
+        letter-spacing: 0;
+    }
+
+    @media (max-width: 1080px) {
+        .home-products-panel {
+            width: min(820px, calc(100% - 40px));
+        }
+
+        .home-products-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: 58px;
+        }
+    }
+
+    @media (max-width: 680px) {
+        .home-products {
+            padding-bottom: 48px;
+        }
+
+        .home-products-panel {
+            width: calc(100% - 32px);
+        }
+
+        .home-products-head {
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+            min-height: 118px;
+            margin-bottom: 40px;
+        }
+
+        .home-products-head h2,
+        .home-products-head a {
+            font-size: 18px;
+        }
+
+        .home-products-grid {
+            grid-template-columns: 1fr;
+            row-gap: 36px;
+        }
+
+        .home-product {
+            grid-template-columns: 46px minmax(0, 1fr);
+            gap: 18px;
+        }
+
+        .home-product-icon,
+        .home-product-icon svg {
+            width: 46px;
+            height: 46px;
+        }
+
+        .home-product-title {
+            font-size: 28px;
+        }
+
+        .home-product-description {
+            font-size: 18px;
+        }
+    }
+</style>
+
 <section class="z-hero">
     <div class="tw-container">
         <h1>Your life's work,<br>powered by our life's work</h1>
@@ -60,17 +249,17 @@
     </div>
 </section>
 
-<section class="tiwi-products-hero">
-    <div class="tiwi-products-panel">
-        <div class="tiwi-products-head">
-            <h2>Featured Products</h2>
+<section class="home-products">
+    <div class="home-products-panel">
+        <div class="home-products-head">
+            <h2>Featured Apps</h2>
             <a href="{{ route('modules.index') }}">Explore all products <span>&rsaquo;</span></a>
         </div>
 
-        <div class="tiwi-products-grid">
+        <div class="home-products-grid">
             @foreach($featuredProducts as $product)
-                <a href="{{ route('modules.index') }}" class="tiwi-product-card">
-                    <span class="tiwi-product-icon {{ $product['accent'] }}" aria-hidden="true">
+                <a href="{{ route('modules.index') }}" class="home-product">
+                    <span class="home-product-icon {{ $product['accent'] }}" aria-hidden="true">
                         @switch($product['key'])
                             @case('pos')
                                 <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14h28v22H18z"/><path d="M14 50h36l-4-14H18z"/><path d="M25 43h14"/><path d="M26 22h12"/></svg>
@@ -91,9 +280,9 @@
                                 <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16h16v16H16z"/><path d="M32 16h16v16H32z"/><path d="M16 32h16v16H16z"/><path d="M32 32h16v16H32z"/></svg>
                         @endswitch
                     </span>
-                    <span class="tiwi-product-copy">
-                        <strong>{{ $product['display_name'] }}</strong>
-                        <small>{{ $product['description'] }}</small>
+                    <span>
+                        <strong class="home-product-title">{{ $product['display_name'] }}</strong>
+                        <small class="home-product-description">{{ $product['description'] }}</small>
                     </span>
                 </a>
             @endforeach
