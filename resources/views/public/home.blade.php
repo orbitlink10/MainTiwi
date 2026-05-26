@@ -131,6 +131,7 @@
         ],
     ]);
     $homepageFaqs = ($faqs ?? collect())->isNotEmpty() ? $faqs : $fallbackFaqs;
+    $homepageFaqColumns = collect($homepageFaqs)->values()->chunk(max(1, (int) ceil(collect($homepageFaqs)->count() / 2)));
 
 @endphp
 
@@ -281,6 +282,12 @@
 
     .home-faq-grid {
         align-items: start;
+    }
+
+    .home-faq-column {
+        display: grid;
+        gap: 12px;
+        align-content: start;
     }
 
     .home-faq-panel {
@@ -623,16 +630,20 @@
         </div>
 
         <div class="home-faq-grid mt-10 grid gap-3 lg:grid-cols-2">
-            @foreach($homepageFaqs as $faq)
-                <details class="home-faq-panel rounded-xl bg-white/10 text-white open:bg-white/10">
-                    <summary class="home-faq-summary flex min-h-[68px] cursor-pointer list-none items-center justify-between gap-5 px-5 py-4 text-base font-semibold leading-6 md:text-lg">
-                        <span>{{ is_array($faq) ? $faq['question'] : $faq->question }}</span>
-                        <span class="home-faq-plus shrink-0 text-3xl font-light leading-none transition-transform">+</span>
-                    </summary>
-                    <div class="border-t border-white/15 px-5 pb-6 pt-4 text-base leading-7 text-white/85 md:text-lg">
-                        {!! nl2br(e(is_array($faq) ? $faq['answer'] : $faq->answer)) !!}
-                    </div>
-                </details>
+            @foreach($homepageFaqColumns as $faqColumn)
+                <div class="home-faq-column">
+                    @foreach($faqColumn as $faq)
+                        <details class="home-faq-panel rounded-xl bg-white/10 text-white open:bg-white/10">
+                            <summary class="home-faq-summary flex min-h-[68px] cursor-pointer list-none items-center justify-between gap-5 px-5 py-4 text-base font-semibold leading-6 md:text-lg">
+                                <span>{{ is_array($faq) ? $faq['question'] : $faq->question }}</span>
+                                <span class="home-faq-plus shrink-0 text-3xl font-light leading-none transition-transform">+</span>
+                            </summary>
+                            <div class="border-t border-white/15 px-5 pb-6 pt-4 text-base leading-7 text-white/85 md:text-lg">
+                                {!! nl2br(e(is_array($faq) ? $faq['answer'] : $faq->answer)) !!}
+                            </div>
+                        </details>
+                    @endforeach
+                </div>
             @endforeach
         </div>
     </div>

@@ -38,12 +38,16 @@
         @endif
         @error('body')<span class="error">{{ $message }}</span>@enderror
     </div>
-    @php
-        $payload = $section->payload ?? [];
-        $payloadLines = $payload['points'] ?? $payload['quotes'] ?? collect($payload)->map(fn ($value, $key) => is_array($value) ? null : "{$key}: {$value}")->filter()->values()->all();
-    @endphp
-    <div class="field"><label>Extra Content Lines</label><textarea name="payload_text">{{ old('payload_text', implode(PHP_EOL, $payloadLines)) }}</textarea></div>
-    <div class="field"><label>Image</label><input name="image" type="file"></div>
+    @if($section->key === 'sliding_content')
+        <input type="hidden" name="payload_text" value="">
+    @else
+        @php
+            $payload = $section->payload ?? [];
+            $payloadLines = $payload['points'] ?? $payload['quotes'] ?? collect($payload)->map(fn ($value, $key) => is_array($value) ? null : "{$key}: {$value}")->filter()->values()->all();
+        @endphp
+        <div class="field"><label>Extra Content Lines</label><textarea name="payload_text">{{ old('payload_text', implode(PHP_EOL, $payloadLines)) }}</textarea></div>
+        <div class="field"><label>Image</label><input name="image" type="file"></div>
+    @endif
     <label class="admin-check"><input type="checkbox" name="status" value="1" @checked(old('status', $section->status))> Active</label>
     </div>
 
