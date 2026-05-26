@@ -156,10 +156,26 @@ class HomepageSectionController extends Controller
                 'body' => null,
                 'payload' => [
                     'menu_items' => [
-                        ['label' => 'Products', 'url' => '/solutions', 'children' => []],
-                        ['label' => 'Customers', 'url' => '/about-tiwi', 'children' => []],
-                        ['label' => 'Partners', 'url' => '/contact', 'children' => []],
-                        ['label' => 'Resources', 'url' => '/blog', 'children' => []],
+                        ['label' => 'Products', 'url' => '/solutions', 'children' => [
+                            ['label' => 'POS System', 'url' => '/solutions'],
+                            ['label' => 'Property Management', 'url' => '/solutions'],
+                            ['label' => 'School Management', 'url' => '/solutions'],
+                            ['label' => 'Manufacturing System', 'url' => '/solutions'],
+                        ]],
+                        ['label' => 'Customers', 'url' => '/about-tiwi', 'children' => [
+                            ['label' => 'Business Teams', 'url' => '/about-tiwi'],
+                            ['label' => 'Schools', 'url' => '/about-tiwi'],
+                            ['label' => 'Property Managers', 'url' => '/about-tiwi'],
+                        ]],
+                        ['label' => 'Partners', 'url' => '/contact', 'children' => [
+                            ['label' => 'Become a Partner', 'url' => '/contact'],
+                            ['label' => 'Request a Demo', 'url' => '/contact'],
+                        ]],
+                        ['label' => 'Resources', 'url' => '/blog', 'children' => [
+                            ['label' => 'Blog', 'url' => '/blog'],
+                            ['label' => 'Pricing', 'url' => '/pricing'],
+                            ['label' => 'Contact', 'url' => '/contact'],
+                        ]],
                     ],
                 ],
                 'sort_order' => 0,
