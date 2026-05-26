@@ -100,6 +100,10 @@
     $testimonialQuote = collect($testimonialQuotes)->first() ?: $testimonialSection?->body ?: 'Tiwi gives every business module a clear home, while each specialist system remains free to grow independently.';
     $testimonialCite = $testimonialPayload['cite'] ?? $testimonialSection?->label ?? 'Tiwi implementation team';
 
+    $slidingSection = $sections->get('sliding_content');
+    $slidingHeading = $slidingSection?->heading ?: 'Helpful context for choosing Tiwi';
+    $slidingBody = $slidingSection?->body ?: '<h2>Built for practical business software decisions</h2><p>Tiwi gives every product a clear place on the website, while each operational system can keep its own dedicated workflow, users, and dashboard.</p><h3>One homepage, many product paths</h3><p>Use this section for longer sales copy, product explanations, buyer guidance, or customer education. Visitors can read through the content without the section taking over the whole page.</p>';
+
     $fallbackFaqs = collect([
         [
             'question' => 'How do I choose the right Tiwi product?',
@@ -275,6 +279,101 @@
         color: #8fb0ff;
     }
 
+    .home-sliding-content {
+        background: #eeeaff;
+        color: #46445f;
+        padding: 72px 0;
+    }
+
+    .home-sliding-grid {
+        display: grid;
+        grid-template-columns: minmax(280px, 480px) minmax(0, 1fr);
+        gap: 72px;
+        align-items: start;
+    }
+
+    .home-sliding-title {
+        margin: 0;
+        color: #46445f;
+        font-size: 56px;
+        font-weight: 400;
+        line-height: 1.18;
+        letter-spacing: 0;
+    }
+
+    .home-sliding-panel {
+        position: relative;
+        max-height: 360px;
+        overflow-y: auto;
+        padding: 0 28px 42px 0;
+        scrollbar-color: #aaa5c8 transparent;
+        scrollbar-width: thin;
+    }
+
+    .home-sliding-panel::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .home-sliding-panel::-webkit-scrollbar-thumb {
+        background: #aaa5c8;
+        border-radius: 999px;
+    }
+
+    .home-sliding-panel::after {
+        content: "";
+        position: sticky;
+        bottom: -42px;
+        display: block;
+        height: 90px;
+        margin-top: -90px;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(238, 234, 255, 0), #eeeaff 76%);
+    }
+
+    .home-sliding-copy {
+        columns: 2 280px;
+        column-gap: 54px;
+    }
+
+    .home-sliding-copy h2,
+    .home-sliding-copy h3 {
+        break-after: avoid;
+        margin: 0 0 18px;
+        color: #5c5a75;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: 0;
+    }
+
+    .home-sliding-copy h3 {
+        font-size: 21px;
+    }
+
+    .home-sliding-copy p,
+    .home-sliding-copy li {
+        margin: 0 0 22px;
+        color: #747184;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1.55;
+        letter-spacing: 0;
+    }
+
+    .home-sliding-copy ul,
+    .home-sliding-copy ol {
+        margin: 0 0 22px 24px;
+        padding: 0;
+    }
+
+    .home-sliding-copy ul {
+        list-style: disc;
+    }
+
+    .home-sliding-copy ol {
+        list-style: decimal;
+    }
+
     @media (max-width: 1080px) {
         .home-products-panel {
             width: min(820px, calc(100% - 40px));
@@ -331,6 +430,32 @@
 
         .home-product-description {
             font-size: 16px;
+        }
+
+        .home-sliding-content {
+            padding: 54px 0;
+        }
+
+        .home-sliding-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        .home-sliding-title {
+            font-size: 42px;
+        }
+
+        .home-sliding-panel {
+            max-height: 430px;
+        }
+
+        .home-sliding-copy {
+            columns: 1;
+        }
+
+        .home-sliding-copy p,
+        .home-sliding-copy li {
+            font-size: 18px;
         }
     }
 </style>
@@ -535,4 +660,17 @@
         </a>
     </div>
 </section>
+
+@if(! $slidingSection || $slidingSection->status)
+<section class="home-sliding-content">
+    <div class="tw-container home-sliding-grid">
+        <h2 class="home-sliding-title">{{ $slidingHeading }}</h2>
+        <div class="home-sliding-panel" tabindex="0" aria-label="Scrollable homepage content">
+            <div class="home-sliding-copy">
+                {!! $slidingBody !!}
+            </div>
+        </div>
+    </div>
+</section>
+@endif
 @endsection
