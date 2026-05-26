@@ -61,16 +61,20 @@ class HomepageSectionController extends Controller
             'menu_labels.*' => ['nullable', 'string', 'max:80'],
             'menu_urls' => ['nullable', 'array'],
             'menu_urls.*' => ['nullable', 'string', 'max:255'],
+            'menu_dropdowns' => ['nullable', 'array'],
+            'menu_dropdowns.*' => ['nullable', 'string'],
         ]);
 
         $menuLabels = $request->input('menu_labels', []);
         $menuUrls = $request->input('menu_urls', []);
+        $menuDropdowns = $request->input('menu_dropdowns', []);
         $menuItems = collect($menuLabels)
-            ->map(function ($label, $index) use ($menuUrls) {
+            ->map(function ($label, $index) use ($menuUrls, $menuDropdowns) {
                 $label = trim((string) $label);
                 $url = trim((string) ($menuUrls[$index] ?? ''));
+                $children = $this->menuChildrenFromText($menuDropdowns[$index] ?? null);
 
-                return $label && $url ? ['label' => $label, 'url' => $url] : null;
+                return $label && $url ? ['label' => $label, 'url' => $url, 'children' => $children] : null;
             })
             ->filter()
             ->values()
@@ -92,6 +96,24 @@ class HomepageSectionController extends Controller
         $homepageSection->update($update);
 
         return redirect()->route('admin.homepage-sections.index')->with('status', 'Header navigation updated.');
+    }
+
+    private function menuChildrenFromText(?string $text): array
+    {
+        return collect(preg_split('/\r\n|\r|\n/', (string) $text))
+            ->map(fn ($item) => trim($item))
+            ->filter()
+            ->map(function ($item) {
+                [$label, $url] = array_pad(explode('|', $item, 2), 2, '');
+
+                return [
+                    'label' => trim($label),
+                    'url' => trim($url),
+                ];
+            })
+            ->filter(fn ($item) => $item['label'] && $item['url'])
+            ->values()
+            ->all();
     }
 
     private function payloadFromText(?string $text): array
@@ -134,10 +156,10 @@ class HomepageSectionController extends Controller
                 'body' => null,
                 'payload' => [
                     'menu_items' => [
-                        ['label' => 'Products', 'url' => '/solutions'],
-                        ['label' => 'Customers', 'url' => '/about-tiwi'],
-                        ['label' => 'Partners', 'url' => '/contact'],
-                        ['label' => 'Resources', 'url' => '/blog'],
+                        ['label' => 'Products', 'url' => '/solutions', 'children' => []],
+                        ['label' => 'Customers', 'url' => '/about-tiwi', 'children' => []],
+                        ['label' => 'Partners', 'url' => '/contact', 'children' => []],
+                        ['label' => 'Resources', 'url' => '/blog', 'children' => []],
                     ],
                 ],
                 'sort_order' => 0,

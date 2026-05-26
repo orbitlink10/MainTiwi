@@ -17,10 +17,10 @@ class HomepageSectionSeeder extends Seeder
                 'body' => null,
                 'payload' => [
                     'menu_items' => [
-                        ['label' => 'Products', 'url' => '/solutions'],
-                        ['label' => 'Customers', 'url' => '/about-tiwi'],
-                        ['label' => 'Partners', 'url' => '/contact'],
-                        ['label' => 'Resources', 'url' => '/blog'],
+                        ['label' => 'Products', 'url' => '/solutions', 'children' => []],
+                        ['label' => 'Customers', 'url' => '/about-tiwi', 'children' => []],
+                        ['label' => 'Partners', 'url' => '/contact', 'children' => []],
+                        ['label' => 'Resources', 'url' => '/blog', 'children' => []],
                     ],
                 ],
                 'sort_order' => 0,

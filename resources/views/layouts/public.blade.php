@@ -44,6 +44,16 @@
             }
         </style>
     @endif
+    <style>
+        .site-nav-item{position:relative}
+        .site-nav-trigger{display:inline-flex;align-items:center;gap:6px;min-height:44px}
+        .site-nav-chevron{width:16px;height:16px;transition:transform .15s ease}
+        .site-nav-item:hover .site-nav-chevron,.site-nav-item:focus-within .site-nav-chevron{transform:rotate(180deg)}
+        .site-nav-dropdown{position:absolute;left:50%;top:100%;z-index:60;min-width:230px;transform:translate(-50%,8px);border:1px solid #e2e8f0;border-radius:12px;background:#fff;padding:8px;box-shadow:0 18px 45px rgba(15,23,42,.12);opacity:0;visibility:hidden;transition:opacity .15s ease,transform .15s ease,visibility .15s ease}
+        .site-nav-item:hover .site-nav-dropdown,.site-nav-item:focus-within .site-nav-dropdown{opacity:1;visibility:visible;transform:translate(-50%,0)}
+        .site-nav-dropdown a{display:block;border-radius:8px;padding:10px 12px;color:#0f172a;font-size:15px;line-height:1.35;text-decoration:none;white-space:nowrap}
+        .site-nav-dropdown a:hover{background:#f8fafc;color:#ee0011}
+    </style>
 </head>
 <body class="font-sans">
     @php
@@ -90,7 +100,22 @@
 
             <nav class="hidden items-center gap-10 text-[17px] font-medium text-slate-950 lg:flex">
                 @foreach($headerMenuItems as $menuItem)
-                    <a class="transition hover:text-tiwi-red" href="{{ $menuUrl($menuItem['url'] ?? '#') }}">{{ $menuItem['label'] ?? 'Menu' }}</a>
+                    @php($children = collect($menuItem['children'] ?? [])->filter(fn ($child) => filled($child['label'] ?? null) && filled($child['url'] ?? null)))
+                    <div class="site-nav-item">
+                        <a class="site-nav-trigger transition hover:text-tiwi-red" href="{{ $menuUrl($menuItem['url'] ?? '#') }}">
+                            {{ $menuItem['label'] ?? 'Menu' }}
+                            @if($children->isNotEmpty())
+                                <svg class="site-nav-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg>
+                            @endif
+                        </a>
+                        @if($children->isNotEmpty())
+                            <div class="site-nav-dropdown">
+                                @foreach($children as $child)
+                                    <a href="{{ $menuUrl($child['url']) }}">{{ $child['label'] }}</a>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
                 @endforeach
             </nav>
 

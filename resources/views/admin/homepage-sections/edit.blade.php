@@ -39,9 +39,12 @@
                 <div id="menu-items" class="menu-items-editor">
                     @foreach($menuItems as $item)
                         <div class="menu-item-row">
-                            <input name="menu_labels[]" value="{{ $item['label'] ?? '' }}" placeholder="Menu label">
-                            <input name="menu_urls[]" value="{{ $item['url'] ?? '' }}" placeholder="/page-url or https://example.com">
-                            <button class="button ghost menu-remove" type="button">Remove</button>
+                            <div class="menu-item-main">
+                                <input name="menu_labels[]" value="{{ $item['label'] ?? '' }}" placeholder="Menu label">
+                                <input name="menu_urls[]" value="{{ $item['url'] ?? '' }}" placeholder="/page-url or https://example.com">
+                                <button class="button ghost menu-remove" type="button">Remove</button>
+                            </div>
+                            <textarea name="menu_dropdowns[]" placeholder="Dropdown links, one per line: Label | /url">{{ collect($item['children'] ?? [])->map(fn ($child) => ($child['label'] ?? '').' | '.($child['url'] ?? ''))->implode(PHP_EOL) }}</textarea>
                         </div>
                     @endforeach
                 </div>
@@ -85,8 +88,10 @@
 @if($section->key === 'header_navigation')
     <style>
         .menu-items-editor{display:grid;gap:10px;margin-bottom:12px}
-        .menu-item-row{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr) auto;gap:10px;align-items:center}
-        @media(max-width:900px){.menu-item-row{grid-template-columns:1fr}}
+        .menu-item-row{display:grid;gap:10px;padding:12px;border:1px solid #d8e4f2;border-radius:14px;background:#f8fbff}
+        .menu-item-main{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr) auto;gap:10px;align-items:center}
+        .menu-item-row textarea{min-height:82px}
+        @media(max-width:900px){.menu-item-main{grid-template-columns:1fr}}
     </style>
     <script>
         const menuItems = document.getElementById('menu-items');
@@ -107,7 +112,7 @@
         addMenuItem.addEventListener('click', () => {
             const row = document.createElement('div');
             row.className = 'menu-item-row';
-            row.innerHTML = '<input name="menu_labels[]" placeholder="Menu label"><input name="menu_urls[]" placeholder="/page-url or https://example.com"><button class="button ghost menu-remove" type="button">Remove</button>';
+            row.innerHTML = '<div class="menu-item-main"><input name="menu_labels[]" placeholder="Menu label"><input name="menu_urls[]" placeholder="/page-url or https://example.com"><button class="button ghost menu-remove" type="button">Remove</button></div><textarea name="menu_dropdowns[]" placeholder="Dropdown links, one per line: Label | /url"></textarea>';
             menuItems.appendChild(row);
             bindMenuRemove(row.querySelector('.menu-remove'));
         });
