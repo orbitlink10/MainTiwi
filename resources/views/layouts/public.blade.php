@@ -46,23 +46,43 @@
     @endif
 </head>
 <body class="font-sans">
+    @php
+        $headerSection = \App\Models\HomepageSection::active()->where('key', 'header_navigation')->first();
+        $headerMenuItems = $headerSection?->payload['menu_items'] ?? [
+            ['label' => 'Products', 'url' => route('modules.index')],
+            ['label' => 'Customers', 'url' => route('about')],
+            ['label' => 'Partners', 'url' => route('contact')],
+            ['label' => 'Resources', 'url' => route('blog.index')],
+        ];
+        $headerLogo = $headerSection?->image ? asset('storage/'.$headerSection->image) : null;
+        $menuUrl = function ($url) {
+            if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://') || str_starts_with($url, '#')) {
+                return $url;
+            }
+
+            return url($url);
+        };
+    @endphp
     <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div class="tw-container flex min-h-20 items-center justify-between gap-8">
             <a href="{{ route('home') }}" class="flex items-center gap-3" aria-label="Tiwi home">
-                <span class="relative block h-12 w-24">
-                    <span class="absolute left-0 top-2 h-9 w-9 rotate-[-9deg] rounded-md border-[5px] border-[#ee0011] bg-white"></span>
-                    <span class="absolute left-7 top-2 h-9 w-9 rotate-[14deg] rounded-md border-[5px] border-[#16a34a] bg-white"></span>
-                    <span class="absolute left-14 top-2 h-9 w-9 rotate-[-5deg] rounded-md border-[5px] border-[#2563eb] bg-white"></span>
-                    <span class="absolute left-[84px] top-2 h-9 w-9 rotate-[1deg] rounded-md border-[5px] border-[#f59e0b] bg-white"></span>
-                    <span class="absolute left-8 top-11 text-[10px] font-black uppercase tracking-[.45em] text-slate-950">Tiwi</span>
-                </span>
+                @if($headerLogo)
+                    <img src="{{ $headerLogo }}" alt="{{ $headerSection->heading ?: 'Tiwi' }}" class="block max-h-16 w-auto">
+                @else
+                    <span class="relative block h-12 w-24">
+                        <span class="absolute left-0 top-2 h-9 w-9 rotate-[-9deg] rounded-md border-[5px] border-[#ee0011] bg-white"></span>
+                        <span class="absolute left-7 top-2 h-9 w-9 rotate-[14deg] rounded-md border-[5px] border-[#16a34a] bg-white"></span>
+                        <span class="absolute left-14 top-2 h-9 w-9 rotate-[-5deg] rounded-md border-[5px] border-[#2563eb] bg-white"></span>
+                        <span class="absolute left-[84px] top-2 h-9 w-9 rotate-[1deg] rounded-md border-[5px] border-[#f59e0b] bg-white"></span>
+                        <span class="absolute left-8 top-11 text-[10px] font-black uppercase tracking-[.45em] text-slate-950">Tiwi</span>
+                    </span>
+                @endif
             </a>
 
             <nav class="hidden items-center gap-10 text-[17px] font-medium text-slate-950 lg:flex">
-                <a class="transition hover:text-tiwi-red" href="{{ route('modules.index') }}">Products</a>
-                <a class="transition hover:text-tiwi-red" href="{{ route('about') }}">Customers</a>
-                <a class="transition hover:text-tiwi-red" href="{{ route('contact') }}">Partners</a>
-                <a class="transition hover:text-tiwi-red" href="{{ route('blog.index') }}">Resources</a>
+                @foreach($headerMenuItems as $menuItem)
+                    <a class="transition hover:text-tiwi-red" href="{{ $menuUrl($menuItem['url'] ?? '#') }}">{{ $menuItem['label'] ?? 'Menu' }}</a>
+                @endforeach
             </nav>
 
             <div class="hidden items-center gap-6 text-[17px] font-medium lg:flex">

@@ -25,6 +25,10 @@ class HomepageSectionController extends Controller
 
     public function update(Request $request, HomepageSection $homepage_section)
     {
+        if ($homepage_section->key === 'header_navigation') {
+            return $this->updateHeaderNavigation($request, $homepage_section);
+        }
+
         $data = $request->validate([
             'label' => ['required', 'string', 'max:120'],
             'heading' => ['required', 'string', 'max:255'],
@@ -44,6 +48,50 @@ class HomepageSectionController extends Controller
         $homepage_section->update($data);
 
         return redirect()->route('admin.homepage-sections.index')->with('status', 'Homepage section updated.');
+    }
+
+    private function updateHeaderNavigation(Request $request, HomepageSection $homepageSection)
+    {
+        $data = $request->validate([
+            'label' => ['required', 'string', 'max:120'],
+            'heading' => ['required', 'string', 'max:255'],
+            'sort_order' => ['required', 'integer', 'min:0'],
+            'logo' => ['nullable', 'image', 'max:2048'],
+            'menu_labels' => ['nullable', 'array'],
+            'menu_labels.*' => ['nullable', 'string', 'max:80'],
+            'menu_urls' => ['nullable', 'array'],
+            'menu_urls.*' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $menuLabels = $request->input('menu_labels', []);
+        $menuUrls = $request->input('menu_urls', []);
+        $menuItems = collect($menuLabels)
+            ->map(function ($label, $index) use ($menuUrls) {
+                $label = trim((string) $label);
+                $url = trim((string) ($menuUrls[$index] ?? ''));
+
+                return $label && $url ? ['label' => $label, 'url' => $url] : null;
+            })
+            ->filter()
+            ->values()
+            ->all();
+
+        $update = [
+            'label' => $data['label'],
+            'heading' => $data['heading'],
+            'body' => null,
+            'payload' => ['menu_items' => $menuItems],
+            'sort_order' => $data['sort_order'],
+            'status' => $request->boolean('status'),
+        ];
+
+        if ($request->hasFile('logo')) {
+            $update['image'] = $request->file('logo')->store('homepage', 'public');
+        }
+
+        $homepageSection->update($update);
+
+        return redirect()->route('admin.homepage-sections.index')->with('status', 'Header navigation updated.');
     }
 
     private function payloadFromText(?string $text): array
@@ -79,6 +127,21 @@ class HomepageSectionController extends Controller
     private function defaultSections(): array
     {
         return [
+            [
+                'key' => 'header_navigation',
+                'label' => 'Header Navigation',
+                'heading' => 'Logo and Navigation Menus',
+                'body' => null,
+                'payload' => [
+                    'menu_items' => [
+                        ['label' => 'Products', 'url' => '/solutions'],
+                        ['label' => 'Customers', 'url' => '/about-tiwi'],
+                        ['label' => 'Partners', 'url' => '/contact'],
+                        ['label' => 'Resources', 'url' => '/blog'],
+                    ],
+                ],
+                'sort_order' => 0,
+            ],
             [
                 'key' => 'hero',
                 'label' => 'Hero Section',

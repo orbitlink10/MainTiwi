@@ -12,37 +12,107 @@
         <a class="button ghost" href="{{ route('admin.homepage-sections.index') }}">Back to Homepage Content</a>
     </div>
 
-    <div class="admin-form-section">
-    <div class="form-grid">
-        <div class="field"><label>Section Label</label><input name="label" value="{{ old('label', $section->label) }}" required></div>
-        <div class="field"><label>Sort Order</label><input name="sort_order" type="number" min="0" value="{{ old('sort_order', $section->sort_order) }}" required></div>
-    </div>
-    <div class="field"><label>Section Heading</label><textarea name="heading" required>{{ old('heading', $section->heading) }}</textarea>@error('heading')<span class="error">{{ $message }}</span>@enderror</div>
-    <div class="field">
-        <label>Section Body</label>
-        @if($section->key === 'sliding_content')
-            <p style="margin:0 0 12px;color:#607a9f;line-height:1.55">Use H2/H3 headings and paragraphs, or paste plain text with blank lines. Numbered sections become headings and short lines after a colon become bullet lists.</p>
-            <textarea class="admin-editor rich-homepage-editor" name="body">{{ old('body', $section->body) }}</textarea>
-        @else
-            <textarea name="body">{{ old('body', $section->body) }}</textarea>
-        @endif
-        @error('body')<span class="error">{{ $message }}</span>@enderror
-    </div>
-    @if($section->key === 'sliding_content')
-        <input type="hidden" name="payload_text" value="">
-    @else
+    @if($section->key === 'header_navigation')
         @php
-            $payload = $section->payload ?? [];
-            $payloadLines = $payload['points'] ?? $payload['quotes'] ?? collect($payload)->map(fn ($value, $key) => is_array($value) ? null : "{$key}: {$value}")->filter()->values()->all();
+            $menuItems = old('menu_labels')
+                ? collect(old('menu_labels'))->map(fn ($label, $index) => ['label' => $label, 'url' => old('menu_urls')[$index] ?? ''])->all()
+                : ($section->payload['menu_items'] ?? []);
+            $menuItems = count($menuItems) ? $menuItems : [['label' => '', 'url' => '']];
         @endphp
-        <div class="field"><label>Extra Content Lines</label><textarea name="payload_text">{{ old('payload_text', implode(PHP_EOL, $payloadLines)) }}</textarea></div>
-        <div class="field"><label>Image</label><input name="image" type="file"></div>
+
+        <div class="admin-form-section">
+            <div class="form-grid">
+                <div class="field"><label>Section Label</label><input name="label" value="{{ old('label', $section->label) }}" required></div>
+                <div class="field"><label>Sort Order</label><input name="sort_order" type="number" min="0" value="{{ old('sort_order', $section->sort_order) }}" required></div>
+            </div>
+            <div class="field"><label>Section Heading</label><input name="heading" value="{{ old('heading', $section->heading) }}" required>@error('heading')<span class="error">{{ $message }}</span>@enderror</div>
+            <div class="field">
+                <label>Logo</label>
+                @if($section->image)
+                    <img src="{{ asset('storage/'.$section->image) }}" alt="Current logo" style="max-width:180px;max-height:80px;margin-bottom:12px;border:1px solid #d8e4f2;border-radius:12px;padding:10px;background:#fff">
+                @endif
+                <input name="logo" type="file" accept="image/*">
+                @error('logo')<span class="error">{{ $message }}</span>@enderror
+            </div>
+            <div class="field">
+                <label>Navigation Menus</label>
+                <div id="menu-items" class="menu-items-editor">
+                    @foreach($menuItems as $item)
+                        <div class="menu-item-row">
+                            <input name="menu_labels[]" value="{{ $item['label'] ?? '' }}" placeholder="Menu label">
+                            <input name="menu_urls[]" value="{{ $item['url'] ?? '' }}" placeholder="/page-url or https://example.com">
+                            <button class="button ghost menu-remove" type="button">Remove</button>
+                        </div>
+                    @endforeach
+                </div>
+                <button class="button secondary" id="add-menu-item" type="button">Add menu</button>
+            </div>
+            <label class="admin-check"><input type="checkbox" name="status" value="1" @checked(old('status', $section->status))> Active</label>
+        </div>
+    @else
+        <div class="admin-form-section">
+        <div class="form-grid">
+            <div class="field"><label>Section Label</label><input name="label" value="{{ old('label', $section->label) }}" required></div>
+            <div class="field"><label>Sort Order</label><input name="sort_order" type="number" min="0" value="{{ old('sort_order', $section->sort_order) }}" required></div>
+        </div>
+        <div class="field"><label>Section Heading</label><textarea name="heading" required>{{ old('heading', $section->heading) }}</textarea>@error('heading')<span class="error">{{ $message }}</span>@enderror</div>
+        <div class="field">
+            <label>Section Body</label>
+            @if($section->key === 'sliding_content')
+                <p style="margin:0 0 12px;color:#607a9f;line-height:1.55">Use H2/H3 headings and paragraphs, or paste plain text with blank lines. Numbered sections become headings and short lines after a colon become bullet lists.</p>
+                <textarea class="admin-editor rich-homepage-editor" name="body">{{ old('body', $section->body) }}</textarea>
+            @else
+                <textarea name="body">{{ old('body', $section->body) }}</textarea>
+            @endif
+            @error('body')<span class="error">{{ $message }}</span>@enderror
+        </div>
+        @if($section->key === 'sliding_content')
+            <input type="hidden" name="payload_text" value="">
+        @else
+            @php
+                $payload = $section->payload ?? [];
+                $payloadLines = $payload['points'] ?? $payload['quotes'] ?? collect($payload)->map(fn ($value, $key) => is_array($value) ? null : "{$key}: {$value}")->filter()->values()->all();
+            @endphp
+            <div class="field"><label>Extra Content Lines</label><textarea name="payload_text">{{ old('payload_text', implode(PHP_EOL, $payloadLines)) }}</textarea></div>
+            <div class="field"><label>Image</label><input name="image" type="file"></div>
+        @endif
+        <label class="admin-check"><input type="checkbox" name="status" value="1" @checked(old('status', $section->status))> Active</label>
+        </div>
     @endif
-    <label class="admin-check"><input type="checkbox" name="status" value="1" @checked(old('status', $section->status))> Active</label>
-    </div>
 
     <div class="actions"><button class="button" type="submit">Save section</button><a class="button ghost" href="{{ route('admin.homepage-sections.index') }}">Cancel</a></div>
 </form>
+@if($section->key === 'header_navigation')
+    <style>
+        .menu-items-editor{display:grid;gap:10px;margin-bottom:12px}
+        .menu-item-row{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr) auto;gap:10px;align-items:center}
+        @media(max-width:900px){.menu-item-row{grid-template-columns:1fr}}
+    </style>
+    <script>
+        const menuItems = document.getElementById('menu-items');
+        const addMenuItem = document.getElementById('add-menu-item');
+
+        function bindMenuRemove(button) {
+            button.addEventListener('click', () => {
+                const rows = menuItems.querySelectorAll('.menu-item-row');
+                if (rows.length > 1) {
+                    button.closest('.menu-item-row').remove();
+                } else {
+                    button.closest('.menu-item-row').querySelectorAll('input').forEach((input) => input.value = '');
+                }
+            });
+        }
+
+        document.querySelectorAll('.menu-remove').forEach(bindMenuRemove);
+        addMenuItem.addEventListener('click', () => {
+            const row = document.createElement('div');
+            row.className = 'menu-item-row';
+            row.innerHTML = '<input name="menu_labels[]" placeholder="Menu label"><input name="menu_urls[]" placeholder="/page-url or https://example.com"><button class="button ghost menu-remove" type="button">Remove</button>';
+            menuItems.appendChild(row);
+            bindMenuRemove(row.querySelector('.menu-remove'));
+        });
+    </script>
+@endif
 @if($section->key === 'sliding_content')
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>

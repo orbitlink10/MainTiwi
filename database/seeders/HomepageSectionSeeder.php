@@ -11,6 +11,21 @@ class HomepageSectionSeeder extends Seeder
     {
         $sections = [
             [
+                'key' => 'header_navigation',
+                'label' => 'Header Navigation',
+                'heading' => 'Logo and Navigation Menus',
+                'body' => null,
+                'payload' => [
+                    'menu_items' => [
+                        ['label' => 'Products', 'url' => '/solutions'],
+                        ['label' => 'Customers', 'url' => '/about-tiwi'],
+                        ['label' => 'Partners', 'url' => '/contact'],
+                        ['label' => 'Resources', 'url' => '/blog'],
+                    ],
+                ],
+                'sort_order' => 0,
+            ],
+            [
                 'key' => 'hero',
                 'label' => 'Hero',
                 'heading' => "Your life's work,\npowered by our life's work",
