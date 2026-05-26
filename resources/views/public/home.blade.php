@@ -279,6 +279,14 @@
         color: #8fb0ff;
     }
 
+    .home-faq-grid {
+        align-items: start;
+    }
+
+    .home-faq-panel {
+        align-self: start;
+    }
+
     .home-sliding-content {
         background: #eeeaff;
         color: #46445f;
@@ -605,23 +613,23 @@
     </div>
 </section>
 
-<section class="home-faq-section py-16 text-white md:py-20">
+<section class="home-faq-section py-12 text-white md:py-16">
     <div class="tw-container">
         <div class="max-w-5xl">
-            <h2 class="text-5xl font-light leading-none tracking-normal md:text-6xl">FAQs</h2>
-            <p class="mt-8 text-xl leading-9 text-white md:text-2xl">
+            <h2 class="text-4xl font-light leading-none tracking-normal md:text-5xl">FAQs</h2>
+            <p class="mt-6 text-lg leading-8 text-white md:text-xl">
                 Find answers to common questions about Tiwi products, dashboard content, external product links, and getting started.
             </p>
         </div>
 
-        <div class="mt-14 grid gap-3 lg:grid-cols-2">
+        <div class="home-faq-grid mt-10 grid gap-3 lg:grid-cols-2">
             @foreach($homepageFaqs as $faq)
                 <details class="home-faq-panel rounded-xl bg-white/10 text-white open:bg-white/10">
-                    <summary class="home-faq-summary flex min-h-[84px] cursor-pointer list-none items-center justify-between gap-5 px-6 py-5 text-lg font-semibold leading-7 md:text-xl">
+                    <summary class="home-faq-summary flex min-h-[68px] cursor-pointer list-none items-center justify-between gap-5 px-5 py-4 text-base font-semibold leading-6 md:text-lg">
                         <span>{{ is_array($faq) ? $faq['question'] : $faq->question }}</span>
-                        <span class="home-faq-plus shrink-0 text-4xl font-light leading-none transition-transform">+</span>
+                        <span class="home-faq-plus shrink-0 text-3xl font-light leading-none transition-transform">+</span>
                     </summary>
-                    <div class="border-t border-white/15 px-6 pb-7 pt-5 text-lg leading-8 text-white/85">
+                    <div class="border-t border-white/15 px-5 pb-6 pt-4 text-base leading-7 text-white/85 md:text-lg">
                         {!! nl2br(e(is_array($faq) ? $faq['answer'] : $faq->answer)) !!}
                     </div>
                 </details>
@@ -629,6 +637,22 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.querySelectorAll('.home-faq-panel').forEach((panel) => {
+        panel.addEventListener('toggle', () => {
+            if (!panel.open) {
+                return;
+            }
+
+            document.querySelectorAll('.home-faq-panel[open]').forEach((openPanel) => {
+                if (openPanel !== panel) {
+                    openPanel.open = false;
+                }
+            });
+        });
+    });
+</script>
 
 @if($posts->isNotEmpty())
 <section class="bg-white py-16">

@@ -22,7 +22,17 @@
         <label>Section Body</label>
         @if($section->key === 'sliding_content')
             <p style="margin:0 0 12px;color:#607a9f;line-height:1.55">Use H2/H3 headings and paragraphs. This content appears in the sliding panel after the homepage call-to-action section.</p>
-            <textarea class="admin-editor rich-homepage-editor" name="body">{{ old('body', $section->body) }}</textarea>
+            <input type="hidden" name="body" id="sliding-content-body" value="{{ old('body', $section->body) }}">
+            <div class="sliding-editor-toolbar" aria-label="Sliding content formatting">
+                <button type="button" data-command="formatBlock" data-value="h2">H2</button>
+                <button type="button" data-command="formatBlock" data-value="h3">H3</button>
+                <button type="button" data-command="formatBlock" data-value="p">P</button>
+                <button type="button" data-command="bold">B</button>
+                <button type="button" data-command="insertUnorderedList">List</button>
+                <button type="button" data-command="insertOrderedList">1. List</button>
+                <button type="button" data-command="createLink">Link</button>
+            </div>
+            <div id="sliding-content-editor" class="sliding-content-editor" contenteditable="true">{!! old('body', $section->body) !!}</div>
         @else
             <textarea name="body">{{ old('body', $section->body) }}</textarea>
         @endif
@@ -40,18 +50,50 @@
     <div class="actions"><button class="button" type="submit">Save section</button><a class="button ghost" href="{{ route('admin.homepage-sections.index') }}">Cancel</a></div>
 </form>
 @if($section->key === 'sliding_content')
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <style>
+        .sliding-editor-toolbar{display:flex;flex-wrap:wrap;gap:8px;padding:10px;border:1px solid #cddcf0;border-bottom:0;border-radius:12px 12px 0 0;background:#f7faff}
+        .sliding-editor-toolbar button{min-height:34px;padding:0 12px;border:1px solid #c7d7ee;border-radius:8px;background:#fff;color:#27456d;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+        .sliding-editor-toolbar button:hover{border-color:#2d7ff0;color:#0f54b8}
+        .sliding-content-editor{min-height:420px;max-height:620px;overflow:auto;padding:22px;border:1px solid #cddcf0;border-radius:0 0 12px 12px;background:#fff;color:#132744;font-size:18px;line-height:1.65}
+        .sliding-content-editor:focus{outline:0;border-color:#2d7ff0;box-shadow:0 0 0 3px rgba(45,127,240,.12)}
+        .sliding-content-editor h2{margin:0 0 16px;font-size:32px;line-height:1.25;font-weight:900;color:#061936}
+        .sliding-content-editor h3{margin:22px 0 12px;font-size:24px;line-height:1.3;font-weight:900;color:#061936}
+        .sliding-content-editor p{margin:0 0 18px}
+        .sliding-content-editor ul,.sliding-content-editor ol{margin:0 0 18px 24px;padding:0}
+        .sliding-content-editor ul{list-style:disc}
+        .sliding-content-editor ol{list-style:decimal}
+    </style>
     <script>
-        tinymce.init({
-            selector: '.rich-homepage-editor',
-            height: 420,
-            menubar: 'file edit view insert format tools',
-            plugins: 'lists link code',
-            toolbar: 'undo redo | blocks | bold italic | bullist numlist | link | code',
-            block_formats: 'Paragraph=p; Heading 2=h2; Heading 3=h3',
-            branding: true,
-            promotion: true
+        const slidingEditor = document.getElementById('sliding-content-editor');
+        const slidingInput = document.getElementById('sliding-content-body');
+
+        function syncSlidingContent() {
+            slidingInput.value = slidingEditor.innerHTML.trim();
+        }
+
+        document.querySelectorAll('.sliding-editor-toolbar button').forEach((button) => {
+            button.addEventListener('click', () => {
+                slidingEditor.focus();
+                const command = button.dataset.command;
+                let value = button.dataset.value || null;
+
+                if (command === 'createLink') {
+                    value = prompt('Enter the link URL');
+                    if (!value) {
+                        return;
+                    }
+                }
+
+                document.execCommand(command, false, value);
+                syncSlidingContent();
+            });
         });
+
+        slidingEditor.addEventListener('input', syncSlidingContent);
+        slidingEditor.addEventListener('paste', () => {
+            setTimeout(syncSlidingContent, 0);
+        });
+        slidingEditor.closest('form').addEventListener('submit', syncSlidingContent);
     </script>
 @endif
 @endsection
