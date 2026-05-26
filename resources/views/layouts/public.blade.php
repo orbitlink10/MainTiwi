@@ -188,6 +188,7 @@
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
+                includedLanguages: 'sw,luo,so,om',
                 autoDisplay: false
             }, 'google_translate_element');
         }
