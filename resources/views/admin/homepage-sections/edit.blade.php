@@ -58,11 +58,13 @@
         .sliding-editor-toolbar{display:flex;flex-wrap:wrap;gap:8px;padding:10px;border:1px solid #cddcf0;border-bottom:0;border-radius:12px 12px 0 0;background:#f7faff}
         .sliding-editor-toolbar button{min-height:34px;padding:0 12px;border:1px solid #c7d7ee;border-radius:8px;background:#fff;color:#27456d;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
         .sliding-editor-toolbar button:hover{border-color:#2d7ff0;color:#0f54b8}
-        .sliding-content-editor{min-height:420px;max-height:620px;overflow:auto;padding:22px;border:1px solid #cddcf0;border-radius:0 0 12px 12px;background:#fff;color:#132744;font-size:18px;line-height:1.65}
+        .sliding-content-editor{min-height:420px;max-height:620px;overflow:auto;padding:22px;border:1px solid #cddcf0;border-radius:0 0 12px 12px;background:#fff;color:#132744;font-size:16px;line-height:1.65}
         .sliding-content-editor:focus{outline:0;border-color:#2d7ff0;box-shadow:0 0 0 3px rgba(45,127,240,.12)}
-        .sliding-content-editor h2{margin:0 0 16px;font-size:32px;line-height:1.25;font-weight:900;color:#061936}
-        .sliding-content-editor h3{margin:22px 0 12px;font-size:24px;line-height:1.3;font-weight:900;color:#061936}
+        .sliding-content-editor h1{margin:0 0 16px;font-size:28px;line-height:1.25;font-weight:800;color:#061936}
+        .sliding-content-editor h2{margin:0 0 16px;font-size:24px;line-height:1.25;font-weight:800;color:#061936}
+        .sliding-content-editor h3{margin:22px 0 12px;font-size:20px;line-height:1.3;font-weight:800;color:#061936}
         .sliding-content-editor p{margin:0 0 18px}
+        .sliding-content-editor strong,.sliding-content-editor b{font-weight:700}
         .sliding-content-editor ul,.sliding-content-editor ol{margin:0 0 18px 24px;padding:0}
         .sliding-content-editor ul{list-style:disc}
         .sliding-content-editor ol{list-style:decimal}
@@ -94,8 +96,21 @@
         });
 
         slidingEditor.addEventListener('input', syncSlidingContent);
-        slidingEditor.addEventListener('paste', () => {
-            setTimeout(syncSlidingContent, 0);
+        slidingEditor.addEventListener('paste', (event) => {
+            event.preventDefault();
+
+            const text = (event.clipboardData || window.clipboardData).getData('text/plain').trim();
+            if (!text) {
+                return;
+            }
+
+            const html = text
+                .split(/\n{2,}/)
+                .map((block) => `<p>${block.replace(/\n/g, '<br>')}</p>`)
+                .join('');
+
+            document.execCommand('insertHTML', false, html);
+            syncSlidingContent();
         });
         slidingEditor.closest('form').addEventListener('submit', syncSlidingContent);
     </script>

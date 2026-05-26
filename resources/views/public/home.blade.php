@@ -353,23 +353,23 @@
     .home-sliding-copy h2,
     .home-sliding-copy h3 {
         break-after: avoid;
-        margin: 0 0 18px;
+        margin: 0 0 14px;
         color: #5c5a75;
-        font-size: 24px;
+        font-size: 22px;
         font-weight: 600;
         line-height: 1.25;
         letter-spacing: 0;
     }
 
     .home-sliding-copy h3 {
-        font-size: 21px;
+        font-size: 19px;
     }
 
     .home-sliding-copy p,
     .home-sliding-copy li {
-        margin: 0 0 22px;
+        margin: 0 0 18px;
         color: #747184;
-        font-size: 20px;
+        font-size: 17px;
         font-weight: 400;
         line-height: 1.55;
         letter-spacing: 0;
