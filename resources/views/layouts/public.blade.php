@@ -53,6 +53,13 @@
         .site-nav-item:hover .site-nav-dropdown,.site-nav-item:focus-within .site-nav-dropdown{opacity:1;visibility:visible;transform:translate(-50%,0)}
         .site-nav-dropdown a{display:block;border-radius:8px;padding:10px 12px;color:#0f172a;font-size:15px;line-height:1.35;text-decoration:none;white-space:nowrap}
         .site-nav-dropdown a:hover{background:#f8fafc;color:#ee0011}
+        .site-language{display:flex;align-items:center;gap:8px;color:#0f172a;font-size:15px;font-weight:600}
+        .site-language-label{white-space:nowrap}
+        .site-language .goog-te-gadget{font-family:Inter,ui-sans-serif,system-ui,sans-serif!important;font-size:0!important;color:transparent!important}
+        .site-language .goog-te-combo{min-height:42px;max-width:160px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;color:#0f172a;padding:0 10px;font:inherit;font-size:14px}
+        .site-language .goog-logo-link,.site-language .goog-te-gadget span{display:none!important}
+        body > .skiptranslate{display:none!important}
+        body{top:0!important}
     </style>
 </head>
 <body class="font-sans">
@@ -120,6 +127,10 @@
             </nav>
 
             <div class="hidden items-center gap-6 text-[17px] font-medium lg:flex">
+                <div class="site-language">
+                    <span class="site-language-label">Language</span>
+                    <div id="google_translate_element"></div>
+                </div>
                 <a class="text-slate-950 transition hover:text-tiwi-red" href="{{ route('login') }}">Sign In</a>
                 <a class="rounded border border-tiwi-red px-6 py-3 text-tiwi-red transition hover:bg-tiwi-red hover:text-white" href="{{ route('contact') }}">Sign Up</a>
             </div>
@@ -173,5 +184,14 @@
             </div>
         </div>
     </footer>
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
