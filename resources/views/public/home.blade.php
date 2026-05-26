@@ -355,21 +355,21 @@
         break-after: avoid;
         margin: 0 0 14px;
         color: #5c5a75;
-        font-size: 22px;
+        font-size: 19px;
         font-weight: 600;
         line-height: 1.25;
         letter-spacing: 0;
     }
 
     .home-sliding-copy h3 {
-        font-size: 19px;
+        font-size: 17px;
     }
 
     .home-sliding-copy p,
     .home-sliding-copy li {
         margin: 0 0 18px;
         color: #747184;
-        font-size: 17px;
+        font-size: 15px;
         font-weight: 400;
         line-height: 1.55;
         letter-spacing: 0;
