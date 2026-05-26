@@ -54,7 +54,9 @@
             ['label' => 'Partners', 'url' => route('contact')],
             ['label' => 'Resources', 'url' => route('blog.index')],
         ];
-        $headerLogo = $headerSection?->image ? asset('storage/'.$headerSection->image) : null;
+        $headerLogo = $headerSection?->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($headerSection->image)
+            ? asset('storage/'.$headerSection->image)
+            : null;
         $menuUrl = function ($url) {
             if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://') || str_starts_with($url, '#')) {
                 return $url;
