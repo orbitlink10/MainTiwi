@@ -10,9 +10,15 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PublicController;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicController::class, 'home'])->name('home');
+Route::get('/media/{path}', function (string $path) {
+    abort_unless(Storage::disk('public')->exists($path), 404);
+
+    return response()->file(Storage::disk('public')->path($path));
+})->where('path', '.*')->name('media.show');
 Route::get('/about-tiwi', [PublicController::class, 'about'])->name('about');
 Route::get('/solutions', [PublicController::class, 'modules'])->name('modules.index');
 Route::get('/solutions/{module:slug}', [PublicController::class, 'module'])->name('modules.show');

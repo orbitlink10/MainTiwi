@@ -55,7 +55,7 @@
             ['label' => 'Resources', 'url' => route('blog.index')],
         ];
         $headerLogo = $headerSection?->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($headerSection->image)
-            ? asset('storage/'.$headerSection->image)
+            ? route('media.show', ['path' => $headerSection->image])
             : null;
         $menuUrl = function ($url) {
             if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://') || str_starts_with($url, '#')) {
@@ -69,7 +69,14 @@
         <div class="tw-container flex min-h-20 items-center justify-between gap-8">
             <a href="{{ route('home') }}" class="flex items-center gap-3" aria-label="Tiwi home">
                 @if($headerLogo)
-                    <img src="{{ $headerLogo }}" alt="{{ $headerSection->heading ?: 'Tiwi' }}" class="block max-h-16 w-auto">
+                    <img src="{{ $headerLogo }}" alt="{{ $headerSection->heading ?: 'Tiwi' }}" class="block max-h-14 max-w-[190px] object-contain" onerror="this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden');">
+                    <span class="relative hidden h-12 w-24">
+                        <span class="absolute left-0 top-2 h-9 w-9 rotate-[-9deg] rounded-md border-[5px] border-[#ee0011] bg-white"></span>
+                        <span class="absolute left-7 top-2 h-9 w-9 rotate-[14deg] rounded-md border-[5px] border-[#16a34a] bg-white"></span>
+                        <span class="absolute left-14 top-2 h-9 w-9 rotate-[-5deg] rounded-md border-[5px] border-[#2563eb] bg-white"></span>
+                        <span class="absolute left-[84px] top-2 h-9 w-9 rotate-[1deg] rounded-md border-[5px] border-[#f59e0b] bg-white"></span>
+                        <span class="absolute left-8 top-11 text-[10px] font-black uppercase tracking-[.45em] text-slate-950">Tiwi</span>
+                    </span>
                 @else
                     <span class="relative block h-12 w-24">
                         <span class="absolute left-0 top-2 h-9 w-9 rotate-[-9deg] rounded-md border-[5px] border-[#ee0011] bg-white"></span>
