@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\HomepageSectionController;
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\PageController;
@@ -34,6 +35,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('modules', ModuleController::class)->except('show');
     Route::resource('pages', PageController::class)->except('show');
     Route::resource('blog-posts', BlogPostController::class)->except('show');
+    Route::resource('faqs', FaqController::class)->except('show');
     Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
     Route::resource('homepage-sections', HomepageSectionController::class)->only(['index', 'edit', 'update']);
 });

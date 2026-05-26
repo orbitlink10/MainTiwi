@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Models\Faq;
 use App\Models\HomepageSection;
 use App\Models\Module;
 use App\Models\Page;
@@ -14,6 +15,7 @@ class PublicController extends Controller
         return view('public.home', [
             'modules' => Module::active()->orderBy('name')->take(6)->get(),
             'posts' => BlogPost::published()->latest('published_at')->take(3)->get(),
+            'faqs' => Faq::active()->orderBy('sort_order')->orderBy('question')->get(),
             'sections' => HomepageSection::active()->get()->keyBy('key'),
             'metaTitle' => 'Tiwi | Business Software Modules',
             'metaDescription' => 'Tiwi markets and links business software modules for POS, property management, schools, itinerary building, and manufacturing.',

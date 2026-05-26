@@ -100,6 +100,34 @@
     $testimonialQuote = collect($testimonialQuotes)->first() ?: $testimonialSection?->body ?: 'Tiwi gives every business module a clear home, while each specialist system remains free to grow independently.';
     $testimonialCite = $testimonialPayload['cite'] ?? $testimonialSection?->label ?? 'Tiwi implementation team';
 
+    $fallbackFaqs = collect([
+        [
+            'question' => 'How do I choose the right Tiwi product?',
+            'answer' => 'Start with the workflow that needs the fastest improvement. Retail teams usually begin with POS, schools with learner and fee management, property teams with tenant records, and travel teams with itinerary planning.',
+        ],
+        [
+            'question' => 'Can each product link to a separate system?',
+            'answer' => 'Yes. Tiwi can market every product from one website while sending visitors to the correct external dashboard, demo, or production system for that product.',
+        ],
+        [
+            'question' => 'Can I update website content from the dashboard?',
+            'answer' => 'Yes. The admin dashboard manages homepage sections, pages, products, blog posts, contact messages, and FAQs without editing code.',
+        ],
+        [
+            'question' => 'Is the homepage content mobile friendly?',
+            'answer' => 'Yes. Public pages are structured to work across phone, tablet, and desktop screen sizes.',
+        ],
+        [
+            'question' => 'Can I hide an FAQ without deleting it?',
+            'answer' => 'Yes. Turn off the Active checkbox in the FAQ editor and it will stay in the dashboard without appearing on the homepage.',
+        ],
+        [
+            'question' => 'How are FAQs ordered on the homepage?',
+            'answer' => 'Use the Sort order field in the dashboard. Lower numbers appear first.',
+        ],
+    ]);
+    $homepageFaqs = ($faqs ?? collect())->isNotEmpty() ? $faqs : $fallbackFaqs;
+
 @endphp
 
 <style>
@@ -229,6 +257,22 @@
         font-weight: 400;
         line-height: 1.35;
         letter-spacing: 0;
+    }
+
+    .home-faq-summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .home-faq-panel[open] .home-faq-plus {
+        transform: rotate(45deg);
+    }
+
+    .home-faq-section {
+        background: #30395f;
+    }
+
+    .home-faq-plus {
+        color: #8fb0ff;
     }
 
     @media (max-width: 1080px) {
@@ -432,6 +476,31 @@
         <div class="p-6">
             <strong class="block text-5xl font-black">MySQL</strong>
             <span class="mt-3 block text-xs font-black uppercase tracking-[.16em] text-slate-300">Laravel backend</span>
+        </div>
+    </div>
+</section>
+
+<section class="home-faq-section py-16 text-white md:py-20">
+    <div class="tw-container">
+        <div class="max-w-5xl">
+            <h2 class="text-5xl font-light leading-none tracking-normal md:text-6xl">FAQs</h2>
+            <p class="mt-8 text-xl leading-9 text-white md:text-2xl">
+                Find answers to common questions about Tiwi products, dashboard content, external product links, and getting started.
+            </p>
+        </div>
+
+        <div class="mt-14 grid gap-3 lg:grid-cols-2">
+            @foreach($homepageFaqs as $faq)
+                <details class="home-faq-panel rounded-xl bg-white/10 text-white open:bg-white/10">
+                    <summary class="home-faq-summary flex min-h-[84px] cursor-pointer list-none items-center justify-between gap-5 px-6 py-5 text-lg font-semibold leading-7 md:text-xl">
+                        <span>{{ is_array($faq) ? $faq['question'] : $faq->question }}</span>
+                        <span class="home-faq-plus shrink-0 text-4xl font-light leading-none transition-transform">+</span>
+                    </summary>
+                    <div class="border-t border-white/15 px-6 pb-7 pt-5 text-lg leading-8 text-white/85">
+                        {!! nl2br(e(is_array($faq) ? $faq['answer'] : $faq->answer)) !!}
+                    </div>
+                </details>
+            @endforeach
         </div>
     </div>
 </section>

@@ -34,6 +34,14 @@ class HomepageSectionSeeder extends Seeder
                 'payload' => ['quotes' => ['The module pages make comparison simple.', 'The dashboard keeps our web updates fast.']],
                 'sort_order' => 3,
             ],
+            [
+                'key' => 'sliding_content',
+                'label' => 'Sliding Homepage Content',
+                'heading' => 'Helpful context for choosing Tiwi',
+                'body' => '<h2>Built for practical business software decisions</h2><p>Tiwi gives every product a clear place on the website, while each operational system can keep its own dedicated workflow, users, and dashboard.</p><h3>One homepage, many product paths</h3><p>Use this section for longer sales copy, product explanations, buyer guidance, or customer education. Visitors can read through the content without the section taking over the whole page.</p><h3>Easy to update from the dashboard</h3><p>Edit this content from Homepage Content in the admin panel. Headings, paragraphs, links, and lists can be added without changing code.</p>',
+                'payload' => [],
+                'sort_order' => 4,
+            ],
         ];
 
         foreach ($sections as $section) {

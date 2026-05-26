@@ -94,6 +94,10 @@
                     <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></span>
                     <span>Blog Posts</span>
                 </a>
+                <a class="admin-nav-link @if(request()->routeIs('admin.faqs.*')) active @endif" href="{{ route('admin.faqs.index') }}">
+                    <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.1 9a3 3 0 1 1 5.8 1c-.5 1.4-1.9 1.9-2.5 2.8-.3.4-.4.8-.4 1.2"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></span>
+                    <span>FAQs</span>
+                </a>
                 <a class="admin-nav-link @if(request()->routeIs('admin.contact-messages.*')) active @endif" href="{{ route('admin.contact-messages.index') }}">
                     <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></span>
                     <span>Contact Messages</span>
