@@ -162,6 +162,7 @@ class HomepageSectionController extends Controller
                             ['label' => 'School Management', 'url' => '/solutions'],
                             ['label' => 'Manufacturing System', 'url' => '/solutions'],
                         ]],
+                        ['label' => 'Featured Apps', 'url' => '/#featured-apps'],
                         ['label' => 'Customers', 'url' => '/about-tiwi', 'children' => [
                             ['label' => 'Business Teams', 'url' => '/about-tiwi'],
                             ['label' => 'Schools', 'url' => '/about-tiwi'],

@@ -483,7 +483,7 @@
     </div>
 </section>
 
-<section class="home-products">
+<section id="featured-apps" class="home-products">
     <div class="home-products-panel">
         <div class="home-products-head">
             <h2>Featured Apps</h2>

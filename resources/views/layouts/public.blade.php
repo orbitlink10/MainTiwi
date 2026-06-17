@@ -60,10 +60,19 @@
         $headerSection = \App\Models\HomepageSection::active()->where('key', 'header_navigation')->first();
         $headerMenuItems = $headerSection?->payload['menu_items'] ?? [
             ['label' => 'Products', 'url' => route('modules.index')],
+            ['label' => 'Featured Apps', 'url' => route('home').'#featured-apps'],
             ['label' => 'Customers', 'url' => route('about')],
             ['label' => 'Partners', 'url' => route('contact')],
             ['label' => 'Resources', 'url' => route('blog.index')],
         ];
+        $hasFeaturedAppsMenu = collect($headerMenuItems)->contains(fn ($item) => ($item['label'] ?? null) === 'Featured Apps');
+
+        if (! $hasFeaturedAppsMenu) {
+            array_splice($headerMenuItems, 1, 0, [[
+                'label' => 'Featured Apps',
+                'url' => route('home').'#featured-apps',
+            ]]);
+        }
         $headerLogo = $headerSection?->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($headerSection->image)
             ? route('media.show', ['path' => $headerSection->image])
             : null;
