@@ -7,6 +7,9 @@ use App\Models\Faq;
 use App\Models\HomepageSection;
 use App\Models\Module;
 use App\Models\Page;
+use App\Models\Post;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class PublicController extends Controller
 {
@@ -69,6 +72,29 @@ class PublicController extends Controller
             'post' => $post,
             'metaTitle' => $post->meta_title ?: $post->title.' | Tiwi',
             'metaDescription' => $post->meta_description ?: $post->excerpt,
+        ]);
+    }
+
+    public function publicPost(string $slug)
+    {
+        $post = null;
+
+        if (Schema::hasColumn('posts', 'slug')) {
+            $post = Post::where('slug', $slug)->first();
+        }
+
+        if (! $post) {
+            $post = Post::query()
+                ->get()
+                ->first(fn (Post $post) => Str::slug($post->admin_title) === $slug);
+        }
+
+        abort_unless($post, 404);
+
+        return view('public.posts.show', [
+            'post' => $post,
+            'metaTitle' => ($post->meta_title ?? null) ?: $post->admin_title.' | Tiwi',
+            'metaDescription' => ($post->meta_description ?? null) ?: str(strip_tags($post->admin_description))->limit(155),
         ]);
     }
 

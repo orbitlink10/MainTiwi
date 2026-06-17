@@ -42,7 +42,7 @@
                         <td>{{ $post->admin_type }}</td>
                         <td>
                             <div class="post-actions">
-                                <a class="admin-action preview" href="{{ route('admin.posts.show', $post) }}">Preview</a>
+                                <a class="admin-action preview" href="{{ $post->public_url }}" target="_blank" rel="noopener">Preview</a>
                                 <a class="admin-action" href="{{ route('admin.posts.edit', $post) }}">Update</a>
                                 <button class="danger" type="submit" form="delete-post-{{ $post->id }}">Delete</button>
                             </div>

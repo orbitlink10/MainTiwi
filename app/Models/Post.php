@@ -94,6 +94,16 @@ class Post extends Model
             ?? '';
     }
 
+    public function getPublicSlugAttribute(): string
+    {
+        return $this->attributes['slug'] ?? Str::slug($this->admin_title);
+    }
+
+    public function getPublicUrlAttribute(): string
+    {
+        return route('posts.public.show', $this->public_slug);
+    }
+
     private static function uniqueSlug(string $title, ?int $ignoreId = null): string
     {
         $base = Str::slug($title);

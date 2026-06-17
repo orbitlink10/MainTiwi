@@ -17,6 +17,7 @@
         <div>{!! $post->admin_description !!}</div>
     </div>
     <div class="actions">
+        <a class="button" href="{{ $post->public_url }}" target="_blank" rel="noopener">Open public post</a>
         <a class="button ghost" href="{{ route('admin.posts.index') }}">Back to posts</a>
     </div>
 </section>

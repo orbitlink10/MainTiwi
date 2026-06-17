@@ -37,7 +37,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('admin.posts.show', ['post' => $post]);
+        return redirect($post->public_url);
     }
 
     public function update(Request $request, Post $post)

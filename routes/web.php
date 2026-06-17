@@ -48,3 +48,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
     Route::resource('homepage-sections', HomepageSectionController::class)->only(['index', 'edit', 'update']);
 });
+
+Route::get('/{slug}', [PublicController::class, 'publicPost'])
+    ->where('slug', '^(?!admin$|media$|about-tiwi$|solutions$|pricing$|blog$|contact$)[A-Za-z0-9-]+$')
+    ->name('posts.public.show');
