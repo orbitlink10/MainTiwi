@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\HomepageSectionController;
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PublicController;
@@ -40,6 +41,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('homepage-content', [HomepageSectionController::class, 'index'])->name('homepage-content.index');
     Route::resource('modules', ModuleController::class)->except('show');
     Route::resource('pages', PageController::class)->except('show');
+    Route::resource('posts', PostController::class)->except('show');
     Route::resource('blog-posts', BlogPostController::class)->except('show');
     Route::resource('faqs', FaqController::class)->except('show');
     Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
