@@ -27,7 +27,6 @@ return new class extends Migration
             $table->boolean('status')->default(true)->index();
             $table->timestamp('published_at')->nullable()->index();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
