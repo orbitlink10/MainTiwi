@@ -31,7 +31,7 @@ class Post extends Model
     protected static function booted(): void
     {
         static::saving(function (Post $post) {
-            if (Schema::hasColumn($post->getTable(), 'slug') && ($post->isDirty('title') || $post->isDirty('page_title') || blank($post->slug))) {
+            if (Schema::hasColumn($post->getTable(), 'slug') && blank($post->slug)) {
                 $post->slug = static::uniqueSlug($post->admin_title, $post->id);
             }
         });
@@ -46,10 +46,14 @@ class Post extends Model
 
     public function getAdminImageUrlAttribute(): ?string
     {
-        $path = $this->attributes['featured_image']
-            ?? $this->attributes['image']
-            ?? $this->attributes['image_path']
-            ?? null;
+        $path = $this->firstAttribute([
+            'featured_image',
+            'image',
+            'image_path',
+            'photo',
+            'thumbnail',
+            'banner',
+        ]);
 
         if (! $path) {
             return null;
@@ -59,39 +63,85 @@ class Post extends Model
             return $path;
         }
 
-        return Storage::disk('public')->exists($path) ? Storage::url($path) : asset($path);
+        if (Storage::disk('public')->exists($path)) {
+            return Storage::url($path);
+        }
+
+        $normalized = ltrim($path, '/');
+
+        foreach ([
+            $normalized,
+            "storage/{$normalized}",
+            "uploads/{$normalized}",
+            "images/{$normalized}",
+            "posts/{$normalized}",
+        ] as $candidate) {
+            if (is_file(public_path($candidate))) {
+                return asset($candidate);
+            }
+        }
+
+        if (str_contains($normalized, '/')) {
+            return asset($normalized);
+        }
+
+        return null;
     }
 
     public function getAdminAltTextAttribute(): string
     {
-        return $this->attributes['alt_text']
-            ?? $this->attributes['image_alt_text']
-            ?? $this->attributes['meta_title']
-            ?? $this->admin_title
-            ?? '';
+        return $this->firstAttribute([
+            'alt_text',
+            'image_alt_text',
+            'image_alt',
+            'alt',
+            'meta_title',
+        ]) ?: $this->admin_title;
     }
 
     public function getAdminTypeAttribute(): string
     {
-        return $this->attributes['type'] ?? 'Post';
+        return $this->firstAttribute(['type', 'post_type', 'page_type']) ?: 'Post';
     }
 
     public function getAdminTitleAttribute(): string
     {
-        return $this->attributes['title']
-            ?? $this->attributes['page_title']
-            ?? $this->attributes['heading_1']
-            ?? $this->attributes['meta_title']
-            ?? '';
+        return $this->firstAttribute([
+            'title',
+            'page_title',
+            'keyword_title',
+            'post_title',
+            'heading_1',
+            'heading1',
+            'name',
+            'meta_title',
+        ]);
     }
 
     public function getAdminDescriptionAttribute(): string
     {
-        return $this->attributes['content']
-            ?? $this->attributes['page_description']
-            ?? $this->attributes['description']
-            ?? $this->attributes['excerpt']
-            ?? '';
+        return $this->firstAttribute([
+            'content',
+            'page_description',
+            'description',
+            'body',
+            'details',
+            'long_description',
+            'post_content',
+            'desc',
+            'excerpt',
+        ]);
+    }
+
+    public function getAdminHeading2Attribute(): string
+    {
+        return $this->firstAttribute([
+            'heading_2',
+            'heading2',
+            'sub_heading',
+            'subheading',
+            'subtitle',
+        ]);
     }
 
     public function getPublicSlugAttribute(): string
@@ -118,5 +168,16 @@ class Post extends Model
         }
 
         return $slug;
+    }
+
+    private function firstAttribute(array $keys): string
+    {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $this->attributes) && filled($this->attributes[$key])) {
+                return (string) $this->attributes[$key];
+            }
+        }
+
+        return '';
     }
 }

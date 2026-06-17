@@ -4,7 +4,7 @@
     $metaTitle = old('meta_title', $post->meta_title ?? '');
     $metaDescription = old('meta_description', $post->meta_description ?? '');
     $altText = old('alt_text', $post->admin_alt_text);
-    $heading2 = old('heading_2', $post->heading_2 ?? '');
+    $heading2 = old('heading_2', $post->admin_heading2);
     $type = old('type', $post->admin_type);
     $description = old('page_description', $post->admin_description);
 @endphp

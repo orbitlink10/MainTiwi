@@ -90,15 +90,33 @@ class PostController extends Controller
 
         $this->putIfColumnExists($data, $columns, 'title', $validated['page_title']);
         $this->putIfColumnExists($data, $columns, 'page_title', $validated['page_title']);
+        $this->putIfColumnExists($data, $columns, 'keyword_title', $validated['page_title']);
+        $this->putIfColumnExists($data, $columns, 'post_title', $validated['page_title']);
+        $this->putIfColumnExists($data, $columns, 'heading_1', $validated['page_title']);
+        $this->putIfColumnExists($data, $columns, 'heading1', $validated['page_title']);
+        $this->putIfColumnExists($data, $columns, 'name', $validated['page_title']);
         $this->putIfColumnExists($data, $columns, 'meta_title', $validated['meta_title'] ?? null);
         $this->putIfColumnExists($data, $columns, 'meta_description', $validated['meta_description'] ?? null);
         $this->putIfColumnExists($data, $columns, 'alt_text', $validated['alt_text'] ?? null);
         $this->putIfColumnExists($data, $columns, 'image_alt_text', $validated['alt_text'] ?? null);
+        $this->putIfColumnExists($data, $columns, 'image_alt', $validated['alt_text'] ?? null);
+        $this->putIfColumnExists($data, $columns, 'alt', $validated['alt_text'] ?? null);
         $this->putIfColumnExists($data, $columns, 'heading_2', $validated['heading_2'] ?? null);
+        $this->putIfColumnExists($data, $columns, 'heading2', $validated['heading_2'] ?? null);
+        $this->putIfColumnExists($data, $columns, 'sub_heading', $validated['heading_2'] ?? null);
+        $this->putIfColumnExists($data, $columns, 'subheading', $validated['heading_2'] ?? null);
+        $this->putIfColumnExists($data, $columns, 'subtitle', $validated['heading_2'] ?? null);
         $this->putIfColumnExists($data, $columns, 'type', $validated['type'] ?? 'Post');
+        $this->putIfColumnExists($data, $columns, 'post_type', $validated['type'] ?? 'Post');
+        $this->putIfColumnExists($data, $columns, 'page_type', $validated['type'] ?? 'Post');
         $this->putIfColumnExists($data, $columns, 'content', $validated['page_description'] ?? '');
         $this->putIfColumnExists($data, $columns, 'page_description', $validated['page_description'] ?? '');
         $this->putIfColumnExists($data, $columns, 'description', $validated['page_description'] ?? '');
+        $this->putIfColumnExists($data, $columns, 'body', $validated['page_description'] ?? '');
+        $this->putIfColumnExists($data, $columns, 'details', $validated['page_description'] ?? '');
+        $this->putIfColumnExists($data, $columns, 'long_description', $validated['page_description'] ?? '');
+        $this->putIfColumnExists($data, $columns, 'post_content', $validated['page_description'] ?? '');
+        $this->putIfColumnExists($data, $columns, 'desc', $validated['page_description'] ?? '');
         $this->putIfColumnExists($data, $columns, 'excerpt', str($validated['meta_description'] ?? $validated['page_description'] ?? '')->limit(500));
         $this->putIfColumnExists($data, $columns, 'status', $request->boolean('status', true));
         $this->putIfColumnExists($data, $columns, 'published_at', $validated['published_at'] ?? now());
@@ -108,6 +126,9 @@ class PostController extends Controller
             $this->putIfColumnExists($data, $columns, 'featured_image', $path);
             $this->putIfColumnExists($data, $columns, 'image', $path);
             $this->putIfColumnExists($data, $columns, 'image_path', $path);
+            $this->putIfColumnExists($data, $columns, 'photo', $path);
+            $this->putIfColumnExists($data, $columns, 'thumbnail', $path);
+            $this->putIfColumnExists($data, $columns, 'banner', $path);
         }
 
         return $data;

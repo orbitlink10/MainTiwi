@@ -20,6 +20,10 @@ return new class extends Migration
                 $table->string('page_title')->nullable();
             }
 
+            if (! Schema::hasColumn('posts', 'keyword_title')) {
+                $table->string('keyword_title')->nullable();
+            }
+
             if (! Schema::hasColumn('posts', 'meta_title')) {
                 $table->string('meta_title')->nullable();
             }
@@ -36,12 +40,20 @@ return new class extends Migration
                 $table->string('heading_2')->nullable();
             }
 
+            if (! Schema::hasColumn('posts', 'heading2')) {
+                $table->string('heading2')->nullable();
+            }
+
             if (! Schema::hasColumn('posts', 'type')) {
                 $table->string('type')->default('Post');
             }
 
             if (! Schema::hasColumn('posts', 'page_description')) {
                 $table->longText('page_description')->nullable();
+            }
+
+            if (! Schema::hasColumn('posts', 'body')) {
+                $table->longText('body')->nullable();
             }
 
             if (! Schema::hasColumn('posts', 'image')) {
