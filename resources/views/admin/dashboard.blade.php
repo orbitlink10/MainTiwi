@@ -7,6 +7,7 @@
     <div class="stat"><span>Active</span><strong>{{ $activeModuleCount }}</strong></div>
     <div class="stat"><span>Pages</span><strong>{{ $pageCount }}</strong></div>
     <div class="stat"><span>Posts</span><strong>{{ $postCount }}</strong></div>
+    <div class="stat"><span>Blog Posts</span><strong>{{ $blogPostCount }}</strong></div>
     <div class="stat"><span>Unread</span><strong>{{ $unreadMessages }}</strong></div>
 </section>
 <section class="section">

@@ -7,6 +7,7 @@ use App\Models\BlogPost;
 use App\Models\ContactMessage;
 use App\Models\Module;
 use App\Models\Page;
+use App\Models\Post;
 
 class DashboardController extends Controller
 {
@@ -16,7 +17,8 @@ class DashboardController extends Controller
             'moduleCount' => Module::count(),
             'activeModuleCount' => Module::active()->count(),
             'pageCount' => Page::count(),
-            'postCount' => BlogPost::count(),
+            'postCount' => Post::count(),
+            'blogPostCount' => BlogPost::count(),
             'unreadMessages' => ContactMessage::whereNull('read_at')->count(),
             'latestMessages' => ContactMessage::latest()->take(5)->get(),
         ]);

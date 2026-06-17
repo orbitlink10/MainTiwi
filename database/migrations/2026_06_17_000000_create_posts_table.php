@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        // Keep this conservative because some deployments may already have a posts table.
     }
 };

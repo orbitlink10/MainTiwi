@@ -41,7 +41,7 @@
         .admin-body .actions{display:flex;flex-wrap:wrap;gap:10px;padding:0 26px 24px}
         .admin-body .button{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 18px;border:1px solid #2d7ff0;border-radius:999px;background:#2d7ff0;color:#fff;font-size:14px;font-weight:800;text-decoration:none}
         .admin-body .button.ghost,.admin-body .button.secondary{background:#f7faff;color:#334f76;border-color:#9fb2cf}
-        .admin-body .stats{width:min(100%,1120px);margin:0 auto 22px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+        .admin-body .stats{width:min(100%,1120px);margin:0 auto 22px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
         .admin-body .stat{min-height:92px;padding:18px;border:1px solid #d8e4f2;border-radius:16px;background:#fff;box-shadow:0 12px 28px rgba(31,53,84,.05)}
         .admin-body .stat span{color:#607a9f;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
         .admin-body .stat strong{display:block;margin-top:8px;color:#061936;font-size:30px;line-height:1}
@@ -85,6 +85,10 @@
                 <a class="admin-nav-link @if(request()->routeIs('admin.pages.*')) active @endif" href="{{ route('admin.pages.index') }}">
                     <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v6h5"/><path d="M9 14h7"/><path d="M9 18h5"/></svg></span>
                     <span>Pages</span>
+                </a>
+                <a class="admin-nav-link @if(request()->routeIs('admin.posts.*')) active @endif" href="{{ route('admin.posts.index') }}">
+                    <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></span>
+                    <span>Posts</span>
                 </a>
                 <a class="admin-nav-link @if(request()->routeIs('admin.modules.*')) active @endif" href="{{ route('admin.modules.index') }}">
                     <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg></span>
