@@ -80,20 +80,20 @@
         .admin-body .post-actions .admin-action,.admin-body .post-actions .danger{width:100%;min-height:38px;border-radius:999px;background:#fff}
         .admin-body .post-title{font-size:17px;line-height:1.45;font-weight:700;color:#061936}
         .admin-body .post-form-panel{width:min(100%,1120px);margin:0 auto 22px;border:1px solid #d8e4f2;background:#fff;box-shadow:0 16px 38px rgba(31,53,84,.06)}
-        .admin-body .post-form-title{padding:11px 26px;background:#0d83f3;color:#061936;font-size:24px;font-weight:900;letter-spacing:-.03em}
-        .admin-body .post-form-body{padding:26px 26px 10px}
-        .admin-body .post-form-body .field{margin-bottom:24px}
-        .admin-body .post-form-body label{font-size:21px;color:#050b15}
-        .admin-body .post-form-body input,.admin-body .post-form-body select{min-height:54px;border-radius:15px;font-size:21px}
+        .admin-body .post-form-title{padding:11px 26px;background:#0d83f3;color:#061936;font-size:22px;font-weight:900;letter-spacing:-.02em}
+        .admin-body .post-form-body{padding:24px 26px 10px}
+        .admin-body .post-form-body .field{margin-bottom:18px}
+        .admin-body .post-form-body label{font-size:14px;color:#061936}
+        .admin-body .post-form-body input,.admin-body .post-form-body select{min-height:46px;border-radius:12px;font-size:15px}
         .admin-body .post-form-preview{display:block;width:220px;height:140px;margin-top:12px;border:1px solid #dce7f4;object-fit:cover}
-        .admin-body .post-description-editor{min-height:560px;border:2px solid #e5e7eb;border-radius:14px;font-size:18px;box-shadow:none;resize:vertical}
+        .admin-body .post-description-editor{min-height:420px;border:1px solid #cddcf0;border-radius:12px;font-size:15px;box-shadow:none;resize:vertical}
         .admin-body .tox-tinymce{border:2px solid #e5e7eb!important;border-radius:14px!important;overflow:hidden!important}
-        .admin-body .tox .tox-menubar{padding:15px 26px 6px!important;background:#fff!important}
-        .admin-body .tox .tox-mbtn{font-size:18px!important;color:#111827!important;margin-right:14px!important}
+        .admin-body .tox .tox-menubar{padding:8px 16px 4px!important;background:#fff!important}
+        .admin-body .tox .tox-mbtn{font-size:14px!important;color:#111827!important;margin-right:8px!important}
         .admin-body .tox .tox-toolbar-overlord{border-bottom:1px solid #e5e7eb!important;box-shadow:0 10px 20px rgba(15,23,42,.08)!important;background:#fff!important}
-        .admin-body .tox .tox-toolbar__primary{padding:14px 26px!important;background:#fff!important}
-        .admin-body .tox .tox-tbtn{width:38px!important;height:38px!important;margin-right:12px!important;color:#1f2937!important}
-        .admin-body .tox .tox-tbtn svg{width:24px!important;height:24px!important}
+        .admin-body .tox .tox-toolbar__primary{padding:8px 16px!important;background:#fff!important}
+        .admin-body .tox .tox-tbtn{width:32px!important;height:32px!important;margin-right:6px!important;color:#1f2937!important}
+        .admin-body .tox .tox-tbtn svg{width:18px!important;height:18px!important}
         .admin-body .tox .tox-edit-area__iframe{background:#fff!important}
         .admin-body .post-status{align-self:end;min-height:54px}
         @media(max-width:900px){.admin-body .admin-shell{grid-template-columns:1fr}.admin-body .admin-sidebar{position:relative;height:auto}.admin-body .admin-main{padding:22px 16px}.admin-body .admin-top h1{font-size:32px}.admin-body .stats,.admin-body .form-grid{grid-template-columns:1fr}.admin-body .admin-card-head,.admin-body .section-head{align-items:flex-start;flex-direction:column}}
