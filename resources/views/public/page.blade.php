@@ -51,11 +51,6 @@
     .article-hero img { display:block; width:100%; aspect-ratio:16 / 9; object-fit:cover; }
     .article-summary { margin:0 0 32px; color:#343946; font-size:21px; line-height:1.55; font-weight:400; }
     .article-intro-heading { margin:0 0 22px; color:#111827; font-size:34px; line-height:1.18; font-weight:800; letter-spacing:0; }
-    .article-toc { border-top:1px solid #e6e8ee; border-bottom:1px solid #e6e8ee; padding:22px 0; margin:0 0 34px; }
-    .article-toc h2 { margin:0 0 14px; color:#111827; font-size:20px; line-height:28px; font-weight:800; }
-    .article-toc ol { display:grid; gap:8px; margin:0; padding-left:22px; color:#111827; font-size:16px; line-height:24px; }
-    .article-toc a { color:#111827; text-decoration:none; font-weight:650; }
-    .article-toc a:hover { color:#ee0011; }
     .article-content { color:#242936; overflow-wrap:break-word; }
     .article-content * { max-width:100%; box-sizing:border-box; }
     .article-content h2 { margin:52px 0 18px; color:#111827; font-size:34px; line-height:1.18; font-weight:800; letter-spacing:0; scroll-margin-top:94px; }
@@ -129,17 +124,6 @@
 
                 @if($page->heading)
                     <h2 class="article-intro-heading">{{ $page->heading }}</h2>
-                @endif
-
-                @if(count($tocItems))
-                    <nav class="article-toc" aria-label="Table of contents">
-                        <h2>Table of contents</h2>
-                        <ol>
-                            @foreach($tocItems as $item)
-                                <li><a href="#{{ $item['id'] }}">{{ $item['title'] }}</a></li>
-                            @endforeach
-                        </ol>
-                    </nav>
                 @endif
 
                 <div class="article-content">
