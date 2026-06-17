@@ -120,6 +120,10 @@
                     <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h10"/></svg></span>
                     <span>Homepage Content</span>
                 </a>
+                <a class="admin-nav-link @if(request()->routeIs('admin.modules.*')) active @endif" href="{{ route('admin.modules.index') }}">
+                    <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 14.7 8.5 21 9.4 16.5 13.8 17.6 20 12 17.1 6.4 20 7.5 13.8 3 9.4 9.3 8.5z"/></svg></span>
+                    <span>Featured Apps</span>
+                </a>
                 <a class="admin-nav-link @if(request()->routeIs('admin.pages.*')) active @endif" href="{{ route('admin.pages.index') }}">
                     <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v6h5"/><path d="M9 14h7"/><path d="M9 18h5"/></svg></span>
                     <span>Pages</span>
