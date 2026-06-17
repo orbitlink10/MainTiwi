@@ -86,10 +86,15 @@
         .admin-body .post-form-body label{font-size:21px;color:#050b15}
         .admin-body .post-form-body input,.admin-body .post-form-body select{min-height:54px;border-radius:15px;font-size:21px}
         .admin-body .post-form-preview{display:block;width:220px;height:140px;margin-top:12px;border:1px solid #dce7f4;object-fit:cover}
-        .admin-body .editor-shell{overflow:hidden;border:2px solid #e5e7eb;border-radius:14px;background:#fff}
-        .admin-body .editor-menu,.admin-body .editor-toolbar{display:flex;align-items:center;gap:24px;padding:18px 26px;color:#111827;font-size:18px}
-        .admin-body .editor-toolbar{gap:28px;border-bottom:1px solid #e5e7eb;box-shadow:0 10px 20px rgba(15,23,42,.08);font-size:24px}
-        .admin-body .post-description-editor{min-height:360px;border:0;border-radius:0;font-size:18px;box-shadow:none;resize:vertical}
+        .admin-body .post-description-editor{min-height:560px;border:2px solid #e5e7eb;border-radius:14px;font-size:18px;box-shadow:none;resize:vertical}
+        .admin-body .tox-tinymce{border:2px solid #e5e7eb!important;border-radius:14px!important;overflow:hidden!important}
+        .admin-body .tox .tox-menubar{padding:15px 26px 6px!important;background:#fff!important}
+        .admin-body .tox .tox-mbtn{font-size:18px!important;color:#111827!important;margin-right:14px!important}
+        .admin-body .tox .tox-toolbar-overlord{border-bottom:1px solid #e5e7eb!important;box-shadow:0 10px 20px rgba(15,23,42,.08)!important;background:#fff!important}
+        .admin-body .tox .tox-toolbar__primary{padding:14px 26px!important;background:#fff!important}
+        .admin-body .tox .tox-tbtn{width:38px!important;height:38px!important;margin-right:12px!important;color:#1f2937!important}
+        .admin-body .tox .tox-tbtn svg{width:24px!important;height:24px!important}
+        .admin-body .tox .tox-edit-area__iframe{background:#fff!important}
         .admin-body .post-status{align-self:end;min-height:54px}
         @media(max-width:900px){.admin-body .admin-shell{grid-template-columns:1fr}.admin-body .admin-sidebar{position:relative;height:auto}.admin-body .admin-main{padding:22px 16px}.admin-body .admin-top h1{font-size:32px}.admin-body .stats,.admin-body .form-grid{grid-template-columns:1fr}.admin-body .admin-card-head,.admin-body .section-head{align-items:flex-start;flex-direction:column}}
     </style>

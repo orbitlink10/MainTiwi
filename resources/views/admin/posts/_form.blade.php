@@ -62,15 +62,7 @@
 
         <div class="field">
             <label>Page Description:</label>
-            <div class="editor-shell">
-                <div class="editor-menu">
-                    <span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span><span>Tools</span><span>Table</span>
-                </div>
-                <div class="editor-toolbar" aria-hidden="true">
-                    <span>Undo</span><span>Redo</span><strong>B</strong><em>I</em><span>Left</span><span>Center</span><span>Right</span><span>Justify</span><span>Outdent</span><span>Indent</span><span>Link</span><span>Image</span><span>Video</span><span>&lt;&gt;</span><span>Full</span>
-                </div>
-                <textarea class="post-description-editor" name="page_description">{{ $description }}</textarea>
-            </div>
+            <textarea id="page_description_editor" class="post-description-editor" name="page_description">{{ $description }}</textarea>
             @error('page_description')<span class="error">{{ $message }}</span>@enderror
         </div>
 
@@ -89,3 +81,35 @@
     <button class="button" type="submit">Save post</button>
     <a class="button ghost" href="{{ route('admin.posts.index') }}">Cancel</a>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!window.tinymce) {
+            return;
+        }
+
+        tinymce.init({
+            selector: '#page_description_editor',
+            base_url: 'https://cdn.jsdelivr.net/npm/tinymce@6.8.5',
+            suffix: '.min',
+            height: 560,
+            menubar: 'file edit view insert format tools table',
+            plugins: 'lists link image media table code fullscreen autoresize',
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image media | code fullscreen',
+            branding: false,
+            promotion: false,
+            statusbar: false,
+            resize: true,
+            content_style: 'body{font-family:Arial,Helvetica,sans-serif;font-size:18px;line-height:1.65;color:#111827;padding:24px;} h1{font-size:42px;line-height:1.2;margin:0 0 22px;font-weight:800;} h2{font-size:30px;line-height:1.25;margin:28px 0 16px;font-weight:800;} p{margin:0 0 18px;} img{max-width:100%;height:auto;} table{width:100%;border-collapse:collapse;}',
+            convert_urls: false,
+            automatic_uploads: true,
+            file_picker_types: 'image media',
+            setup: function (editor) {
+                editor.on('change keyup', function () {
+                    editor.save();
+                });
+            }
+        });
+    });
+</script>
