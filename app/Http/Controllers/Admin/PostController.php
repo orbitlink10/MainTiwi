@@ -78,7 +78,6 @@ class PostController extends Controller
             'type' => ['nullable', 'string', 'max:50'],
             'page_description' => ['nullable', 'string'],
             'featured_image' => ['nullable', 'image', 'max:4096'],
-            'published_at' => ['nullable', 'date'],
         ]);
     }
 
@@ -118,8 +117,11 @@ class PostController extends Controller
         $this->putIfColumnExists($data, $columns, 'post_content', $validated['page_description'] ?? '');
         $this->putIfColumnExists($data, $columns, 'desc', $validated['page_description'] ?? '');
         $this->putIfColumnExists($data, $columns, 'excerpt', str($validated['meta_description'] ?? $validated['page_description'] ?? '')->limit(500));
-        $this->putIfColumnExists($data, $columns, 'status', $request->boolean('status', true));
-        $this->putIfColumnExists($data, $columns, 'published_at', $validated['published_at'] ?? now());
+        $this->putIfColumnExists($data, $columns, 'status', true);
+
+        if (! $post?->exists || blank($post->published_at)) {
+            $this->putIfColumnExists($data, $columns, 'published_at', now());
+        }
 
         if ($request->hasFile('featured_image')) {
             $path = $request->file('featured_image')->store('posts', 'public');

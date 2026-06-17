@@ -65,15 +65,6 @@
             <textarea id="page_description_editor" class="post-description-editor" name="page_description">{{ $description }}</textarea>
             @error('page_description')<span class="error">{{ $message }}</span>@enderror
         </div>
-
-        <div class="form-grid">
-            <div class="field">
-                <label>Published at</label>
-                <input name="published_at" type="datetime-local" value="{{ old('published_at', optional($post->published_at)->format('Y-m-d\\TH:i')) }}">
-                @error('published_at')<span class="error">{{ $message }}</span>@enderror
-            </div>
-            <label class="admin-check post-status"><input type="checkbox" name="status" value="1" @checked(old('status', $post->exists ? ($post->status ?? true) : true))> Active</label>
-        </div>
     </div>
 </div>
 
