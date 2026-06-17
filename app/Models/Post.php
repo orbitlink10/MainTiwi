@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Post extends Model
@@ -44,6 +45,34 @@ class Post extends Model
         return $query->where('status', true)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
+    }
+
+    public function getAdminImageUrlAttribute(): ?string
+    {
+        $path = $this->attributes['featured_image'] ?? $this->attributes['image'] ?? null;
+
+        if (! $path) {
+            return null;
+        }
+
+        if (Str::startsWith($path, ['http://', 'https://', '/'])) {
+            return $path;
+        }
+
+        return Storage::disk('public')->exists($path) ? Storage::url($path) : asset($path);
+    }
+
+    public function getAdminAltTextAttribute(): string
+    {
+        return $this->attributes['alt_text']
+            ?? $this->attributes['meta_title']
+            ?? $this->attributes['title']
+            ?? '';
+    }
+
+    public function getAdminTypeAttribute(): string
+    {
+        return $this->attributes['type'] ?? 'Post';
     }
 
     private static function uniqueSlug(string $title, ?int $ignoreId = null): string

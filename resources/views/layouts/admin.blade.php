@@ -53,11 +53,32 @@
         .admin-body .inline-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
         .admin-body .admin-action,.admin-body .danger{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 13px;border-radius:999px;font:inherit;font-size:13px;font-weight:800;text-decoration:none;cursor:pointer}
         .admin-body .admin-action{border:1px solid #f2bd63;background:#fff8ec;color:#d78a00}
+        .admin-body .admin-action.preview{border-color:#00a4d6;background:#f2fcff;color:#008fc0}
         .admin-body .danger{border:1px solid #ff9aae;background:#fff0f3;color:#f2345a}
         .admin-body .admin-status{display:inline-flex;align-items:center;min-height:28px;padding:0 11px;border-radius:999px;background:#fff0f3;color:#f2345a;font-size:12px;font-weight:800}
         .admin-body .admin-status.active{background:#e8f8ef;color:#0f9f5b}
         .admin-body .notice{width:min(100%,1120px);margin:0 auto 16px;padding:12px 14px;border:1px solid #b9e6d0;border-radius:12px;background:#edfff6;color:#0b7444;font-size:14px;font-weight:800}
-        .admin-body .pagination{padding:0 22px 22px}
+        .admin-body .pagination{padding:0 22px 22px;color:#60748f;font-size:14px}
+        .admin-body .pagination nav{display:grid;gap:10px}
+        .admin-body .pagination svg{width:18px!important;height:18px!important;max-width:18px!important;max-height:18px!important}
+        .admin-body .pagination a,.admin-body .pagination span{font-size:14px}
+        .admin-body .bulk-bar{display:flex;align-items:center;gap:12px;width:min(100%,1120px);margin:0 auto 14px;padding:0 16px}
+        .admin-body .bulk-bar select{width:auto;min-width:170px}
+        .admin-body .content-table{table-layout:fixed}
+        .admin-body .content-table th,.admin-body .content-table td{padding:18px 16px}
+        .admin-body .content-table tbody tr:nth-child(odd){background:#f7f7f7}
+        .admin-body .content-table tbody tr:nth-child(even){background:#fff}
+        .admin-body .content-table input[type="checkbox"]{width:18px;min-height:18px}
+        .admin-body .content-table .check-col{width:46px}
+        .admin-body .content-table .no-col{width:70px}
+        .admin-body .content-table .image-col{width:230px}
+        .admin-body .content-table .type-col{width:120px}
+        .admin-body .content-table .action-col{width:170px}
+        .admin-body .post-thumb{display:block;width:225px;max-width:100%;height:150px;border:1px solid #dce7f4;background:#eef4fb;object-fit:cover}
+        .admin-body .post-thumb-empty{display:grid;place-items:center;color:#7890b0;font-size:13px;font-weight:800}
+        .admin-body .post-actions{display:grid;gap:8px}
+        .admin-body .post-actions .admin-action,.admin-body .post-actions .danger{width:100%;min-height:38px;border-radius:999px;background:#fff}
+        .admin-body .post-title{font-size:17px;line-height:1.45;font-weight:700;color:#061936}
         @media(max-width:900px){.admin-body .admin-shell{grid-template-columns:1fr}.admin-body .admin-sidebar{position:relative;height:auto}.admin-body .admin-main{padding:22px 16px}.admin-body .admin-top h1{font-size:32px}.admin-body .stats,.admin-body .form-grid{grid-template-columns:1fr}.admin-body .admin-card-head,.admin-body .section-head{align-items:flex-start;flex-direction:column}}
     </style>
 </head>

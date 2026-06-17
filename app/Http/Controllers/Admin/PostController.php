@@ -34,6 +34,11 @@ class PostController extends Controller
         return view('admin.posts.edit', ['post' => $post]);
     }
 
+    public function show(Post $post)
+    {
+        return view('admin.posts.show', ['post' => $post]);
+    }
+
     public function update(Request $request, Post $post)
     {
         $data = $this->validated($request);
@@ -53,6 +58,19 @@ class PostController extends Controller
         $post->delete();
 
         return back()->with('status', 'Post deleted.');
+    }
+
+    public function bulkAction(Request $request)
+    {
+        $data = $request->validate([
+            'action' => ['required', 'in:delete'],
+            'posts' => ['required', 'array'],
+            'posts.*' => ['integer'],
+        ]);
+
+        $deleted = Post::whereKey($data['posts'])->delete();
+
+        return back()->with('status', "{$deleted} post(s) deleted.");
     }
 
     private function validated(Request $request): array

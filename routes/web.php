@@ -41,7 +41,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('homepage-content', [HomepageSectionController::class, 'index'])->name('homepage-content.index');
     Route::resource('modules', ModuleController::class)->except('show');
     Route::resource('pages', PageController::class)->except('show');
-    Route::resource('posts', PostController::class)->except('show');
+    Route::post('posts/bulk-action', [PostController::class, 'bulkAction'])->name('posts.bulk-action');
+    Route::resource('posts', PostController::class);
     Route::resource('blog-posts', BlogPostController::class)->except('show');
     Route::resource('faqs', FaqController::class)->except('show');
     Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
