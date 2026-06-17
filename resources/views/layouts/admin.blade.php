@@ -79,6 +79,18 @@
         .admin-body .post-actions{display:grid;gap:8px}
         .admin-body .post-actions .admin-action,.admin-body .post-actions .danger{width:100%;min-height:38px;border-radius:999px;background:#fff}
         .admin-body .post-title{font-size:17px;line-height:1.45;font-weight:700;color:#061936}
+        .admin-body .post-form-panel{width:min(100%,1120px);margin:0 auto 22px;border:1px solid #d8e4f2;background:#fff;box-shadow:0 16px 38px rgba(31,53,84,.06)}
+        .admin-body .post-form-title{padding:11px 26px;background:#0d83f3;color:#061936;font-size:24px;font-weight:900;letter-spacing:-.03em}
+        .admin-body .post-form-body{padding:26px 26px 10px}
+        .admin-body .post-form-body .field{margin-bottom:24px}
+        .admin-body .post-form-body label{font-size:21px;color:#050b15}
+        .admin-body .post-form-body input,.admin-body .post-form-body select{min-height:54px;border-radius:15px;font-size:21px}
+        .admin-body .post-form-preview{display:block;width:220px;height:140px;margin-top:12px;border:1px solid #dce7f4;object-fit:cover}
+        .admin-body .editor-shell{overflow:hidden;border:2px solid #e5e7eb;border-radius:14px;background:#fff}
+        .admin-body .editor-menu,.admin-body .editor-toolbar{display:flex;align-items:center;gap:24px;padding:18px 26px;color:#111827;font-size:18px}
+        .admin-body .editor-toolbar{gap:28px;border-bottom:1px solid #e5e7eb;box-shadow:0 10px 20px rgba(15,23,42,.08);font-size:24px}
+        .admin-body .post-description-editor{min-height:360px;border:0;border-radius:0;font-size:18px;box-shadow:none;resize:vertical}
+        .admin-body .post-status{align-self:end;min-height:54px}
         @media(max-width:900px){.admin-body .admin-shell{grid-template-columns:1fr}.admin-body .admin-sidebar{position:relative;height:auto}.admin-body .admin-main{padding:22px 16px}.admin-body .admin-top h1{font-size:32px}.admin-body .stats,.admin-body .form-grid{grid-template-columns:1fr}.admin-body .admin-card-head,.admin-body .section-head{align-items:flex-start;flex-direction:column}}
     </style>
 </head>

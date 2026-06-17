@@ -28,7 +28,7 @@
             <tbody>
                 @forelse($posts as $post)
                     <tr>
-                        <td><input class="post-check" type="checkbox" name="posts[]" value="{{ $post->id }}" aria-label="Select {{ $post->title }}"></td>
+                        <td><input class="post-check" type="checkbox" name="posts[]" value="{{ $post->id }}" aria-label="Select {{ $post->admin_title }}"></td>
                         <td>{{ $posts->firstItem() + $loop->index }}</td>
                         <td>
                             @if($post->admin_image_url)
@@ -37,7 +37,7 @@
                                 <span class="post-thumb post-thumb-empty">No image</span>
                             @endif
                         </td>
-                        <td><span class="post-title">{{ $post->title }}</span></td>
+                        <td><span class="post-title">{{ $post->admin_title }}</span></td>
                         <td>{{ $post->admin_alt_text }}</td>
                         <td>{{ $post->admin_type }}</td>
                         <td>

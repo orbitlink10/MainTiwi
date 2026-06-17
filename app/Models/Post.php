@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -11,17 +12,13 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'slug',
-        'excerpt',
-        'content',
-        'featured_image',
-        'meta_title',
-        'meta_description',
-        'status',
-        'published_at',
-    ];
+    protected $guarded = [];
+
+    public function usesTimestamps(): bool
+    {
+        return Schema::hasColumn($this->getTable(), static::CREATED_AT)
+            && Schema::hasColumn($this->getTable(), static::UPDATED_AT);
+    }
 
     protected function casts(): array
     {
@@ -34,8 +31,8 @@ class Post extends Model
     protected static function booted(): void
     {
         static::saving(function (Post $post) {
-            if ($post->isDirty('title') || blank($post->slug)) {
-                $post->slug = static::uniqueSlug($post->title, $post->id);
+            if (Schema::hasColumn($post->getTable(), 'slug') && ($post->isDirty('title') || $post->isDirty('page_title') || blank($post->slug))) {
+                $post->slug = static::uniqueSlug($post->admin_title, $post->id);
             }
         });
     }
@@ -49,7 +46,10 @@ class Post extends Model
 
     public function getAdminImageUrlAttribute(): ?string
     {
-        $path = $this->attributes['featured_image'] ?? $this->attributes['image'] ?? null;
+        $path = $this->attributes['featured_image']
+            ?? $this->attributes['image']
+            ?? $this->attributes['image_path']
+            ?? null;
 
         if (! $path) {
             return null;
@@ -65,14 +65,33 @@ class Post extends Model
     public function getAdminAltTextAttribute(): string
     {
         return $this->attributes['alt_text']
+            ?? $this->attributes['image_alt_text']
             ?? $this->attributes['meta_title']
-            ?? $this->attributes['title']
+            ?? $this->admin_title
             ?? '';
     }
 
     public function getAdminTypeAttribute(): string
     {
         return $this->attributes['type'] ?? 'Post';
+    }
+
+    public function getAdminTitleAttribute(): string
+    {
+        return $this->attributes['title']
+            ?? $this->attributes['page_title']
+            ?? $this->attributes['heading_1']
+            ?? $this->attributes['meta_title']
+            ?? '';
+    }
+
+    public function getAdminDescriptionAttribute(): string
+    {
+        return $this->attributes['content']
+            ?? $this->attributes['page_description']
+            ?? $this->attributes['description']
+            ?? $this->attributes['excerpt']
+            ?? '';
     }
 
     private static function uniqueSlug(string $title, ?int $ignoreId = null): string
