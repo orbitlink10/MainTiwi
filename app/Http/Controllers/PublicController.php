@@ -77,6 +77,17 @@ class PublicController extends Controller
 
     public function publicPost(string $slug)
     {
+        $page = Page::active()->where('slug', $slug)->first();
+
+        if ($page) {
+            return view('public.page', [
+                'page' => $page,
+                'modules' => Module::active()->orderBy('name')->get(),
+                'metaTitle' => $page->meta_title ?: $page->title.' | Tiwi',
+                'metaDescription' => $page->meta_description ?: str(strip_tags($page->content))->limit(155),
+            ]);
+        }
+
         $post = null;
 
         if (Schema::hasColumn('posts', 'slug')) {

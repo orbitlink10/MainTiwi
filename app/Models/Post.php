@@ -59,15 +59,23 @@ class Post extends Model
             return null;
         }
 
-        if (Str::startsWith($path, ['http://', 'https://', '/'])) {
+        if (Str::startsWith($path, ['http://', 'https://'])) {
             return $path;
         }
 
-        if (Storage::disk('public')->exists($path)) {
-            return Storage::url($path);
+        $normalized = ltrim($path, '/');
+
+        if (Str::startsWith($normalized, 'storage/')) {
+            $storagePath = Str::after($normalized, 'storage/');
+
+            if (Storage::disk('public')->exists($storagePath)) {
+                return route('media.show', ['path' => $storagePath]);
+            }
         }
 
-        $normalized = ltrim($path, '/');
+        if (Storage::disk('public')->exists($normalized)) {
+            return route('media.show', ['path' => $normalized]);
+        }
 
         foreach ([
             $normalized,
