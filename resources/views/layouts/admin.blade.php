@@ -6,40 +6,40 @@
     <title>@yield('title', 'Admin') | Tiwi</title>
     <link rel="stylesheet" href="{{ asset('css/tiwi.css') }}">
     <style>
-        .admin-body{margin:0;background:#f3f7fc;color:#102033;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-        .admin-body .admin-shell{display:grid;grid-template-columns:292px minmax(0,1fr);min-height:100vh;background:#f4f8fd}
-        .admin-body .admin-sidebar{position:sticky;top:0;height:100vh;overflow:auto;padding:22px 18px;background:#eef4fb;border-right:1px solid #d8e4f2}
-        .admin-body .admin-brand{display:flex;align-items:center;min-height:56px;margin:0 0 24px;padding:0 18px;border:1px solid #d4e0ef;border-radius:14px;background:#fff;color:#263548;font-size:22px;font-weight:800;letter-spacing:-.035em;box-shadow:0 10px 26px rgba(31,53,84,.06)}
+        .admin-body{margin:0;background:#f3f5f8;color:#111827;font-family:Arial,Helvetica,sans-serif}
+        .admin-body .admin-shell{display:grid;grid-template-columns:292px minmax(0,1fr);min-height:100vh;background:#f3f5f8}
+        .admin-body .admin-sidebar{position:sticky;top:0;height:100vh;overflow:auto;padding:22px 18px;background:#f7f8fa;border-right:1px solid #d6dde7;box-shadow:6px 0 18px rgba(15,23,42,.12)}
+        .admin-body .admin-brand{display:flex;align-items:center;min-height:56px;margin:0 0 24px;padding:0 18px;border:0;border-radius:0;background:transparent;color:#40516a;font-size:22px;font-weight:700;letter-spacing:0;box-shadow:none}
         .admin-body .admin-nav{display:grid;gap:5px}
-        .admin-body .admin-nav-heading{display:block;margin:18px 8px 8px;color:#8ba0bb;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
-        .admin-body .admin-nav-link{display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:12px;min-height:46px;padding:4px 10px;border-radius:12px;color:#334f76;font-size:16px;font-weight:700;text-decoration:none}
-        .admin-body .admin-nav-link:hover,.admin-body .admin-nav-link.active{background:#fff;color:#102033}
-        .admin-body .admin-nav-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:#dfe9f6;color:#6f87a8}
-        .admin-body .admin-nav-link.active .admin-nav-icon{background:#2d7ff0;color:#fff}
+        .admin-body .admin-nav-heading{display:block;margin:24px 8px 12px;color:#8b9bb2;font-size:13px;font-weight:400;letter-spacing:.18em;text-transform:uppercase}
+        .admin-body .admin-nav-link{display:grid;grid-template-columns:40px minmax(0,1fr);align-items:center;gap:14px;min-height:52px;padding:4px 8px;border-radius:0;color:#40516a;font-size:18px;font-weight:600;text-decoration:none}
+        .admin-body .admin-nav-link:hover,.admin-body .admin-nav-link.active{background:#fff;color:#111827}
+        .admin-body .admin-nav-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:#e2e8f0;color:#718096}
+        .admin-body .admin-nav-link.active .admin-nav-icon{background:#0d83f3;color:#fff}
         .admin-body .admin-nav-icon svg{display:block;width:20px;height:20px;max-width:20px;max-height:20px;fill:none!important;stroke:currentColor!important;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
         .admin-body .admin-nav-icon svg *{fill:none!important;stroke:currentColor!important}
         .admin-body .admin-logout{margin-top:18px}
-        .admin-body .admin-main{padding:28px 34px 42px;background:linear-gradient(120deg,#f8fbff 0,#edf5ff 100%)}
-        .admin-body .admin-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;width:min(100%,1120px);margin:0 auto 20px}
-        .admin-body .admin-pill{display:inline-flex;min-height:24px;align-items:center;padding:0 12px;margin:0 0 10px;border-radius:999px;background:#e3edf9;color:#415c7f;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-        .admin-body .admin-top h1{margin:0;color:#101827;font-size:38px;line-height:1.04;font-weight:800;letter-spacing:-.045em}
-        .admin-body .admin-user{color:#60748f;font-size:14px;font-weight:700}
-        .admin-body .admin-card,.admin-body .content,.admin-body .section{width:min(100%,1120px);margin:0 auto 22px;overflow:hidden;border:1px solid #d8e4f2;border-radius:18px;background:#fff;box-shadow:0 16px 38px rgba(31,53,84,.06)}
+        .admin-body .admin-main{padding:28px 24px 42px;background:#f3f5f8}
+        .admin-body .admin-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;width:min(100%,1224px);margin:0 auto 18px}
+        .admin-body .admin-pill{display:none}
+        .admin-body .admin-top h1{margin:0;color:#111827;font-size:30px;line-height:1.15;font-weight:700;letter-spacing:0}
+        .admin-body .admin-user{color:#40516a;font-size:14px;font-weight:600}
+        .admin-body .admin-card,.admin-body .content,.admin-body .section{width:min(100%,1224px);margin:0 auto 22px;overflow:hidden;border:1px solid #dbe2ec;border-radius:0;background:#fff;box-shadow:0 12px 24px rgba(15,23,42,.08)}
         .admin-body .admin-card-head,.admin-body .section-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 26px;border-bottom:1px solid #dce7f4}
         .admin-body .admin-card-head h2,.admin-body .section-head h2{margin:0 0 4px;color:#061936;font-size:24px;font-weight:800;letter-spacing:-.035em}
         .admin-body .admin-card-head p{margin:0;color:#607a9f;font-size:15px;line-height:1.45}
         .admin-body .admin-form-section{padding:24px 26px 14px}
         .admin-body .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
         .admin-body .field{display:grid;gap:8px;margin-bottom:16px}
-        .admin-body label{color:#061936;font-size:14px;font-weight:800;letter-spacing:-.01em}
-        .admin-body input,.admin-body textarea,.admin-body select{width:100%;min-height:46px;border:1px solid #cddcf0;border-radius:12px;background:#fff;color:#132744;padding:10px 14px;font:inherit;font-size:15px;line-height:1.45;box-shadow:none}
+        .admin-body label{color:#111827;font-size:18px;font-weight:700;letter-spacing:0}
+        .admin-body input,.admin-body textarea,.admin-body select{width:100%;min-height:46px;border:1px solid #d9e1ec;border-radius:12px;background:#fff;color:#132744;padding:10px 14px;font:inherit;font-size:18px;line-height:1.45;box-shadow:none}
         .admin-body textarea{min-height:118px}
         .admin-body .admin-editor{min-height:190px}
         .admin-body input:focus,.admin-body textarea:focus,.admin-body select:focus{outline:0;border-color:#2d7ff0;box-shadow:0 0 0 3px rgba(45,127,240,.12)}
         .admin-body .admin-check{display:inline-flex;align-items:center;gap:10px}
         .admin-body .admin-check input{width:18px;min-height:18px}
         .admin-body .actions{display:flex;flex-wrap:wrap;gap:10px;padding:0 26px 24px}
-        .admin-body .button{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 18px;border:1px solid #2d7ff0;border-radius:999px;background:#2d7ff0;color:#fff;font-size:14px;font-weight:800;text-decoration:none}
+        .admin-body .button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 18px;border:1px solid #0d83f3;border-radius:4px;background:#0d83f3;color:#fff;font-size:15px;font-weight:700;text-decoration:none}
         .admin-body .button.ghost,.admin-body .button.secondary{background:#f7faff;color:#334f76;border-color:#9fb2cf}
         .admin-body .stats{width:min(100%,1120px);margin:0 auto 22px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
         .admin-body .stat{min-height:92px;padding:18px;border:1px solid #d8e4f2;border-radius:16px;background:#fff;box-shadow:0 12px 28px rgba(31,53,84,.05)}
@@ -79,12 +79,13 @@
         .admin-body .post-actions{display:grid;gap:8px}
         .admin-body .post-actions .admin-action,.admin-body .post-actions .danger{width:100%;min-height:38px;border-radius:999px;background:#fff}
         .admin-body .post-title{font-size:17px;line-height:1.45;font-weight:700;color:#061936}
-        .admin-body .post-form-panel{width:min(100%,1120px);margin:0 auto 22px;border:1px solid #d8e4f2;background:#fff;box-shadow:0 16px 38px rgba(31,53,84,.06)}
-        .admin-body .post-form-title{padding:11px 26px;background:#0d83f3;color:#061936;font-size:22px;font-weight:900;letter-spacing:-.02em}
-        .admin-body .post-form-body{padding:24px 26px 10px}
-        .admin-body .post-form-body .field{margin-bottom:18px}
-        .admin-body .post-form-body label{font-size:14px;color:#061936}
-        .admin-body .post-form-body input,.admin-body .post-form-body select{min-height:46px;border-radius:12px;font-size:15px}
+        .admin-body .post-form-panel{width:min(100%,1224px);margin:0 auto 22px;border:1px solid #dbe2ec;background:#fff;box-shadow:0 12px 24px rgba(15,23,42,.08)}
+        .admin-body .post-form-title{padding:9px 30px;background:#0d83f3;color:#061936;font-size:24px;font-weight:700;letter-spacing:0}
+        .admin-body .post-form-body{padding:34px 30px 16px}
+        .admin-body .post-form-body .field{margin-bottom:24px}
+        .admin-body .post-form-body label{font-size:18px;color:#111827}
+        .admin-body .post-form-body input,.admin-body .post-form-body textarea,.admin-body .post-form-body select{min-height:56px;border-radius:12px;font-size:18px}
+        .admin-body .post-form-body .actions{padding:4px 0 8px}
         .admin-body .post-form-preview{display:block;width:220px;height:140px;margin-top:12px;border:1px solid #dce7f4;object-fit:cover}
         .admin-body .post-description-editor{min-height:420px;border:1px solid #cddcf0;border-radius:12px;font-size:15px;box-shadow:none;resize:vertical}
         .admin-body .tox-tinymce{border:2px solid #e5e7eb!important;border-radius:14px!important;overflow:hidden!important}
@@ -163,13 +164,15 @@
             </form>
         </aside>
         <main class="admin-main">
-            <div class="admin-top">
-                <div>
-                    <p class="admin-pill">Admin Section</p>
-                    <h1>@yield('title', 'Admin')</h1>
+            @unless(View::hasSection('hide_admin_top'))
+                <div class="admin-top">
+                    <div>
+                        <p class="admin-pill">Admin Section</p>
+                        <h1>@yield('title', 'Admin')</h1>
+                    </div>
+                    <span class="admin-user">{{ auth()->user()->name }}</span>
                 </div>
-                <span class="admin-user">{{ auth()->user()->name }}</span>
-            </div>
+            @endunless
             @if(session('status')) <div class="notice">{{ session('status') }}</div> @endif
             @yield('content')
         </main>

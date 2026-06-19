@@ -13,4 +13,4 @@
 </div>
 <div class="field"><label>Image</label><input name="image" type="file">@error('image')<span class="error">{{ $message }}</span>@enderror</div>
 <label><input type="checkbox" name="status" value="1" @checked(old('status', $module->exists ? $module->status : true))> Active</label>
-<div class="actions"><button class="button" type="submit">Save featured app</button><a class="button ghost" href="{{ route('admin.modules.index') }}">Cancel</a></div>
+<div class="actions form-actions"><button class="button" type="submit">Save featured app</button><a class="button ghost" href="{{ route('admin.modules.index') }}">Cancel</a></div>
