@@ -24,6 +24,7 @@ class Module extends Model
         'meta_title',
         'meta_description',
         'status',
+        'is_featured',
     ];
 
     protected function casts(): array
@@ -31,6 +32,7 @@ class Module extends Model
         return [
             'features' => 'array',
             'status' => 'boolean',
+            'is_featured' => 'boolean',
         ];
     }
 
@@ -46,6 +48,11 @@ class Module extends Model
     public function scopeActive($query)
     {
         return $query->where('status', true);
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
     }
 
     private static function uniqueSlug(string $name, ?int $ignoreId = null): string

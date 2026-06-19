@@ -77,7 +77,8 @@
             'description' => $module->short_description,
             'key' => $keyForModule($module->name, $module->slug),
             'accent' => $accentForModule($module->name),
-            'url' => route('modules.show', $module->slug),
+            'url' => $module->external_url ?: route('modules.show', $module->slug),
+            'is_external' => filled($module->external_url),
         ])->values()->all()
         : $fallbackProducts;
 
@@ -492,7 +493,7 @@
 
         <div class="home-products-grid">
             @foreach($featuredProducts as $product)
-                <a href="{{ $product['url'] }}" class="home-product">
+                <a href="{{ $product['url'] }}" class="home-product" @if($product['is_external'] ?? false) target="_blank" rel="noopener" @endif>
                     <span class="home-product-icon {{ $product['accent'] }}" aria-hidden="true">
                         @switch($product['key'])
                             @case('pos')
@@ -557,7 +558,7 @@
 
         <div class="space-y-4 border-t border-slate-700 pt-6">
             @foreach($featuredProducts as $product)
-                <a href="{{ $product['url'] }}" class="group grid min-h-[90px] grid-cols-[64px_1fr_24px] items-center gap-6 rounded-2xl border border-[#303945] bg-[#1f2630] px-5 py-4 transition hover:border-slate-500 hover:bg-[#252d38]">
+                <a href="{{ $product['url'] }}" class="group grid min-h-[90px] grid-cols-[64px_1fr_24px] items-center gap-6 rounded-2xl border border-[#303945] bg-[#1f2630] px-5 py-4 transition hover:border-slate-500 hover:bg-[#252d38]" @if($product['is_external'] ?? false) target="_blank" rel="noopener" @endif>
                     <span class="z-dark-icon {{ $product['accent'] }}" data-symbol="{{ Str::of($product['name'])->explode(' ')->map(fn ($word) => Str::substr($word, 0, 1))->take(3)->join('') }}"></span>
                     <span>
                         <strong class="block text-xl font-black leading-tight text-white">{{ $product['name'] }}</strong>

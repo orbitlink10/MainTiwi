@@ -16,7 +16,7 @@ class PublicController extends Controller
     public function home()
     {
         return view('public.home', [
-            'modules' => Module::active()->orderBy('name')->take(6)->get(),
+            'modules' => Module::active()->featured()->orderBy('id')->take(6)->get(),
             'posts' => BlogPost::published()->latest('published_at')->take(3)->get(),
             'faqs' => Faq::active()->orderBy('sort_order')->orderBy('question')->get(),
             'sections' => HomepageSection::active()->get()->keyBy('key'),
@@ -38,7 +38,7 @@ class PublicController extends Controller
     public function modules()
     {
         return view('public.modules.index', [
-            'modules' => Module::active()->orderBy('name')->get(),
+            'modules' => Module::active()->orderBy('id')->get(),
             'metaTitle' => 'Solutions and Modules | Tiwi',
             'metaDescription' => 'Explore Tiwi software modules for POS, property management, school, itinerary, and manufacturing operations.',
         ]);

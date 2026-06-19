@@ -1,15 +1,14 @@
 <?php
 
-namespace Database\Seeders;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
-use App\Models\Module;
-use Illuminate\Database\Seeder;
-
-class ModuleSeeder extends Seeder
+return new class extends Migration
 {
-    public function run(): void
+    public function up(): void
     {
-        $modules = [
+        $apps = [
             [
                 'name' => 'POS',
                 'aliases' => ['POS System'],
@@ -23,7 +22,7 @@ class ModuleSeeder extends Seeder
                 'name' => 'Property',
                 'aliases' => ['Property Management System', 'Rental Management System'],
                 'short_description' => 'Manage tenants, units, rent collection, service requests, and property records.',
-                'full_description' => 'Tiwi Property Management helps landlords, agencies, and property teams track occupancy, rent payments, maintenance requests, leases, and property records from one workspace.',
+                'full_description' => 'Tiwi Property helps landlords, agencies, and property teams track occupancy, rent payments, maintenance requests, leases, and property records from one workspace.',
                 'features' => ['Tenant records', 'Rent tracking', 'Maintenance requests', 'Lease management'],
                 'pricing_text' => 'Custom pricing based on property volume.',
                 'external_url' => 'https://example.com/tiwi-property',
@@ -32,7 +31,7 @@ class ModuleSeeder extends Seeder
                 'name' => 'School',
                 'aliases' => ['School Management System'],
                 'short_description' => 'Organize learners, fees, classes, exams, admissions, and school communication.',
-                'full_description' => 'Tiwi School Management brings administrators, teachers, guardians, and learners into a single operational workspace for academic and finance workflows.',
+                'full_description' => 'Tiwi School brings administrators, teachers, guardians, and learners into a single operational workspace for academic and finance workflows.',
                 'features' => ['Student records', 'Fee tracking', 'Class timetables', 'Parent communication'],
                 'pricing_text' => 'Per school pricing available on request.',
                 'external_url' => 'https://example.com/tiwi-school',
@@ -66,34 +65,47 @@ class ModuleSeeder extends Seeder
             ],
         ];
 
-        foreach ($modules as $module) {
-            $aliases = $module['aliases'];
-            unset($module['aliases']);
+        foreach ($apps as $app) {
+            $slug = Str::slug($app['name']);
+            $aliasSlugs = collect($app['aliases'])
+                ->map(fn (string $alias) => Str::slug($alias))
+                ->all();
 
-            $record = Module::where('name', $module['name'])
-                ->orWhereIn('name', $aliases)
-                ->orWhere('slug', \Illuminate\Support\Str::slug($module['name']))
-                ->orWhereIn('slug', collect($aliases)->map(fn ($alias) => \Illuminate\Support\Str::slug($alias))->all())
+            if (DB::table('modules')->where('slug', $slug)->exists()) {
+                continue;
+            }
+
+            $data = [
+                'name' => $app['name'],
+                'slug' => $slug,
+                'short_description' => $app['short_description'],
+                'full_description' => $app['full_description'],
+                'features' => json_encode($app['features']),
+                'pricing_text' => $app['pricing_text'],
+                'external_url' => $app['external_url'],
+                'meta_title' => $app['name'].' | Tiwi Business Software',
+                'meta_description' => $app['short_description'],
+                'status' => true,
+                'updated_at' => now(),
+            ];
+
+            $existingId = DB::table('modules')
+                ->whereIn('slug', $aliasSlugs)
+                ->orWhereIn('name', $app['aliases'])
                 ->orderBy('id')
-                ->first();
+                ->value('id');
 
-            $record ??= new Module();
-            $record->fill($module + [
-                    'image' => null,
-                    'meta_title' => $module['name'].' | Tiwi Business Software',
-                    'meta_description' => $module['short_description'],
-                    'status' => true,
-                    'is_featured' => true,
-                ]);
-            $record->save();
+            if ($existingId) {
+                DB::table('modules')->where('id', $existingId)->update($data);
+                continue;
+            }
 
-            Module::whereKeyNot($record->id)
-                ->where(fn ($query) => $query
-                    ->where('name', $module['name'])
-                    ->orWhereIn('name', $aliases)
-                    ->orWhere('slug', \Illuminate\Support\Str::slug($module['name']))
-                    ->orWhereIn('slug', collect($aliases)->map(fn ($alias) => \Illuminate\Support\Str::slug($alias))->all()))
-                ->delete();
+            DB::table('modules')->insert($data + ['created_at' => now()]);
         }
     }
-}
+
+    public function down(): void
+    {
+        //
+    }
+};

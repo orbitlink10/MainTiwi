@@ -11,7 +11,7 @@ class ModuleController extends Controller
     public function index()
     {
         return view('admin.modules.index', [
-            'modules' => Module::latest()->paginate(15),
+            'modules' => Module::featured()->orderBy('id')->paginate(15),
         ]);
     }
 
@@ -23,8 +23,10 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request);
+        $data['full_description'] = $data['full_description'] ?: $data['short_description'];
         $data['features'] = $this->featuresFromText($request->input('features_text'));
         $data['status'] = $request->boolean('status');
+        $data['is_featured'] = true;
         $data['image'] = $request->file('image')?->store('modules', 'public');
 
         Module::create($data);
@@ -40,6 +42,7 @@ class ModuleController extends Controller
     public function update(Request $request, Module $module)
     {
         $data = $this->validated($request);
+        $data['full_description'] = $data['full_description'] ?: $data['short_description'];
         $data['features'] = $this->featuresFromText($request->input('features_text'));
         $data['status'] = $request->boolean('status');
 
@@ -64,7 +67,7 @@ class ModuleController extends Controller
         return $request->validate([
             'name' => ['required', 'string', 'max:180'],
             'short_description' => ['required', 'string', 'max:500'],
-            'full_description' => ['required', 'string'],
+            'full_description' => ['nullable', 'string'],
             'features_text' => ['nullable', 'string'],
             'pricing_text' => ['nullable', 'string'],
             'external_url' => ['nullable', 'url', 'max:255'],
