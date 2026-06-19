@@ -103,7 +103,7 @@
 <body class="admin-body">
     <div class="admin-shell">
         <aside class="admin-sidebar">
-            <a class="admin-brand" href="{{ route('admin.dashboard') }}">Tiwi Admin</a>
+            <a class="admin-brand" href="{{ route('home') }}">Tiwi Systems</a>
 
             <nav class="admin-nav" aria-label="Admin navigation">
                 <a class="admin-nav-link @if(request()->routeIs('admin.dashboard')) active @endif" href="{{ route('admin.dashboard') }}">
