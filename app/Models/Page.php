@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Page extends Model
@@ -44,6 +45,44 @@ class Page extends Model
     public function scopeActive($query)
     {
         return $query->where('status', true);
+    }
+
+    public function getAdminImageUrlAttribute(): ?string
+    {
+        if (! $this->featured_image) {
+            return null;
+        }
+
+        if (Str::startsWith($this->featured_image, ['http://', 'https://'])) {
+            return $this->featured_image;
+        }
+
+        $path = ltrim($this->featured_image, '/');
+
+        if (Str::startsWith($path, 'storage/')) {
+            $path = Str::after($path, 'storage/');
+        }
+
+        if (Storage::disk('public')->exists($path)) {
+            return route('media.show', ['path' => $path]);
+        }
+
+        return asset($this->featured_image);
+    }
+
+    public function getAdminAltTextAttribute(): string
+    {
+        return $this->image_alt_text ?: $this->title;
+    }
+
+    public function getAdminTypeAttribute(): string
+    {
+        return $this->type ?: 'Post';
+    }
+
+    public function getPublicUrlAttribute(): string
+    {
+        return route('posts.public.show', $this->slug);
     }
 
     private static function uniqueSlug(string $title, ?int $ignoreId = null): string

@@ -40,6 +40,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
     Route::get('homepage-content', [HomepageSectionController::class, 'index'])->name('homepage-content.index');
     Route::resource('modules', ModuleController::class)->except('show');
+    Route::post('pages/bulk-action', [PageController::class, 'bulkAction'])->name('pages.bulk-action');
     Route::resource('pages', PageController::class)->except('show');
     Route::post('posts/bulk-action', [PostController::class, 'bulkAction'])->name('posts.bulk-action');
     Route::resource('posts', PostController::class);

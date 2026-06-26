@@ -55,6 +55,19 @@ class PageController extends Controller
         return back()->with('status', 'Page deleted.');
     }
 
+    public function bulkAction(Request $request)
+    {
+        $data = $request->validate([
+            'action' => ['required', 'in:delete'],
+            'pages' => ['required', 'array'],
+            'pages.*' => ['integer'],
+        ]);
+
+        $deleted = Page::whereKey($data['pages'])->delete();
+
+        return back()->with('status', "{$deleted} page(s) deleted.");
+    }
+
     private function validated(Request $request): array
     {
         return $request->validate([

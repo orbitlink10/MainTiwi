@@ -3,16 +3,23 @@
 @section('content')
 <form method="POST" action="{{ route('admin.posts.bulk-action') }}" onsubmit="return confirm('Apply this action to the selected posts?')">
     @csrf
-    <div class="bulk-bar">
-        <select name="action" aria-label="Bulk actions">
-            <option value="">Bulk actions</option>
-            <option value="delete">Delete selected</option>
-        </select>
-        <button class="button" type="submit">Apply</button>
-        <a class="button ghost" href="{{ route('admin.posts.create') }}">Add post</a>
-    </div>
+    <section class="admin-card">
+        <div class="admin-card-head">
+            <div>
+                <h2>Post List</h2>
+                <p>Manage published posts, preview changes, and update content.</p>
+            </div>
+            <a class="button" href="{{ route('admin.posts.create') }}">+ Add Post</a>
+        </div>
 
-    <section class="section">
+        <div class="bulk-bar">
+            <select name="action" aria-label="Bulk actions">
+                <option value="">Bulk actions</option>
+                <option value="delete">Delete selected</option>
+            </select>
+            <button class="button" type="submit">Apply</button>
+        </div>
+
         <table class="table content-table">
             <thead>
                 <tr>
