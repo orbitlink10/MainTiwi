@@ -32,6 +32,32 @@
         return '<h'.$level.$attributes.' id="'.$id.'">'.$matches[3].'</h'.$level.'>';
     }, $contentHtml);
 
+    $contentHtml = preg_replace_callback('/<img\b[^>]*>/i', function ($matches) {
+        $tag = $matches[0];
+
+        if (! preg_match('/\bsrc\s*=\s*(["\'])(.*?)\1/i', $tag, $srcMatch)) {
+            return $tag;
+        }
+
+        $src = html_entity_decode($srcMatch[2], ENT_QUOTES);
+
+        if (\Illuminate\Support\Str::startsWith($src, ['http://', 'https://'])) {
+            $encoded = rtrim(strtr(base64_encode($src), '+/', '-_'), '=');
+            $proxied = route('content-image.proxy', ['encoded' => $encoded]);
+            $tag = preg_replace('/\bsrc\s*=\s*(["\'])(.*?)\1/i', 'src="'.e($proxied).'" data-original-src="'.e($src).'"', $tag, 1);
+        }
+
+        if (! preg_match('/\bloading\s*=/i', $tag)) {
+            $tag = preg_replace('/<img\b/i', '<img loading="lazy"', $tag, 1);
+        }
+
+        if (! preg_match('/\bdecoding\s*=/i', $tag)) {
+            $tag = preg_replace('/<img\b/i', '<img decoding="async"', $tag, 1);
+        }
+
+        return $tag;
+    }, $contentHtml);
+
     $summary = ($post->meta_description ?? null) ?: \Illuminate\Support\Str::limit(strip_tags($rawContent), 190);
     $shareUrl = urlencode(request()->fullUrl());
     $shareTitle = urlencode($post->admin_title);
@@ -57,7 +83,8 @@
     .article-content a { color:#1264d8; font-weight:650; text-decoration:underline; text-underline-offset:3px; }
     .article-content ul, .article-content ol { margin:0 0 24px; padding-left:28px; }
     .article-content li { margin-bottom:10px; padding-left:4px; }
-    .article-content img { display:block; width:100%!important; height:auto!important; margin:28px 0; border:1px solid #e5e7eb; border-radius:8px; }
+    .article-content img { display:block; width:auto!important; max-width:100%!important; max-height:460px; height:auto!important; margin:28px auto; border:1px solid #e5e7eb; border-radius:8px; object-fit:contain; }
+    .article-content .article-media-failed { display:none!important; }
     .article-content blockquote { margin:28px 0; padding:22px 26px; border-left:4px solid #ff642d; background:#fff4ee; color:#20242f; font-size:19px; line-height:1.58; }
     .article-content table, .article-content tbody, .article-content thead, .article-content tfoot, .article-content tr, .article-content td, .article-content th { display:block!important; width:100%!important; height:auto!important; min-height:0!important; }
     .article-content table { margin:0 0 28px!important; border-collapse:collapse; font-size:16px; line-height:24px; }
@@ -168,4 +195,24 @@
         </div>
     </div>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.article-content img').forEach(function (img) {
+            function removeFailedImage() {
+                var wrapper = img.closest('td, figure, p, div');
+                img.remove();
+
+                if (wrapper && !wrapper.textContent.trim() && !wrapper.querySelector('img, video, iframe')) {
+                    wrapper.classList.add('article-media-failed');
+                }
+            }
+
+            if (img.complete && img.naturalWidth === 0) {
+                removeFailedImage();
+            } else {
+                img.addEventListener('error', removeFailedImage, { once: true });
+            }
+        });
+    });
+</script>
 @endsection

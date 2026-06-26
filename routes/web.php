@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PublicController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,31 @@ Route::get('/media/{path}', function (string $path) {
 
     return response()->file(Storage::disk('public')->path($path));
 })->where('path', '.*')->name('media.show');
+Route::get('/content-image/{encoded}', function (string $encoded) {
+    $url = base64_decode(strtr($encoded, '-_', '+/'), true);
+    abort_unless($url && filter_var($url, FILTER_VALIDATE_URL), 404);
+
+    $parts = parse_url($url);
+    abort_unless(in_array($parts['scheme'] ?? '', ['http', 'https'], true), 404);
+    abort_unless(filled($parts['host'] ?? null), 404);
+
+    $ip = gethostbyname($parts['host']);
+    abort_unless(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE), 404);
+
+    $response = Http::withHeaders([
+        'Accept' => 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+        'User-Agent' => 'Mozilla/5.0 (compatible; TiwiContentImageProxy/1.0)',
+    ])->timeout(12)->retry(1, 200)->get($url);
+
+    abort_unless($response->ok(), 404);
+
+    $contentType = strtolower((string) $response->header('Content-Type'));
+    abort_unless(str_starts_with($contentType, 'image/'), 404);
+
+    return response($response->body(), 200)
+        ->header('Content-Type', $response->header('Content-Type'))
+        ->header('Cache-Control', 'public, max-age=86400');
+})->where('encoded', '[A-Za-z0-9_-]+')->name('content-image.proxy');
 Route::get('/about-tiwi', [PublicController::class, 'about'])->name('about');
 Route::get('/solutions', [PublicController::class, 'modules'])->name('modules.index');
 Route::get('/solutions/{module:slug}', [PublicController::class, 'module'])->name('modules.show');
