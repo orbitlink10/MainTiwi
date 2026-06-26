@@ -85,7 +85,7 @@
     .article-content a { color:#1264d8; font-weight:650; text-decoration:underline; text-underline-offset:3px; }
     .article-content ul, .article-content ol { margin:0 0 24px; padding-left:28px; }
     .article-content li { margin-bottom:10px; padding-left:4px; }
-    .article-content img { display:block; width:auto!important; max-width:100%!important; max-height:460px; height:auto!important; margin:28px auto; border:1px solid #e5e7eb; border-radius:8px; object-fit:contain; }
+    .article-content img { display:block; width:100%!important; max-width:100%!important; height:auto!important; margin:28px 0; border:1px solid #e5e7eb; border-radius:8px; object-fit:cover; }
     .article-content .article-media-failed { display:none!important; }
     .article-content blockquote { margin:28px 0; padding:22px 26px; border-left:4px solid #ee0011; background:#fff4ee; color:#20242f; font-size:19px; line-height:1.58; }
     .article-content table { width:100%; margin:28px 0; border-collapse:collapse; font-size:16px; line-height:24px; }
@@ -192,6 +192,18 @@
 </section>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        function isEmptyMediaContainer(element) {
+            return element
+                && !element.textContent.replace(/\u00a0/g, '').trim()
+                && !element.querySelector('img, video, iframe, embed, object, svg');
+        }
+
+        document.querySelectorAll('.article-content td, .article-content th, .article-content p, .article-content figure, .article-content div').forEach(function (element) {
+            if (isEmptyMediaContainer(element)) {
+                element.classList.add('article-media-failed');
+            }
+        });
+
         document.querySelectorAll('.article-content img').forEach(function (img) {
             function removeFailedImage() {
                 var wrapper = img.closest('td, figure, p, div');
