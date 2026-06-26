@@ -60,7 +60,7 @@
                 @endforelse
             </tbody>
         </table>
-        <div class="pagination">{{ $pages->links() }}</div>
+        <div class="pagination">{{ $pages->onEachSide(1)->links('admin.partials.pagination') }}</div>
     </section>
 </form>
 

@@ -58,10 +58,14 @@
         .admin-body .admin-status{display:inline-flex;align-items:center;min-height:28px;padding:0 11px;border-radius:999px;background:#fff0f3;color:#f2345a;font-size:12px;font-weight:800}
         .admin-body .admin-status.active{background:#e8f8ef;color:#0f9f5b}
         .admin-body .notice{width:min(100%,1120px);margin:0 auto 16px;padding:12px 14px;border:1px solid #b9e6d0;border-radius:12px;background:#edfff6;color:#0b7444;font-size:14px;font-weight:800}
-        .admin-body .pagination{padding:0 22px 22px;color:#60748f;font-size:14px}
-        .admin-body .pagination nav{display:grid;gap:10px}
-        .admin-body .pagination svg{width:18px!important;height:18px!important;max-width:18px!important;max-height:18px!important}
-        .admin-body .pagination a,.admin-body .pagination span{font-size:14px}
+        .admin-body .pagination{padding:4px 22px 26px;color:#60748f;font-size:14px}
+        .admin-body .admin-pagination{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+        .admin-body .admin-pagination-summary{margin:0;color:#60748f;font-size:14px;font-weight:700}
+        .admin-body .admin-pagination-list{display:flex;align-items:center;gap:6px;margin:0;padding:0;list-style:none}
+        .admin-body .admin-pagination-link,.admin-body .admin-pagination-current,.admin-body .admin-pagination-disabled{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;padding:0 12px;border:1px solid #d8e4f2;border-radius:999px;background:#fff;color:#40516a;font-size:14px;font-weight:800;text-decoration:none}
+        .admin-body .admin-pagination-link:hover{border-color:#0d83f3;color:#0d83f3}
+        .admin-body .admin-pagination-current{border-color:#0d83f3;background:#0d83f3;color:#fff}
+        .admin-body .admin-pagination-disabled{opacity:.45}
         .admin-body .bulk-bar{display:flex;align-items:center;gap:12px;width:min(100%,1120px);margin:0 auto 14px;padding:0 16px}
         .admin-body .bulk-bar select{width:auto;min-width:170px}
         .admin-body .content-table{table-layout:fixed}
@@ -71,14 +75,16 @@
         .admin-body .content-table input[type="checkbox"]{width:18px;min-height:18px}
         .admin-body .content-table .check-col{width:46px}
         .admin-body .content-table .no-col{width:70px}
-        .admin-body .content-table .image-col{width:230px}
+        .admin-body .content-table .image-col{width:190px}
         .admin-body .content-table .type-col{width:120px}
         .admin-body .content-table .action-col{width:170px}
-        .admin-body .post-thumb{display:block;width:225px;max-width:100%;height:150px;border:1px solid #dce7f4;background:#eef4fb;object-fit:cover}
+        .admin-body .post-thumb{display:block;width:170px;max-width:100%;height:112px;border:1px solid #dce7f4;background:#eef4fb;object-fit:cover}
         .admin-body .post-thumb-empty{display:grid;place-items:center;color:#7890b0;font-size:13px;font-weight:800}
         .admin-body .post-actions{display:grid;gap:8px}
         .admin-body .post-actions .admin-action,.admin-body .post-actions .danger{width:100%;min-height:38px;border-radius:999px;background:#fff}
-        .admin-body .post-title{font-size:17px;line-height:1.45;font-weight:700;color:#061936}
+        .admin-body .post-title{display:-webkit-box;max-height:4.35em;overflow:hidden;color:#061936;font-size:17px;line-height:1.45;font-weight:700;overflow-wrap:anywhere;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+        .admin-body .post-alt-text{display:-webkit-box;max-height:4.2em;overflow:hidden;color:#102846;line-height:1.4;overflow-wrap:anywhere;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+        .admin-body .post-type{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;background:#eef6ff;color:#2468b2;font-size:13px;font-weight:800;text-transform:capitalize}
         .admin-body .post-form-panel{width:min(100%,1224px);margin:0 auto 22px;border:1px solid #dbe2ec;background:#fff;box-shadow:0 12px 24px rgba(15,23,42,.08)}
         .admin-body .post-form-title{padding:9px 30px;background:#0d83f3;color:#061936;font-size:24px;font-weight:700;letter-spacing:0}
         .admin-body .post-form-body{padding:34px 30px 16px}

@@ -45,8 +45,8 @@
                             @endif
                         </td>
                         <td><span class="post-title">{{ $post->admin_title }}</span></td>
-                        <td>{{ $post->admin_alt_text }}</td>
-                        <td>{{ $post->admin_type }}</td>
+                        <td><span class="post-alt-text">{{ $post->admin_alt_text }}</span></td>
+                        <td><span class="post-type">{{ $post->admin_type }}</span></td>
                         <td>
                             <div class="post-actions">
                                 <a class="admin-action preview" href="{{ $post->public_url }}" target="_blank" rel="noopener">Preview</a>
@@ -60,7 +60,7 @@
                 @endforelse
             </tbody>
         </table>
-        <div class="pagination">{{ $posts->links() }}</div>
+        <div class="pagination">{{ $posts->onEachSide(1)->links('admin.partials.pagination') }}</div>
     </section>
 </form>
 

@@ -89,10 +89,6 @@ class Post extends Model
             }
         }
 
-        if (str_contains($normalized, '/')) {
-            return asset($normalized);
-        }
-
         return null;
     }
 
