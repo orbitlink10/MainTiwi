@@ -124,7 +124,7 @@ class Post extends Model
 
     public function getAdminDescriptionAttribute(): string
     {
-        return $this->firstAttribute([
+        return $this->longestAttribute([
             'content',
             'page_description',
             'description',
@@ -133,6 +133,7 @@ class Post extends Model
             'long_description',
             'post_content',
             'desc',
+        ]) ?: $this->firstAttribute([
             'excerpt',
         ]);
     }
@@ -183,5 +184,24 @@ class Post extends Model
         }
 
         return '';
+    }
+
+    private function longestAttribute(array $keys): string
+    {
+        $values = [];
+
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $this->attributes) && filled($this->attributes[$key])) {
+                $values[] = (string) $this->attributes[$key];
+            }
+        }
+
+        if ($values === []) {
+            return '';
+        }
+
+        usort($values, fn (string $left, string $right) => mb_strlen($right) <=> mb_strlen($left));
+
+        return $values[0];
     }
 }
